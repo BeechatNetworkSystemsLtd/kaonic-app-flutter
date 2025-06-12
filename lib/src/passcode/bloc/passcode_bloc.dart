@@ -13,9 +13,7 @@ class PasscodeBloc extends Bloc<PasscodeEvent, PasscodeState> {
     required PasscodeMode mode,
     required PasscodeRepository passcodeRepository,
     String? username,
-  })  : _passcodeRepository = passcodeRepository,
-        _username = username,
-        _mode = mode,
+  })  : _mode = mode,
         super(switch (mode) {
           PasscodeMode.create => const PasscodeCreate(code: ''),
           PasscodeMode.enter => const PasscodeEnter(code: '')
@@ -23,9 +21,7 @@ class PasscodeBloc extends Bloc<PasscodeEvent, PasscodeState> {
     on<PasscodeChanged>(_handlePasscodeChange);
   }
 
-  final String? _username;
   final PasscodeMode _mode;
-  final PasscodeRepository _passcodeRepository;
   String _code = '';
 
   Future<void> _handlePasscodeChange(

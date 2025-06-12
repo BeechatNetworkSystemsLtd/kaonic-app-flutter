@@ -13,11 +13,16 @@ class UserService {
   UserModel? get user => _user;
 
   Future<UserModel?> signUpUser(String username, String passcode) async {
-    _user = _userRepository.createUser(username, passcode);
-    _user?.key = await platform.invokeMethod("generateKey");
-    _userRepository.updateUser(_user!);
+    try {
+      _user = _userRepository.createUser(username, passcode);
+      _user?.key = await platform.invokeMethod("generateSecret");
+      _userRepository.updateUser(_user!);
 
-    return user;
+      return user;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   UserModel? loginUser(String username, String passcode) {

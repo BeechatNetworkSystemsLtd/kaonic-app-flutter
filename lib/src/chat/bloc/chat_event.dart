@@ -6,9 +6,9 @@ sealed class ChatEvent {}
 final class _IntiChat extends ChatEvent {}
 
 final class _UpdatedChats extends ChatEvent {
-  _UpdatedChats({required this.chats});
+  _UpdatedChats({required this.messages});
 
-  final Map<String, MeshChat> chats;
+  final List<KaonicEvent<KaonicEventData>> messages;
 }
 
 final class SendMessage extends ChatEvent {

@@ -20,13 +20,13 @@ dependencies:
   objectbox: ^4.0.2
   objectbox_flutter_libs: ^4.0.2
 
-  #crypto
-  cryptography: ^2.7.0
-
   #UI
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.10+1
+
+  #Annotation
+  json_annotation: ^4.9.0
 
   #other
   path_provider: ^2.1.5
@@ -34,6 +34,7 @@ dependencies:
   permission_handler: ^11.3.1
   file_picker: ^8.1.4
   open_file: ^3.5.10
+  uuid: ^4.5.1
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +42,9 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   build_runner: ^2.0.0
   objectbox_generator: any
+  json_serializable: ^6.8.0
+  freezed: ^2.5.7
+  freezed_annotation: ^2.4.4
 
 dependency_overrides:
   js: ^0.7.1

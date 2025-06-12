@@ -4,25 +4,22 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kaonic/data/models/meah_chat.dart';
-import 'package:kaonic/data/models/mesh_address.dart';
-import 'package:kaonic/data/models/mesh_message.dart';
-import 'package:kaonic/data/models/radio_address.dart';
-import 'package:kaonic/service/communication_service.dart';
-import 'package:kaonic/src/chat/chat_args.dart';
+import 'package:kaonic/data/models/kaonic_event.dart';
+import 'package:kaonic/service/call_service.dart';
+import 'package:kaonic/service/chat_service.dart';
 
 part 'chat_event.dart';
 part 'chat_state.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
-  ChatBloc(
-      {required CommunicationService communicationService,
-      required ChatArgs args})
-      : _communicationService = communicationService,
-        _args = args,
-        super(ChatState(
-            address: MeshAddress.fromRadio(
-                RadioAddress.fromHex(args.contact.address)))) {
+  ChatBloc({
+    required ChatService chatService,
+    required CallService callService,
+    required String address,
+  })  : _chatService = chatService,
+        _address = address,
+        _callService = callService,
+        super(ChatState(address: address)) {
     on<SendMessage>(_sendMessage);
     on<_UpdatedChats>(_updatedChats);
     on<_IntiChat>(_intiChat);
@@ -31,26 +28,31 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     add(_IntiChat());
   }
-
-  final CommunicationService _communicationService;
-  final ChatArgs _args;
-  late final StreamSubscription<Map<String, MeshChat>>? _chatSubscription;
+  late final ChatService _chatService;
+  late final CallService _callService;
+  final String _address;
+  StreamSubscription<List<KaonicEvent<KaonicEventData>>>?
+      _chatSubscription;
 
   @override
   Future<void> close() async {
     _chatSubscription?.cancel();
+    _chatService.onChatIDUpdated = null;
     super.close();
   }
 
-  FutureOr<void> _intiChat(_IntiChat event, Emitter<ChatState> emit) {
-    _chatSubscription = _communicationService.chats
-        ?.listen((chats) => add(_UpdatedChats(chats: chats)));
+  FutureOr<void> _intiChat(_IntiChat event, Emitter<ChatState> emit) async {
+    final chatId = await _chatService.createChat(_address);
+    _chatService.onChatIDUpdated = _onChatIdChanged;
+    _chatSubscription = _chatService.getChatMessages(chatId).listen((messages) {
+      add(_UpdatedChats(messages: messages));
+    });
   }
 
   FutureOr<void> _sendMessage(
       SendMessage event, Emitter<ChatState> emit) async {
     try {
-      _communicationService.sendMessage(state.address, event.message);
+      _chatService.sendTextMessage(event.message, _address);
     } catch (e) {
       if (kDebugMode) {
         print('\u001b[31mERROR: $e\u001b[0m');
@@ -61,16 +63,17 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
 
   FutureOr<void> _updatedChats(_UpdatedChats event, Emitter<ChatState> emit) {
-    _communicationService.markMessageRead(state.address);
+    // _communicationService.markMessageRead(state.address);
 
     emit(state.copyWith(
-        messages: event.chats[_args.contact.address]?.messages,
-        flagScrollToDown: true));
+      messages: event.messages,
+      flagScrollToDown: true,
+    ));
   }
 
   FutureOr<void> _initiateCall(
       InitiateCall event, Emitter<ChatState> emit) async {
-    await _communicationService.initiateCall(state.address);
+    _callService.createCall(_address);
 
     emit(NavigateToCall(address: state.address));
   }
@@ -78,7 +81,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   void _filePicked(FilePicked event, Emitter<ChatState> emit) {
     if (event.file.files.isEmpty && event.file.files.first.path != null) return;
     final f = File(event.file.files.first.path!);
-    _communicationService.sendFile(state.address, event.file.files.first.name,
-        f.readAsBytesSync(), f.path);
+    _chatService.sendFileMessage(f.path, _address);
+  }
+
+  void _onChatIdChanged(String address, String chatId) {
+    if (address != _address) return;
+    _chatSubscription?.cancel();
+    _chatSubscription = _chatService.getChatMessages(chatId).listen((messages) {
+      add(_UpdatedChats(messages: messages));
+    });
   }
 }
