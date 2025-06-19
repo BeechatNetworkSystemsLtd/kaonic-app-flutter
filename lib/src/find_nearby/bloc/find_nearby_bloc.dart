@@ -2,18 +2,16 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kaonic/data/models/contact_model.dart';
-import 'package:kaonic/data/models/mesh_node.dart';
-import 'package:kaonic/service/communication_service.dart';
+import 'package:kaonic/service/kaonic_communication_service.dart';
 import 'package:kaonic/service/user_service.dart';
 import 'package:meta/meta.dart';
-
 
 part 'find_nearby_event.dart';
 part 'find_nearby_state.dart';
 
 class FindNearbyBloc extends Bloc<FindNearbyEvent, FindNearbyState> {
   FindNearbyBloc({
-    required CommunicationService communicationService,
+    required KaonicCommunicationService communicationService,
     required UserService userService,
   })  : _communicationService = communicationService,
         _userService = userService,
@@ -21,12 +19,14 @@ class FindNearbyBloc extends Bloc<FindNearbyEvent, FindNearbyState> {
     on<_DeviceListUpdated>(_initialLoading);
     on<AddContact>(_addContact);
 
-    nodesSubscription = _communicationService.nodes?.listen(
-      (nodes) => add(_DeviceListUpdated(devices: nodes.values.toList())),
+    nodesSubscription = _communicationService.nodes.listen(
+      (nodes) {
+        add(_DeviceListUpdated(devices: nodes));
+      },
     );
   }
 
-  final CommunicationService _communicationService;
+  final KaonicCommunicationService _communicationService;
   final UserService _userService;
   StreamSubscription<dynamic>? nodesSubscription;
 
@@ -43,8 +43,7 @@ class FindNearbyBloc extends Bloc<FindNearbyEvent, FindNearbyState> {
   }
 
   FutureOr<void> _addContact(AddContact event, Emitter<FindNearbyState> emit) {
-    final ContactModel contact =
-        ContactModel(address: event.contact.address().toHex());
+    final ContactModel contact = ContactModel(address: event.contact);
     _userService.user?.contacts.add(contact);
     _userService.updateCurrentUser();
     emit(SuccessfullyAddedContact(contact: contact));

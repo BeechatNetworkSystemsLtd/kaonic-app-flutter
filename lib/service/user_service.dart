@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:kaonic/data/models/user_model.dart';
 import 'package:kaonic/data/repository/user_repository.dart';
-import 'package:kaonic/main.dart';
 import 'package:objectbox/objectbox.dart';
 
 class UserService {
@@ -14,13 +13,16 @@ class UserService {
   UserModel? get user => _user;
 
   Future<UserModel?> signUpUser(String username, String passcode) async {
-    _user = _userRepository.createUser(username, passcode);
-    _user?.key = mocked
-        ? '12345674567566674555123456745675666745551234567456756667455512345674567566674555123456745675666745551234567456756667455512345674567566674555123456745675666745551234567456756667455512345674567566674555'
-        : await platform.invokeMethod("generateKey");
-    _userRepository.updateUser(_user!);
+    try {
+      _user = _userRepository.createUser(username, passcode);
+      _user?.key = await platform.invokeMethod("generateSecret");
+      _userRepository.updateUser(_user!);
 
-    return user;
+      return user;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   UserModel? loginUser(String username, String passcode) {

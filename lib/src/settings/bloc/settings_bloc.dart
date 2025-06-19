@@ -1,14 +1,14 @@
-import 'package:bloc/bloc.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kaonic/data/models/settings.dart';
-import 'package:kaonic/service/communication_service.dart';
-import 'package:meta/meta.dart';
+import 'package:kaonic/service/kaonic_communication_service.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   SettingsBloc({
-    required CommunicationService communicationService,
+    required KaonicCommunicationService communicationService,
   })  : _communicationService = communicationService,
         super(SettingsState()) {
     on<UpdateFrequency>(
@@ -25,11 +25,11 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     );
     on<SaveSettings>(_saveSettings);
   }
-  final CommunicationService _communicationService;
+  final KaonicCommunicationService _communicationService;
 
   Future<void> _saveSettings(
       SaveSettings event, Emitter<SettingsState> emit) async {
-    _communicationService.sendConfigs(
+    _communicationService.sendConfig(
       mcs: state.rate.index,
       optionNumber: state.option.index,
       module: 0,

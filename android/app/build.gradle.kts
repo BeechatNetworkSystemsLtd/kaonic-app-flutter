@@ -1,5 +1,4 @@
 plugins {
-    id("org.mozilla.rust-android-gradle.rust-android") version "0.9.6"
     id("com.android.application")
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -26,7 +25,7 @@ android {
         applicationId = "network.beechat.app.kaonic"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 23
+        minSdk = 24
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -41,16 +40,12 @@ android {
     }
 }
 
-cargo {
-    module  = "../../kaonic"
-    libname = "kaonic"
-    targets = listOf("arm", "arm64", "x86")
-    profile = "release"
-}
-
 
 dependencies {
+    implementation(files("libs/kaonic-plugin.aar"))
     implementation("com.github.mik3y:usb-serial-for-android:3.8.0")
+    implementation("androidx.compose.runtime:runtime:1.8.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
 }
 
 flutter {

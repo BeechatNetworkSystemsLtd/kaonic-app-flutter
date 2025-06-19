@@ -3,12 +3,12 @@ part of 'settings_bloc.dart';
 
 class SettingsState {
   SettingsState(
-      {this.frequency = CommunicationService.defaultFrequency,
-      this.channelSpacing = CommunicationService.defaultChannelSpacing,
+      {this.frequency = KaonicCommunicationService.defaultFrequency,
+      this.channelSpacing = KaonicCommunicationService.defaultChannelSpacing,
       this.channel = 11,
       this.option = OFDMOptions.option1,
       this.rate = OFDMRate.MCS_6,
-      this.txPower = CommunicationService.defaultTxPower});
+      this.txPower = KaonicCommunicationService.defaultTxPower});
   final String frequency;
   final String txPower;
   final int channel;

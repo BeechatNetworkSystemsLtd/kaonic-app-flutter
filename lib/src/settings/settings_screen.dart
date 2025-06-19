@@ -3,12 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/data/models/settings.dart';
 import 'package:kaonic/generated/l10n.dart';
-import 'package:kaonic/service/communication_service.dart';
+import 'package:kaonic/service/kaonic_communication_service.dart';
 import 'package:kaonic/src/settings/bloc/settings_bloc.dart';
 import 'package:kaonic/src/widgets/main_button.dart';
 import 'package:kaonic/src/widgets/main_text_field.dart';
 import 'package:kaonic/src/widgets/radio_button.dart';
-import 'package:kaonic/theme/assets.dart';
 import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/theme/theme.dart';
 
@@ -21,11 +20,11 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final _frequencyController =
-      TextEditingController(text: CommunicationService.defaultFrequency);
+      TextEditingController(text: KaonicCommunicationService.defaultFrequency);
   final _spacingController =
-      TextEditingController(text: CommunicationService.defaultChannelSpacing);
+      TextEditingController(text: KaonicCommunicationService.defaultChannelSpacing);
   final _txPowerController =
-      TextEditingController(text: CommunicationService.defaultTxPower);
+      TextEditingController(text: KaonicCommunicationService.defaultTxPower);
 
   @override
   void initState() {

@@ -1,120 +1,126 @@
-// ignore_for_file: avoid_print
-
-
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
-
-import 'package:async/async.dart';
-
 import 'dart:async';
 
-import 'package:kaonic/data/models/mesh_address.dart';
-import 'package:kaonic/data/models/mesh_message.dart';
-import 'package:kaonic/data/models/radio_packet.dart';
-import 'package:kaonic/service/mesh_service.dart';
+import 'package:kaonic/data/models/call_event_data.dart';
+import 'package:kaonic/data/models/kaonic_event_type.dart';
+import 'package:kaonic/service/kaonic_communication_service.dart';
+import 'package:rxdart/subjects.dart';
+import 'package:uuid/uuid.dart';
+
+enum CallScreenState {
+  idle,
+  incoming,
+  outgoing,
+  callInProgress,
+  finished;
+
+  String getTitle([String? user]) => switch (this) {
+        incoming => '$user CALLING',
+        outgoing => 'CALLING...',
+        callInProgress => 'IN CALL WITH $user',
+        finished => 'CALL ENDED',
+        _ => ''
+      };
+}
 
 class CallService {
-  static const eventChannel = EventChannel('network.beechat.app.kaonic/audioStream');
-  static const platform = MethodChannel('network.beechat.app.kaonic/kaonic');
-  static const sampleRate = 4800;
-  // static const Codec codec = Codec.pcm16;
-  static const timeoutDuration = Duration(seconds: 10);
-
-  var _running = false;
-  var _lastVoiceTime = DateTime.now();
-  var _callStartTime = DateTime.now();
-
-  Timer? _callTimer;
-
-  MeshAddress? _clientAddress;
-
-  final _voiceBuffer = List<int>.empty(growable: true);
-
-  final MeshService _meshService;
-
-  CallService(this._meshService) {
-    _initService().then((_) {
-      // startCall(MeshAddress());
-    });
+  CallService(KaonicCommunicationService kaonicService) {
+    _kaonicService = kaonicService;
+    _listenCallEvents();
   }
 
-  Future<void> _feedPlayer(Uint8List data) async {
-    return await platform.invokeMethod('feedPlayer', {"data": data});
+  late final KaonicCommunicationService _kaonicService;
+
+  final _navigationEventsController = BehaviorSubject<String>();
+  Stream<String> get navigationEvents => _navigationEventsController.stream;
+
+  final _callStateController = StreamController<CallScreenState>.broadcast();
+  Stream<CallScreenState> get callState => _callStateController.stream;
+
+  String? _activeCallId;
+  String? get activeCallId => _activeCallId;
+
+  String? _activeCallAddress;
+  String? get activeCallAddress => _activeCallAddress;
+
+  void dispose() {
+    _navigationEventsController.close();
+    _callStateController.close();
   }
 
-  Future<void> _playHandler(StreamQueue<MeshVoice> streamQueue) async {
-    while (await streamQueue.hasNext) {
-      final meshVoice = await streamQueue.next;
-      if (_running) {
-        if (meshVoice.address.equals(_clientAddress!)) {
-          await _feedPlayer(meshVoice.data);
-          _lastVoiceTime = DateTime.now();
-        }
-      }
-    }
-  }
-
-  Future<void> _recordHandler(Stream<dynamic> stream) async {
-    final chunkStream = ChunkedStreamReader(stream.map((record) =>
-        (record["data"] as Uint8List)
-            .sublist(0, record["count"] as int)
-            .toList()));
-
-    while (true) {
-      final data = await chunkStream.readBytes(RadioPacket.maxPayloadSize);
-      if (_running) {
-        await _meshService.sendCallVoice(_clientAddress!, data);
-      }
-    }
-  }
-
-  Future<void> _initService() async {
-    _playHandler(StreamQueue(_meshService.voiceStream)).then((_) {});
-
-    _recordHandler(eventChannel.receiveBroadcastStream()).then((_) {});
-  }
-
-  Future<void> startCall(MeshAddress clientAddress) async {
-    if (_running) {
-      return;
-    }
-
-    print("start call with ${clientAddress.toHex()}");
-
-    _clientAddress = clientAddress;
-    _running = true;
-    _lastVoiceTime = DateTime.now();
-    _callStartTime = DateTime.now();
-
-    _callTimer = Timer.periodic(CallService.timeoutDuration, (_) async {
-      if (_lastVoiceTime.difference(DateTime.now()).inSeconds >
-          CallService.timeoutDuration.inSeconds) {
-        print("call timed out!");
-
-        await stopCall();
+  void _listenCallEvents() {
+    _kaonicService.eventsStream
+        .where((event) => KaonicEventType.callEvents.contains(event.type))
+        .listen((event) {
+      final callEventData = event.data as CallEventData;
+      switch (event.type) {
+        case KaonicEventType.CALL_INVOKE:
+          _handleCallInvoke(callEventData.callId, callEventData.address);
+        case KaonicEventType.CALL_ANSWER:
+          _handleCallAnswer(callEventData.callId, callEventData.address);
+        case KaonicEventType.CALL_REJECT:
+        case KaonicEventType.CALL_TIMEOUT:
+          _handleCallReject(callEventData.callId, callEventData.address);
       }
     });
-
-    await platform.invokeMethod('startAudio');
   }
 
-  Future<void> stopAudio() async {
-    await platform.invokeMethod('stopAudio');
+  void createCall(String address) {
+    if (_activeCallId != null) return;
+
+    _activeCallId = const Uuid().v4();
+    _activeCallAddress = address;
+
+    _kaonicService.startCall(_activeCallId!, _activeCallAddress!);
+    _callStateController.add(CallScreenState.outgoing);
   }
 
-  Future<void> stopCall() async {
-    if (_running) {
-      print("stop call with ${_clientAddress!.toHex()}");
-      _callTimer!.cancel();
-    }
-    
-    _running = false;
-    _clientAddress = null;
-    _callTimer = null;
+  void answerCall() {
+    if (_activeCallId == null || _activeCallAddress == null) return;
 
-    await stopAudio();
+    _kaonicService.answerCall(_activeCallId!, _activeCallAddress!);
+    _callStateController.add(CallScreenState.callInProgress);
+  }
 
-    await _meshService.stopCurrentCall();
+  void rejectCall() {
+    if (_activeCallId == null || _activeCallAddress == null) return;
+
+    _kaonicService.rejectCall(_activeCallId!, _activeCallAddress!);
+    _callStateController.add(CallScreenState.finished);
+
+    Future.delayed(const Duration(milliseconds: 150), () {
+      _callStateController.add(CallScreenState.idle);
+    });
+
+    _activeCallId = null;
+    _activeCallAddress = null;
+  }
+
+  void _handleCallInvoke(String callId, String address) {
+    _activeCallId = callId;
+    _activeCallAddress = address;
+
+    _callStateController.add(CallScreenState.incoming);
+
+    _navigationEventsController.add("incomingCall/$callId/$address");
+  }
+
+  void _handleCallReject(String callId, String address) {
+    if (callId != _activeCallId) return;
+
+    _callStateController.add(CallScreenState.finished);
+
+    // Delay before resetting to idle state
+    Future.delayed(const Duration(milliseconds: 150), () {
+      _callStateController.add(CallScreenState.idle);
+    });
+
+    _activeCallId = null;
+    _activeCallAddress = null;
+  }
+
+  void _handleCallAnswer(String callId, String address) {
+    if (callId != _activeCallId) return;
+
+    _callStateController.add(CallScreenState.callInProgress);
   }
 }

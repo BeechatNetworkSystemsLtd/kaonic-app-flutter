@@ -1,7 +1,7 @@
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/routes.dart';
+import 'package:kaonic/service/call_service.dart';
 import 'package:kaonic/service/user_service.dart';
-import 'package:kaonic/src/chat/chat_args.dart';
 import 'package:kaonic/src/home/bloc/home_bloc.dart';
 import 'package:kaonic/src/home/widgets/contact_item.dart';
 import 'package:kaonic/src/widgets/circle_button.dart';
@@ -19,9 +19,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HomeBloc(
+        callService: context.read<CallService>(),
         userService: context.read<UserService>(),
-        deviceService: context.read(),
-        communicationService: context.read(),
+        kaonicCommunicationService: context.read(),
       ),
       child: PopScope(
         canPop: false,
@@ -72,7 +72,10 @@ class HomeScreen extends StatelessWidget {
                     child: BlocConsumer<HomeBloc, HomeState>(
                       listener: (context, state) {
                         if (state is IncomingCall) {
-                          Navigator.of(context).pushNamed(Routes.call);
+                          Navigator.of(context).pushNamed(
+                            Routes.call,
+                            arguments: CallScreenState.incoming,
+                          );
                         }
                       },
                       builder: (context, state) {
@@ -109,14 +112,14 @@ class HomeScreen extends StatelessWidget {
                                   itemBuilder: (context, index) => ContactItem(
                                       onTap: () {
                                         Navigator.of(context).pushNamed(
-                                            Routes.chat,
-                                            arguments: ChatArgs(
-                                                contact: state
-                                                    .user!.contacts[index]));
+                                          Routes.chat,
+                                          arguments: state
+                                              .user!.contacts[index].address,
+                                        );
                                       },
                                       onIdentifyTap: () {},
                                       contact: state.user!.contacts[index],
-                                      nearbyFound: state.nodes.keys.contains(
+                                      nearbyFound: state.nodes.contains(
                                           state.user!.contacts[index].address),
                                       unreadCount: state.unreadMessages[
                                           state.user!.contacts[index].address]),

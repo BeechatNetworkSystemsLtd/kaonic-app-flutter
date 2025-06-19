@@ -1,5 +1,4 @@
 {
-    "login": "Login",
     "signUp": "Sign up",
     "username": "Username",
     "createUsername": "Create username:",
@@ -40,5 +39,6 @@
     "opt3":"Option 3",
     "opt4":"Option 4",
     "settings":"Settings",
-    "save":"Save"
-  }
+    "save":"Save",
+    "login": "Login"
+}
