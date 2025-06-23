@@ -50,16 +50,6 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Login`
-  String get login {
-    return Intl.message(
-      'Login',
-      name: 'login',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Sign up`
   String get signUp {
     return Intl.message(
@@ -335,6 +325,146 @@ class S {
     return Intl.message(
       'Pick File',
       name: 'pickFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Radio`
+  String get radio {
+    return Intl.message(
+      'Radio',
+      name: 'radio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Frequency`
+  String get Frequency {
+    return Intl.message(
+      'Frequency',
+      name: 'Frequency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tx Power`
+  String get txPower {
+    return Intl.message(
+      'Tx Power',
+      name: 'txPower',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Channel`
+  String get Channel {
+    return Intl.message(
+      'Channel',
+      name: 'Channel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Channel spacing`
+  String get ChannelSpacing {
+    return Intl.message(
+      'Channel spacing',
+      name: 'ChannelSpacing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OFDM Option`
+  String get OFDMOption {
+    return Intl.message(
+      'OFDM Option',
+      name: 'OFDMOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OFDM MCS`
+  String get OFDMRate {
+    return Intl.message(
+      'OFDM MCS',
+      name: 'OFDMRate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Option 1`
+  String get opt1 {
+    return Intl.message(
+      'Option 1',
+      name: 'opt1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Option 2`
+  String get opt2 {
+    return Intl.message(
+      'Option 2',
+      name: 'opt2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Option 3`
+  String get opt3 {
+    return Intl.message(
+      'Option 3',
+      name: 'opt3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Option 4`
+  String get opt4 {
+    return Intl.message(
+      'Option 4',
+      name: 'opt4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get login {
+    return Intl.message(
+      'Login',
+      name: 'login',
       desc: '',
       args: [],
     );

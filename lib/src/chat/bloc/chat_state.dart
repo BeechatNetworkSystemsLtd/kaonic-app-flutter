@@ -8,13 +8,13 @@ final class ChatState {
     this.flagScrollToDown = false,
   });
 
-  final List<MeshMessage> messages;
-  final MeshAddress address;
+  final List<KaonicEvent<KaonicEventData>> messages;
+  final String address;
 
   final bool flagScrollToDown;
 
   ChatState copyWith({
-    List<MeshMessage>? messages,
+    List<KaonicEvent<KaonicEventData>>? messages,
     bool flagScrollToDown = false,
   }) =>
       ChatState(

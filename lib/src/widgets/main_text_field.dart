@@ -5,10 +5,19 @@ import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/theme/theme.dart';
 
 class MainTextField extends StatelessWidget {
-  MainTextField({this.hint, this.onChange, this.controller, super.key});
+  MainTextField({
+    this.hint,
+    this.onChange,
+    this.controller,
+    this.suffix,
+    this.keyboardType,
+    super.key,
+  });
   final String? hint;
   final ValueChanged<String>? onChange;
   final TextEditingController? controller;
+  final Widget? suffix;
+  final TextInputType? keyboardType;
 
   final _baseBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(22),
@@ -19,6 +28,7 @@ class MainTextField extends StatelessWidget {
     return TextField(
       onChanged: onChange,
       controller: controller,
+      keyboardType: keyboardType,
       cursorColor: AppColors.grey3,
       style: TextStyles.text14.copyWith(color: Colors.white),
       decoration: InputDecoration(
@@ -32,6 +42,7 @@ class MainTextField extends StatelessWidget {
         border: _baseBorder,
         enabledBorder: _baseBorder,
         focusedBorder: _baseBorder,
+        suffixIcon: suffix,
       ),
     );
   }

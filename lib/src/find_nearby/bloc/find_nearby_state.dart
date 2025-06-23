@@ -4,11 +4,11 @@ part of 'find_nearby_bloc.dart';
 final class FindNearbyState {
   const FindNearbyState({this.devices = const [], this.contacts = const []});
 
-  final List<MeshNode> devices;
+  final List<String> devices;
   final List<ContactModel> contacts;
 
   FindNearbyState copyWith({
-    List<MeshNode>? devices,
+    List<String>? devices,
     List<ContactModel>? contacts,
   }) =>
       FindNearbyState(

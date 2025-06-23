@@ -8,4 +8,5 @@ abstract class Routes {
   static const findNearby = '/findNearby';
   static const chat = '/chat';
   static const call = '/call';
+  static const settings = '/settings';
 }

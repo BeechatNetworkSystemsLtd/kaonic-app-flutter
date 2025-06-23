@@ -1,11 +1,9 @@
-import 'package:kaonic/data/models/mesh_address.dart';
 import 'package:kaonic/data/models/user_model.dart';
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/theme/assets.dart';
 import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/theme/theme.dart';
 import 'package:kaonic/src/widgets/main_button.dart';
-import 'package:cryptography/cryptography.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/src/widgets/screen_container.dart';
 import 'package:flutter/material.dart';
@@ -63,17 +61,11 @@ class SaveBackupScreen extends StatelessWidget {
                         _backupTextRow(
                             title: S.of(context).labelUsername,
                             text: _user.username),
-                        FutureBuilder(
-                          future: MeshAddress.fromPublicKey(SimplePublicKey(
-                              _user.key.codeUnits,
-                              type: KeyPairType.x25519)),
-                          builder: (context, snapshot) => Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10.h),
-                            child: _backupTextRow(
-                                title: S.of(context).labelAddress,
-                                text:
-                                    _userAddress(snapshot.data?.toHex() ?? '')),
-                          ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10.h),
+                          child: _backupTextRow(
+                              title: S.of(context).labelAddress,
+                              text: _userAddress(_user.key)),
                         ),
                         Text(
                           S.of(context).labelPleaseSaveThisFile,

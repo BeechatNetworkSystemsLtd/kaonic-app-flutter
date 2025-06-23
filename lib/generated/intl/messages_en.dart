@@ -22,6 +22,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "Channel": MessageLookupByLibrary.simpleMessage("Channel"),
+        "ChannelSpacing":
+            MessageLookupByLibrary.simpleMessage("Channel spacing"),
+        "Frequency": MessageLookupByLibrary.simpleMessage("Frequency"),
+        "OFDMOption": MessageLookupByLibrary.simpleMessage("OFDM Option"),
+        "OFDMRate": MessageLookupByLibrary.simpleMessage("OFDM MCS"),
         "back": MessageLookupByLibrary.simpleMessage("Back"),
         "createPasscode":
             MessageLookupByLibrary.simpleMessage("Create passcode"),
@@ -54,12 +60,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginFailure": MessageLookupByLibrary.simpleMessage(
             "User does not exist or passcode is incorrect"),
+        "opt1": MessageLookupByLibrary.simpleMessage("Option 1"),
+        "opt2": MessageLookupByLibrary.simpleMessage("Option 2"),
+        "opt3": MessageLookupByLibrary.simpleMessage("Option 3"),
+        "opt4": MessageLookupByLibrary.simpleMessage("Option 4"),
         "passcodeNotMatch":
             MessageLookupByLibrary.simpleMessage("Passcode did not match"),
         "pickFile": MessageLookupByLibrary.simpleMessage("Pick File"),
+        "radio": MessageLookupByLibrary.simpleMessage("Radio"),
         "repeatPasscode":
             MessageLookupByLibrary.simpleMessage("Repeat passcode"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
+        "txPower": MessageLookupByLibrary.simpleMessage("Tx Power"),
         "userExistError": MessageLookupByLibrary.simpleMessage(
             "User with this username is already exist"),
         "username": MessageLookupByLibrary.simpleMessage("Username")

@@ -1,14 +1,14 @@
-import 'dart:async';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kaonic/data/models/kaonic_message_event.dart';
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/routes.dart';
-import 'package:kaonic/service/communication_service.dart';
+import 'package:kaonic/service/call_service.dart';
+import 'package:kaonic/service/chat_service.dart';
 import 'package:kaonic/src/chat/bloc/chat_bloc.dart';
-import 'package:kaonic/src/chat/chat_args.dart';
 import 'package:kaonic/src/chat/widgets/chat_item.dart';
 import 'package:kaonic/src/widgets/circle_button.dart';
 import 'package:kaonic/src/widgets/main_button.dart';
@@ -19,9 +19,12 @@ import 'package:kaonic/theme/text_styles.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, required this.args});
+  const ChatScreen({
+    super.key,
+    required this.address,
+  });
 
-  final ChatArgs args;
+  final String address;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -31,29 +34,18 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   late final ChatBloc _chatBloc;
-  late final StreamSubscription? _fileSubscription;
   @override
   void initState() {
     _chatBloc = ChatBloc(
-      args: widget.args,
-      communicationService: context.read<CommunicationService>(),
+      callService: context.read<CallService>(),
+      address: widget.address,
+      chatService: context.read<ChatService>(),
     );
     [Permission.manageExternalStorage, Permission.accessMediaLocation]
         .request()
         .then(
       (value) {
         print("object");
-      },
-    );
-    _fileSubscription = context.read<CommunicationService>().fileEvents?.listen(
-      (event) {
-        if (event != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('File ${event.fileName} downloaded'),
-            ),
-          );
-        }
       },
     );
     super.initState();
@@ -83,7 +75,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           color: Colors.white,
                         )),
                     Text(
-                      widget.args.contact.address.length>15? widget.args.contact.address.substring(0,15):widget.args.contact.address,
+                      widget.address.length > 15
+                          ? widget.address.substring(0, 15)
+                          : widget.address,
                       textAlign: TextAlign.center,
                       style: TextStyles.text24.copyWith(color: Colors.white),
                     ),
@@ -102,7 +96,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: BlocConsumer<ChatBloc, ChatState>(
                     listener: (context, state) {
                       if (state is NavigateToCall) {
-                        Navigator.of(context).pushReplacementNamed(Routes.call);
+                        Navigator.of(context).pushReplacementNamed(
+                          Routes.call,
+                          arguments: CallScreenState.outgoing,
+                        );
                         return;
                       }
 
@@ -118,10 +115,16 @@ class _ChatScreenState extends State<ChatScreen> {
                               child: ListView.separated(
                                   controller: _scrollController,
                                   padding: EdgeInsets.zero,
-                                  itemBuilder: (context, index) => ChatItem(
-                                        message: state.messages[index],
-                                        myAddress: widget.args.contact.address,
-                                      ),
+                                  itemBuilder: (context, index) {
+                                    final message = state.messages[index].data;
+                                    print('message ${message.runtimeType}');
+
+                                    return ChatItem(
+                                      message: state.messages[index].data
+                                          as MessageEvent,
+                                      peerAddress: widget.address,
+                                    );
+                                  },
                                   separatorBuilder: (context, index) =>
                                       SizedBox(height: 10.h),
                                   itemCount: state.messages.length)),
@@ -183,7 +186,6 @@ class _ChatScreenState extends State<ChatScreen> {
   void dispose() {
     _textController.dispose();
     _scrollController.dispose();
-    _fileSubscription?.cancel();
     super.dispose();
   }
 }

@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kaonic/data/models/mesh_node.dart';
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/theme/theme.dart';
@@ -14,7 +12,7 @@ class DeviceItem extends StatelessWidget {
       this.onIdentifyTap,
       this.showAvailability = true});
 
-  final MeshNode device;
+  final String device;
   final Function() onTap;
   final Function()? onIdentifyTap;
   final bool showAvailability;
@@ -63,7 +61,7 @@ class DeviceItem extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          device.address().toHex(),
+                          device,
                           style: TextStyles.text16
                               .copyWith(color: AppColors.grey5),
                           maxLines: 1,
