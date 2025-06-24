@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,7 +11,11 @@ import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/utils/dialog_util.dart';
 
 class FindNearbyScreen extends StatelessWidget {
-  const FindNearbyScreen({super.key});
+  final List<String> nodes;
+  const FindNearbyScreen({
+    super.key,
+    required this.nodes,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,7 @@ class FindNearbyScreen extends StatelessWidget {
       create: (context) => FindNearbyBloc(
         communicationService: context.read<KaonicCommunicationService>(),
         userService: context.read<UserService>(),
+        addedNodes: nodes,
       ),
       child: Scaffold(
         body: ScreenContainer(

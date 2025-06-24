@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/routes.dart';
+import 'package:kaonic/service/kaonic_communication_service.dart';
 import 'package:kaonic/service/user_service.dart';
 import 'package:kaonic/src/widgets/main_button.dart';
 import 'package:kaonic/theme/assets.dart';
@@ -45,6 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
     Future.delayed(const Duration(milliseconds: 3550), () {
       if (context.read<UserService>().checkUserSignedIn() != null) {
+        context.read<KaonicCommunicationService>().startService();
         Navigator.of(context)
             .pushNamedAndRemoveUntil(Routes.home, (_) => false);
       }

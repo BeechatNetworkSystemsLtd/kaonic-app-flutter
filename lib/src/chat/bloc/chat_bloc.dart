@@ -43,6 +43,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   FutureOr<void> _intiChat(_IntiChat event, Emitter<ChatState> emit) async {
     final chatId = await _chatService.createChat(_address);
     _chatService.onChatIDUpdated = _onChatIdChanged;
+    final myAddress = await _chatService.myAddress();
+    emit(state.copyWith(myAddress: myAddress));
     _chatSubscription = _chatService.getChatMessages(chatId).listen((messages) {
       add(_UpdatedChats(messages: messages));
     });

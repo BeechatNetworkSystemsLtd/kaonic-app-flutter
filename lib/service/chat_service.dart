@@ -4,6 +4,7 @@ import 'package:kaonic/data/models/kaonic_create_chat_event.dart';
 import 'package:kaonic/data/models/kaonic_event.dart';
 import 'package:kaonic/data/models/kaonic_event_type.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
+import 'package:kaonic/data/repository/messages_repository.dart';
 import 'package:kaonic/service/kaonic_communication_service.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -11,12 +12,17 @@ import 'package:rxdart/subjects.dart';
 typedef OnChatIdChanged = Function(String, String);
 
 class ChatService {
-  ChatService(KaonicCommunicationService kaonicService) {
+  ChatService(
+    KaonicCommunicationService kaonicService,
+    MessagesRepository messageRepository,
+  ) {
     _kaonicService = kaonicService;
+    _messageRepository = messageRepository;
     _listenMessages();
   }
 
   late final KaonicCommunicationService _kaonicService;
+  late final MessagesRepository _messageRepository;
 
   /// key is address of chat id
   final _messagesSubject =
@@ -25,6 +31,8 @@ class ChatService {
   /// key is contact address,
   /// value is chatUUID
   final _contactChats = <String, String>{};
+
+  String? _activeContactAddress;
 
   OnChatIdChanged? onChatIDUpdated;
 
@@ -51,10 +59,16 @@ class ChatService {
     });
   }
 
+  Future<String> myAddress() async {
+    return await _kaonicService.myAddress();
+  }
+
   Future<String> createChat(String address) async {
     final chatId = await _kaonicService.createChat(address);
 
-    _contactChats[address] = chatId;
+    _activeContactAddress = address;
+    // _contactChats[address] = chatId;
+    _putOrUpdateChatId(chatId, address, needOnChatUpdated: false);
     return chatId;
   }
 
@@ -94,13 +108,45 @@ class ChatService {
     currentMap[data.chatId] = messageList;
 
     _messagesSubject.add(currentMap);
+
+    _saveMessages(messageList);
   }
 
-  void _putOrUpdateChatId(String chatId, String address) {
-    final containsAddressWithChatID = _contactChats.containsKey(address);
+  void _putOrUpdateChatId(String chatId, String address,
+      {bool needOnChatUpdated = true}) {
+    // final containsAddressWithChatID = _contactChats.containsKey(address);
+    // _contactChats[address] = chatId;
+    // if (containsAddressWithChatID) {
+    //   onChatIDUpdated?.call(address, chatId);
+    // }
+
+    final prevChatId = _contactChats[address];
     _contactChats[address] = chatId;
-    if (containsAddressWithChatID) {
-      onChatIDUpdated?.call(address, chatId);
+    if (prevChatId != null) {
+      final currentMap = Map<String, List<KaonicEvent>>.from(
+          _messagesSubject.valueOrNull ?? {});
+
+      final messages = currentMap[prevChatId] ?? [];
+      currentMap.remove(prevChatId);
+      currentMap[chatId] = messages;
+      _saveMessages(messages);
+      _messagesSubject.add(currentMap);
+      if (needOnChatUpdated) {
+        onChatIDUpdated?.call(address, chatId);
+      }
+    } else if (_activeContactAddress != null) {
+      final messages = _messageRepository.getMessages();
+      if (messages.containsKey(_activeContactAddress)) {
+        _messagesSubject.add({chatId: messages[_activeContactAddress]!});
+      }
     }
+  }
+
+  void _saveMessages(List<KaonicEvent> messages) {
+    if (_activeContactAddress == null) return;
+
+    _messageRepository.saveMessages({
+      _activeContactAddress!: messages,
+    });
   }
 }

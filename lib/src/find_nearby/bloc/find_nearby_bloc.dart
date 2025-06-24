@@ -10,9 +10,11 @@ part 'find_nearby_event.dart';
 part 'find_nearby_state.dart';
 
 class FindNearbyBloc extends Bloc<FindNearbyEvent, FindNearbyState> {
+  final List<String> addedNodes;
   FindNearbyBloc({
     required KaonicCommunicationService communicationService,
     required UserService userService,
+    required this.addedNodes,
   })  : _communicationService = communicationService,
         _userService = userService,
         super(const FindNearbyState()) {
@@ -21,7 +23,9 @@ class FindNearbyBloc extends Bloc<FindNearbyEvent, FindNearbyState> {
 
     nodesSubscription = _communicationService.nodes.listen(
       (nodes) {
-        add(_DeviceListUpdated(devices: nodes));
+        final newNodes =
+            nodes.where((node) => !addedNodes.contains(node)).toList();
+        add(_DeviceListUpdated(devices: newNodes));
       },
     );
   }

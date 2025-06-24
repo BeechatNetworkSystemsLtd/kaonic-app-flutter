@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/data/models/user_model.dart';
+import 'package:kaonic/data/repository/messages_repository.dart';
 import 'package:kaonic/data/repository/storage.dart';
 import 'package:kaonic/data/repository/user_repository.dart';
 import 'package:kaonic/generated/l10n.dart';
@@ -45,8 +46,13 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   final designSize = const Size(375, 812);
   final _storageService = StorageService();
+  late final _messagesRepository =
+      MessagesRepository(storageService: _storageService);
   final _kaonicCommunicationService = KaonicCommunicationService();
-  late final _chatService = ChatService(_kaonicCommunicationService);
+  late final _chatService = ChatService(
+    _kaonicCommunicationService,
+    _messagesRepository,
+  );
   late final _callService = CallService(_kaonicCommunicationService);
 
   @override
@@ -70,6 +76,7 @@ class _MainAppState extends State<MainApp> {
                 userRepository: UserRepository(storageService: _storageService),
               ),
             ),
+            RepositoryProvider(create: (context) => _messagesRepository),
           ],
           child: MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -91,7 +98,10 @@ class _MainAppState extends State<MainApp> {
                           as UserModel,
                     ),
                 Routes.home: (context) => const HomeScreen(),
-                Routes.findNearby: (context) => const FindNearbyScreen(),
+                Routes.findNearby: (context) => FindNearbyScreen(
+                      nodes: ModalRoute.of(context)?.settings.arguments
+                          as List<String>,
+                    ),
                 Routes.chat: (context) => ChatScreen(
                       address:
                           ModalRoute.of(context)?.settings.arguments as String,

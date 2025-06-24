@@ -15,69 +15,102 @@ import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'data/models/contact_model.dart';
+import 'data/models/message_data_container.dart';
 import 'data/models/user_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(1, 6377715857786919868),
-      name: 'ContactModel',
-      lastPropertyId: const obx_int.IdUid(2, 671084407465150616),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 6747143768422524094),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 671084407465150616),
-            name: 'address',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[]),
+    id: const obx_int.IdUid(1, 6377715857786919868),
+    name: 'ContactModel',
+    lastPropertyId: const obx_int.IdUid(2, 671084407465150616),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 6747143768422524094),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 671084407465150616),
+        name: 'address',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(2, 122111734487620448),
-      name: 'UserModel',
-      lastPropertyId: const obx_int.IdUid(7, 3034203895016704663),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 2740337565566816305),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 4808733866466365598),
-            name: 'username',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 1948306391942539678),
-            name: 'passcode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 4134954314985662512),
-            name: 'logged',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 3034203895016704663),
-            name: 'key',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[
-        obx_int.ModelRelation(
-            id: const obx_int.IdUid(1, 4163491123646389794),
-            name: 'contacts',
-            targetId: const obx_int.IdUid(1, 6377715857786919868))
-      ],
-      backlinks: <obx_int.ModelBacklink>[])
+    id: const obx_int.IdUid(2, 122111734487620448),
+    name: 'UserModel',
+    lastPropertyId: const obx_int.IdUid(7, 3034203895016704663),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 2740337565566816305),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 4808733866466365598),
+        name: 'username',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 1948306391942539678),
+        name: 'passcode',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 4134954314985662512),
+        name: 'logged',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 3034203895016704663),
+        name: 'key',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[
+      obx_int.ModelRelation(
+        id: const obx_int.IdUid(1, 4163491123646389794),
+        name: 'contacts',
+        targetId: const obx_int.IdUid(1, 6377715857786919868),
+      ),
+    ],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(3, 4303160672216820288),
+    name: 'MessageDataContainer',
+    lastPropertyId: const obx_int.IdUid(2, 9096841548606055478),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 889738469066974616),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 9096841548606055478),
+        name: 'jsonString',
+        type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -91,115 +124,178 @@ final _entities = <obx_int.ModelEntity>[
 /// For Flutter apps, also calls `loadObjectBoxLibraryAndroidCompat()` from
 /// the ObjectBox Flutter library to fix loading the native ObjectBox library
 /// on Android 6 and older.
-Future<obx.Store> openStore(
-    {String? directory,
-    int? maxDBSizeInKB,
-    int? maxDataSizeInKB,
-    int? fileMode,
-    int? maxReaders,
-    bool queriesCaseSensitiveDefault = true,
-    String? macosApplicationGroup}) async {
+Future<obx.Store> openStore({
+  String? directory,
+  int? maxDBSizeInKB,
+  int? maxDataSizeInKB,
+  int? fileMode,
+  int? maxReaders,
+  bool queriesCaseSensitiveDefault = true,
+  String? macosApplicationGroup,
+}) async {
   await loadObjectBoxLibraryAndroidCompat();
-  return obx.Store(getObjectBoxModel(),
-      directory: directory ?? (await defaultStoreDirectory()).path,
-      maxDBSizeInKB: maxDBSizeInKB,
-      maxDataSizeInKB: maxDataSizeInKB,
-      fileMode: fileMode,
-      maxReaders: maxReaders,
-      queriesCaseSensitiveDefault: queriesCaseSensitiveDefault,
-      macosApplicationGroup: macosApplicationGroup);
+  return obx.Store(
+    getObjectBoxModel(),
+    directory: directory ?? (await defaultStoreDirectory()).path,
+    maxDBSizeInKB: maxDBSizeInKB,
+    maxDataSizeInKB: maxDataSizeInKB,
+    fileMode: fileMode,
+    maxReaders: maxReaders,
+    queriesCaseSensitiveDefault: queriesCaseSensitiveDefault,
+    macosApplicationGroup: macosApplicationGroup,
+  );
 }
 
 /// Returns the ObjectBox model definition for this project for use with
 /// [obx.Store.new].
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
-      entities: _entities,
-      lastEntityId: const obx_int.IdUid(2, 122111734487620448),
-      lastIndexId: const obx_int.IdUid(0, 0),
-      lastRelationId: const obx_int.IdUid(1, 4163491123646389794),
-      lastSequenceId: const obx_int.IdUid(0, 0),
-      retiredEntityUids: const [],
-      retiredIndexUids: const [],
-      retiredPropertyUids: const [8826984033369877482, 5720481686052608034],
-      retiredRelationUids: const [],
-      modelVersion: 5,
-      modelVersionParserMinimum: 5,
-      version: 1);
+    entities: _entities,
+    lastEntityId: const obx_int.IdUid(3, 4303160672216820288),
+    lastIndexId: const obx_int.IdUid(0, 0),
+    lastRelationId: const obx_int.IdUid(1, 4163491123646389794),
+    lastSequenceId: const obx_int.IdUid(0, 0),
+    retiredEntityUids: const [],
+    retiredIndexUids: const [],
+    retiredPropertyUids: const [8826984033369877482, 5720481686052608034],
+    retiredRelationUids: const [],
+    modelVersion: 5,
+    modelVersionParserMinimum: 5,
+    version: 1,
+  );
 
   final bindings = <Type, obx_int.EntityDefinition>{
     ContactModel: obx_int.EntityDefinition<ContactModel>(
-        model: _entities[0],
-        toOneRelations: (ContactModel object) => [],
-        toManyRelations: (ContactModel object) => {},
-        getId: (ContactModel object) => object.id,
-        setId: (ContactModel object, int id) {
-          object.id = id;
-        },
-        objectToFB: (ContactModel object, fb.Builder fbb) {
-          final addressOffset = fbb.writeString(object.address);
-          fbb.startTable(3);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, addressOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final idParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final addressParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 6, '');
-          final object = ContactModel(id: idParam, address: addressParam);
+      model: _entities[0],
+      toOneRelations: (ContactModel object) => [],
+      toManyRelations: (ContactModel object) => {},
+      getId: (ContactModel object) => object.id,
+      setId: (ContactModel object, int id) {
+        object.id = id;
+      },
+      objectToFB: (ContactModel object, fb.Builder fbb) {
+        final addressOffset = fbb.writeString(object.address);
+        fbb.startTable(3);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, addressOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final addressParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final object = ContactModel(id: idParam, address: addressParam);
 
-          return object;
-        }),
+        return object;
+      },
+    ),
     UserModel: obx_int.EntityDefinition<UserModel>(
-        model: _entities[1],
-        toOneRelations: (UserModel object) => [],
-        toManyRelations: (UserModel object) =>
-            {obx_int.RelInfo<UserModel>.toMany(1, object.id): object.contacts},
-        getId: (UserModel object) => object.id,
-        setId: (UserModel object, int id) {
-          object.id = id;
-        },
-        objectToFB: (UserModel object, fb.Builder fbb) {
-          final usernameOffset = fbb.writeString(object.username);
-          final passcodeOffset = fbb.writeString(object.passcode);
-          final keyOffset = fbb.writeString(object.key);
-          fbb.startTable(8);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(1, usernameOffset);
-          fbb.addOffset(2, passcodeOffset);
-          fbb.addBool(3, object.logged);
-          fbb.addOffset(6, keyOffset);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final usernameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 6, '');
-          final passcodeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 8, '');
-          final keyParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 16, '');
-          final idParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final loggedParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false);
-          final object = UserModel(
-              username: usernameParam,
-              passcode: passcodeParam,
-              key: keyParam,
-              id: idParam,
-              logged: loggedParam);
-          obx_int.InternalToManyAccess.setRelInfo<UserModel>(object.contacts,
-              store, obx_int.RelInfo<UserModel>.toMany(1, object.id));
-          return object;
-        })
+      model: _entities[1],
+      toOneRelations: (UserModel object) => [],
+      toManyRelations: (UserModel object) => {
+        obx_int.RelInfo<UserModel>.toMany(1, object.id): object.contacts,
+      },
+      getId: (UserModel object) => object.id,
+      setId: (UserModel object, int id) {
+        object.id = id;
+      },
+      objectToFB: (UserModel object, fb.Builder fbb) {
+        final usernameOffset = fbb.writeString(object.username);
+        final passcodeOffset = fbb.writeString(object.passcode);
+        final keyOffset = fbb.writeString(object.key);
+        fbb.startTable(8);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, usernameOffset);
+        fbb.addOffset(2, passcodeOffset);
+        fbb.addBool(3, object.logged);
+        fbb.addOffset(6, keyOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final usernameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final passcodeParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 8, '');
+        final keyParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 16, '');
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final loggedParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          10,
+          false,
+        );
+        final object = UserModel(
+          username: usernameParam,
+          passcode: passcodeParam,
+          key: keyParam,
+          id: idParam,
+          logged: loggedParam,
+        );
+        obx_int.InternalToManyAccess.setRelInfo<UserModel>(
+          object.contacts,
+          store,
+          obx_int.RelInfo<UserModel>.toMany(1, object.id),
+        );
+        return object;
+      },
+    ),
+    MessageDataContainer: obx_int.EntityDefinition<MessageDataContainer>(
+      model: _entities[2],
+      toOneRelations: (MessageDataContainer object) => [],
+      toManyRelations: (MessageDataContainer object) => {},
+      getId: (MessageDataContainer object) => object.id,
+      setId: (MessageDataContainer object, int id) {
+        object.id = id;
+      },
+      objectToFB: (MessageDataContainer object, fb.Builder fbb) {
+        final jsonStringOffset = fbb.writeString(object.jsonString);
+        fbb.startTable(3);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, jsonStringOffset);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final jsonStringParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final object = MessageDataContainer(
+          id: idParam,
+          jsonString: jsonStringParam,
+        );
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -208,37 +304,58 @@ obx_int.ModelDefinition getObjectBoxModel() {
 /// [ContactModel] entity fields to define ObjectBox queries.
 class ContactModel_ {
   /// See [ContactModel.id].
-  static final id =
-      obx.QueryIntegerProperty<ContactModel>(_entities[0].properties[0]);
+  static final id = obx.QueryIntegerProperty<ContactModel>(
+    _entities[0].properties[0],
+  );
 
   /// See [ContactModel.address].
-  static final address =
-      obx.QueryStringProperty<ContactModel>(_entities[0].properties[1]);
+  static final address = obx.QueryStringProperty<ContactModel>(
+    _entities[0].properties[1],
+  );
 }
 
 /// [UserModel] entity fields to define ObjectBox queries.
 class UserModel_ {
   /// See [UserModel.id].
-  static final id =
-      obx.QueryIntegerProperty<UserModel>(_entities[1].properties[0]);
+  static final id = obx.QueryIntegerProperty<UserModel>(
+    _entities[1].properties[0],
+  );
 
   /// See [UserModel.username].
-  static final username =
-      obx.QueryStringProperty<UserModel>(_entities[1].properties[1]);
+  static final username = obx.QueryStringProperty<UserModel>(
+    _entities[1].properties[1],
+  );
 
   /// See [UserModel.passcode].
-  static final passcode =
-      obx.QueryStringProperty<UserModel>(_entities[1].properties[2]);
+  static final passcode = obx.QueryStringProperty<UserModel>(
+    _entities[1].properties[2],
+  );
 
   /// See [UserModel.logged].
-  static final logged =
-      obx.QueryBooleanProperty<UserModel>(_entities[1].properties[3]);
+  static final logged = obx.QueryBooleanProperty<UserModel>(
+    _entities[1].properties[3],
+  );
 
   /// See [UserModel.key].
-  static final key =
-      obx.QueryStringProperty<UserModel>(_entities[1].properties[4]);
+  static final key = obx.QueryStringProperty<UserModel>(
+    _entities[1].properties[4],
+  );
 
   /// see [UserModel.contacts]
   static final contacts = obx.QueryRelationToMany<UserModel, ContactModel>(
-      _entities[1].relations[0]);
+    _entities[1].relations[0],
+  );
+}
+
+/// [MessageDataContainer] entity fields to define ObjectBox queries.
+class MessageDataContainer_ {
+  /// See [MessageDataContainer.id].
+  static final id = obx.QueryIntegerProperty<MessageDataContainer>(
+    _entities[2].properties[0],
+  );
+
+  /// See [MessageDataContainer.jsonString].
+  static final jsonString = obx.QueryStringProperty<MessageDataContainer>(
+    _entities[2].properties[1],
+  );
 }

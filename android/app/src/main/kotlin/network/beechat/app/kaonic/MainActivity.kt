@@ -93,6 +93,10 @@ class MainActivity : FlutterActivity() {
                         result.error("sendFileMessage", ex.message, "")
                     }
                 }
+                
+                "myAddress" -> {
+                    result.success(KaonicService.myAddress)
+                }
 
                 "sendConfigure" -> {
                     try {
@@ -119,6 +123,9 @@ class MainActivity : FlutterActivity() {
                         Log.d("sendConfigure", ex.toString())
                         result.error("sendConfigure", ex.message, "")
                     }
+                }
+                "startService" -> {
+                    initKaonicService()
                 }
 
                 "createChat" -> {
@@ -192,7 +199,7 @@ class MainActivity : FlutterActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1 && grantResults.isNotEmpty()) {
-            initKaonicService()
+//            initKaonicService()
             checkStoragePermission()
         }
     }
@@ -209,9 +216,10 @@ class MainActivity : FlutterActivity() {
                 arrayOf(Manifest.permission.RECORD_AUDIO),
                 REQUEST_RECORD_AUDIO_PERMISSION
             )
-        } else {
-            initKaonicService()
         }
+//        else {
+//            initKaonicService()
+//        }
     }
 
 

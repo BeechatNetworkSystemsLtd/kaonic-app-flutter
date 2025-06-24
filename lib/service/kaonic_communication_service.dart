@@ -30,6 +30,10 @@ class KaonicCommunicationService {
     kaonicEventChannel.receiveBroadcastStream().listen(_listenKaonicEvents);
   }
 
+  void startService() {
+    kaonicMethodChannel.invokeMethod('startService');
+  }
+
   Future<String> createChat(String address) async {
     final chatId = const Uuid().v4();
     await kaonicMethodChannel.invokeMethod('createChat', {
@@ -94,6 +98,10 @@ class KaonicCommunicationService {
       "address": address,
       "callId": callId,
     });
+  }
+
+  Future<String> myAddress() async {
+    return await kaonicMethodChannel.invokeMethod('myAddress');
   }
 
   void _listenKaonicEvents(dynamic event) {

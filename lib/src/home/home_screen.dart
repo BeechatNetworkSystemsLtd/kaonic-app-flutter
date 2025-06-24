@@ -1,3 +1,4 @@
+import 'package:kaonic/data/models/user_model.dart';
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/routes.dart';
 import 'package:kaonic/service/call_service.dart';
@@ -55,11 +56,20 @@ class HomeScreen extends StatelessWidget {
                               ),
                             )),
                       ),
-                      CircleButton(
-                          icon: Assets.iconAdd,
-                          onTap: () {
-                            Navigator.of(context).pushNamed(Routes.findNearby);
-                          }),
+                      BlocSelector<HomeBloc, HomeState, UserModel?>(
+                        selector: (state) => state.user,
+                        builder: (context, user) {
+                          return CircleButton(
+                            icon: Assets.iconAdd,
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                Routes.findNearby,
+                                arguments: user?.contactAddressList ?? [],
+                              );
+                            },
+                          );
+                        },
+                      ),
                       SizedBox(width: 10.w),
                       CircleButton(
                           icon: Assets.iconSettings,

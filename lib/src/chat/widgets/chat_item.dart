@@ -10,22 +10,25 @@ class ChatItem extends StatelessWidget {
     super.key,
     required this.message,
     required this.peerAddress,
+    required this.myAddress,
   });
 
   // final MeshMessage message;
   final MessageEvent message;
   final String peerAddress;
+  final String myAddress;
 
   @override
   Widget build(BuildContext context) {
+    final bool isMyMessage = message.address == myAddress;
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.grey3),
           borderRadius: BorderRadius.circular(10)),
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 6.h),
       margin: EdgeInsets.only(
-        left: message.address == peerAddress ? 0 : 100.w,
-        right: message.address == peerAddress ? 100.w : 0,
+        left: !isMyMessage ? 0 : 100.w,
+        right: !isMyMessage ? 100.w : 0,
       ),
       child: _child(),
     );

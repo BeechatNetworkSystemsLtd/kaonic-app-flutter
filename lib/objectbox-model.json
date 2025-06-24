@@ -61,9 +61,28 @@
           "targetId": "1:6377715857786919868"
         }
       ]
+    },
+    {
+      "id": "3:4303160672216820288",
+      "lastPropertyId": "2:9096841548606055478",
+      "name": "MessageDataContainer",
+      "properties": [
+        {
+          "id": "1:889738469066974616",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9096841548606055478",
+          "name": "jsonString",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "2:122111734487620448",
+  "lastEntityId": "3:4303160672216820288",
   "lastIndexId": "0:0",
   "lastRelationId": "1:4163491123646389794",
   "lastSequenceId": "0:0",

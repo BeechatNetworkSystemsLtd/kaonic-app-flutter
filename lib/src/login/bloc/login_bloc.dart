@@ -1,13 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kaonic/service/kaonic_communication_service.dart';
 import 'package:kaonic/service/user_service.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc({required UserService userService})
+  final KaonicCommunicationService _kaonicCommunicationService;
+  LoginBloc(this._kaonicCommunicationService,
+      {required UserService userService})
       : _userService = userService,
         super(LoginInitial(btnEnabled: false)) {
     on<LoginInputsChanged>(_handleLoginInputsChanged);
@@ -27,6 +30,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (responseUser == null) {
       emit(LoginFailure());
     } else {
+      _kaonicCommunicationService.startService();
       emit(LoginSuccess());
     }
   }

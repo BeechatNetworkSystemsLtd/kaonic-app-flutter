@@ -10,6 +10,7 @@ import 'package:kaonic/src/widgets/main_text_field.dart';
 import 'package:kaonic/src/widgets/radio_button.dart';
 import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/theme/theme.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -19,10 +20,11 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  String? _appVersion;
   final _frequencyController =
       TextEditingController(text: KaonicCommunicationService.defaultFrequency);
-  final _spacingController =
-      TextEditingController(text: KaonicCommunicationService.defaultChannelSpacing);
+  final _spacingController = TextEditingController(
+      text: KaonicCommunicationService.defaultChannelSpacing);
   final _txPowerController =
       TextEditingController(text: KaonicCommunicationService.defaultTxPower);
 
@@ -30,6 +32,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _getBuildInfo();
+  }
+
+  void _getBuildInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    _appVersion = 'App version: ${info.version}+${info.buildNumber}';
+    setState(() {});
   }
 
   @override
@@ -47,7 +56,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     EdgeInsets.only(top: MediaQuery.of(context).padding.top),
                 child: SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       _appBar(),
                       SizedBox(height: 16),
@@ -193,6 +203,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             )
                             .toList(),
                       ),
+                      if (_appVersion != null)
+                        Text(
+                          _appVersion!,
+                          textAlign: TextAlign.center,
+                          style:
+                              TextStyles.text14.copyWith(color: Colors.white),
+                        ),
                       Padding(
                         padding: EdgeInsets.only(top: 32.h, bottom: 32.h),
                         child: Align(

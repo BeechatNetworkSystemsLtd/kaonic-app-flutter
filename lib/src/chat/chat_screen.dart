@@ -1,4 +1,3 @@
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -120,6 +119,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     print('message ${message.runtimeType}');
 
                                     return ChatItem(
+                                      myAddress: state.myAddress,
                                       message: state.messages[index].data
                                           as MessageEvent,
                                       peerAddress: widget.address,
