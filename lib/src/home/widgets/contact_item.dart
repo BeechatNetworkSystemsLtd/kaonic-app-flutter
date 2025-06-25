@@ -13,6 +13,7 @@ class ContactItem extends StatelessWidget {
     this.onIdentifyTap,
     this.nearbyFound = false,
     this.unreadCount,
+    required this.onLongPress,
   });
 
   final ContactModel contact;
@@ -20,11 +21,13 @@ class ContactItem extends StatelessWidget {
   final Function()? onIdentifyTap;
   final bool nearbyFound;
   final int? unreadCount;
+  final VoidCallback onLongPress;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      onLongPress: onLongPress,
       borderRadius: BorderRadius.circular(42),
       child: Row(
         children: [

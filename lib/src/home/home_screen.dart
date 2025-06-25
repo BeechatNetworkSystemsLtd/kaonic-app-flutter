@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/theme/assets.dart';
 import 'package:kaonic/theme/text_styles.dart';
+import 'package:kaonic/utils/dialog_util.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -119,20 +120,39 @@ class HomeScreen extends StatelessWidget {
                                     state.user!.contacts.isNotEmpty =>
                               ListView.separated(
                                   padding: EdgeInsets.zero,
-                                  itemBuilder: (context, index) => ContactItem(
+                                  itemBuilder: (context, index) {
+                                    final contact =
+                                        state.user!.contacts.elementAt(index);
+                                    return ContactItem(
                                       onTap: () {
                                         Navigator.of(context).pushNamed(
                                           Routes.chat,
-                                          arguments: state
-                                              .user!.contacts[index].address,
+                                          arguments: contact.address,
                                         );
                                       },
                                       onIdentifyTap: () {},
-                                      contact: state.user!.contacts[index],
-                                      nearbyFound: state.nodes.contains(
-                                          state.user!.contacts[index].address),
-                                      unreadCount: state.unreadMessages[
-                                          state.user!.contacts[index].address]),
+                                      contact: contact,
+                                      nearbyFound:
+                                          state.nodes.contains(contact.address),
+                                      unreadCount:
+                                          state.unreadMessages[contact.address],
+                                      onLongPress: () {
+                                        DialogUtil.showDefaultDialog(
+                                          context,
+                                          onYes: () {
+                                            context.read<HomeBloc>().add(
+                                                  RemoveContact(
+                                                    contact: contact.address,
+                                                  ),
+                                                );
+                                          },
+                                          title: S
+                                              .of(context)
+                                              .labelRemoveThisUserFromContactList,
+                                        );
+                                      },
+                                    );
+                                  },
                                   separatorBuilder: (context, index) =>
                                       SizedBox(
                                         height: 4.h,

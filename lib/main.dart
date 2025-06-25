@@ -11,6 +11,7 @@ import 'package:kaonic/routes.dart';
 import 'package:kaonic/service/call_service.dart';
 import 'package:kaonic/service/chat_service.dart';
 import 'package:kaonic/service/kaonic_communication_service.dart';
+import 'package:kaonic/service/ota_service.dart';
 import 'package:kaonic/service/user_service.dart';
 import 'package:kaonic/src/call/call_screen.dart';
 import 'package:kaonic/src/chat/chat_screen.dart';
@@ -18,6 +19,7 @@ import 'package:kaonic/src/find_nearby/find_nearby_screen.dart';
 import 'package:kaonic/src/home/home_screen.dart';
 import 'package:kaonic/src/login/login_screen.dart';
 import 'package:kaonic/src/passcode/passcode_screen.dart';
+import 'package:kaonic/src/settings/ota/ota_screen.dart';
 import 'package:kaonic/src/settings/settings_screen.dart';
 import 'package:kaonic/src/sign_up/save_backup_screen.dart';
 import 'package:kaonic/src/sign_up/sign_up_screen.dart';
@@ -77,6 +79,7 @@ class _MainAppState extends State<MainApp> {
               ),
             ),
             RepositoryProvider(create: (context) => _messagesRepository),
+            RepositoryProvider(create: (context) => OtaService()),
           ],
           child: MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -111,6 +114,7 @@ class _MainAppState extends State<MainApp> {
                           as CallScreenState,
                     ),
                 Routes.settings: (context) => const SettingsScreen(),
+                Routes.ota: (context) => const OtaScreen(),
               }),
         ));
   }

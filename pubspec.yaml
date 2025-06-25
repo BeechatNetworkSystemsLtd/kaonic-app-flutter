@@ -36,6 +36,8 @@ dependencies:
   open_file: ^3.5.10
   uuid: ^4.5.1
   package_info_plus: ^8.3.0
+  dio: ^5.8.0+1
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

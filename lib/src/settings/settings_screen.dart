@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/data/models/settings.dart';
 import 'package:kaonic/generated/l10n.dart';
+import 'package:kaonic/routes.dart';
 import 'package:kaonic/service/kaonic_communication_service.dart';
 import 'package:kaonic/src/settings/bloc/settings_bloc.dart';
 import 'package:kaonic/src/widgets/main_button.dart';
@@ -60,6 +61,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       _appBar(),
+                      SizedBox(height: 16),
+                      Divider(color: Colors.white38),
+                      InkWell(
+                        onTap: () =>
+                            Navigator.of(ctxBloc).pushNamed(Routes.ota),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                S.of(context).softwareUpdate,
+                                style: TextStyles.text18Bold
+                                    .copyWith(color: Colors.white),
+                              ),
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Colors.white,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Divider(color: Colors.white38),
                       SizedBox(height: 16),
                       Align(
                         child: Text(

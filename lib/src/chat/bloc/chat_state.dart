@@ -28,5 +28,10 @@ final class ChatState {
 }
 
 final class NavigateToCall extends ChatState {
-  const NavigateToCall({required super.address});
+  const NavigateToCall({
+    required super.address,
+    required super.messages,
+    required super.myAddress,
+    required super.flagScrollToDown,
+  });
 }

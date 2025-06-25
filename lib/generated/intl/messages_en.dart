@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create passcode"),
         "createUsername":
             MessageLookupByLibrary.simpleMessage("Create username:"),
+        "deviceVersion": MessageLookupByLibrary.simpleMessage("Device version"),
         "enterPasscode": MessageLookupByLibrary.simpleMessage("Enter passcode"),
         "hint": MessageLookupByLibrary.simpleMessage("type..."),
         "invalidPasscode":
@@ -51,12 +52,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "labelNo": MessageLookupByLibrary.simpleMessage("No"),
         "labelPleaseSaveThisFile": MessageLookupByLibrary.simpleMessage(
             "Please save this file to be able to back up your account later."),
+        "labelRemoveThisUserFromContactList":
+            MessageLookupByLibrary.simpleMessage(
+                "Remove this user from Contact List?"),
         "labelSend": MessageLookupByLibrary.simpleMessage("Send"),
         "labelUnknown": MessageLookupByLibrary.simpleMessage("unknown"),
         "labelUsername": MessageLookupByLibrary.simpleMessage("Username:"),
         "labelUsersNearby":
             MessageLookupByLibrary.simpleMessage("Users nearby"),
         "labelYes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "local": MessageLookupByLibrary.simpleMessage("local"),
+        "localOTApackage":
+            MessageLookupByLibrary.simpleMessage("Local OTA package"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginFailure": MessageLookupByLibrary.simpleMessage(
             "User does not exist or passcode is incorrect"),
@@ -64,16 +71,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "opt2": MessageLookupByLibrary.simpleMessage("Option 2"),
         "opt3": MessageLookupByLibrary.simpleMessage("Option 3"),
         "opt4": MessageLookupByLibrary.simpleMessage("Option 4"),
+        "otaUpdate": MessageLookupByLibrary.simpleMessage("OTA Update"),
+        "otaVersion": MessageLookupByLibrary.simpleMessage("OTA version"),
         "passcodeNotMatch":
             MessageLookupByLibrary.simpleMessage("Passcode did not match"),
         "pickFile": MessageLookupByLibrary.simpleMessage("Pick File"),
         "radio": MessageLookupByLibrary.simpleMessage("Radio"),
+        "remote": MessageLookupByLibrary.simpleMessage("remote"),
         "repeatPasscode":
             MessageLookupByLibrary.simpleMessage("Repeat passcode"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
+        "softwareUpdate":
+            MessageLookupByLibrary.simpleMessage("Software Update"),
         "txPower": MessageLookupByLibrary.simpleMessage("Tx Power"),
+        "upload": MessageLookupByLibrary.simpleMessage("Upload"),
+        "uploadOTApackage":
+            MessageLookupByLibrary.simpleMessage("Upload OTA package"),
         "userExistError": MessageLookupByLibrary.simpleMessage(
             "User with this username is already exist"),
         "username": MessageLookupByLibrary.simpleMessage("Username")

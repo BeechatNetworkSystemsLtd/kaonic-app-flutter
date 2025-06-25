@@ -280,6 +280,16 @@ class S {
     );
   }
 
+  /// `Remove this user from Contact List?`
+  String get labelRemoveThisUserFromContactList {
+    return Intl.message(
+      'Remove this user from Contact List?',
+      name: 'labelRemoveThisUserFromContactList',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No`
   String get labelNo {
     return Intl.message(
@@ -465,6 +475,96 @@ class S {
     return Intl.message(
       'Login',
       name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OTA Update`
+  String get otaUpdate {
+    return Intl.message(
+      'OTA Update',
+      name: 'otaUpdate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Local OTA package`
+  String get localOTApackage {
+    return Intl.message(
+      'Local OTA package',
+      name: 'localOTApackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OTA version`
+  String get otaVersion {
+    return Intl.message(
+      'OTA version',
+      name: 'otaVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `local`
+  String get local {
+    return Intl.message(
+      'local',
+      name: 'local',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `remote`
+  String get remote {
+    return Intl.message(
+      'remote',
+      name: 'remote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload OTA package`
+  String get uploadOTApackage {
+    return Intl.message(
+      'Upload OTA package',
+      name: 'uploadOTApackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Device version`
+  String get deviceVersion {
+    return Intl.message(
+      'Device version',
+      name: 'deviceVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload`
+  String get upload {
+    return Intl.message(
+      'Upload',
+      name: 'upload',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Software Update`
+  String get softwareUpdate {
+    return Intl.message(
+      'Software Update',
+      name: 'softwareUpdate',
       desc: '',
       args: [],
     );

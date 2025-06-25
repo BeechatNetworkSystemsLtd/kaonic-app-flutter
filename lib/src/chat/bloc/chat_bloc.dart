@@ -76,7 +76,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       InitiateCall event, Emitter<ChatState> emit) async {
     _callService.createCall(_address);
 
-    emit(NavigateToCall(address: state.address));
+    emit(NavigateToCall(
+      address: state.address,
+      messages: state.messages,
+      myAddress: state.myAddress,
+      flagScrollToDown: state.flagScrollToDown,
+    ));
   }
 
   void _filePicked(FilePicked event, Emitter<ChatState> emit) {

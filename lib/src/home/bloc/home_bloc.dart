@@ -25,6 +25,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<_UpdatedUser>(_updatedUser);
     on<_UpdatedNodes>(_updatedNodes);
     on<_HandleCallStatus>(_handleCallStatus);
+    on<RemoveContact>(_removeContact);
 
     add(_InitEvent());
 
@@ -78,5 +79,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   FutureOr<void> _handleCallStatus(
       _HandleCallStatus event, Emitter<HomeState> emit) {
     emit(IncomingCall.fromParentState(state, event.callId, event.address));
+  }
+
+  FutureOr<void> _removeContact(RemoveContact event, Emitter<HomeState> emit) {
+    final index = _userService.user?.contacts
+        .indexWhere((contact) => contact.address == event.contact);
+    if (index != -1 && index != null) {
+      _userService.user?.contacts.removeAt(index);
+      _userService.updateCurrentUser();
+    }
   }
 }

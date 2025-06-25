@@ -95,7 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: BlocConsumer<ChatBloc, ChatState>(
                     listener: (context, state) {
                       if (state is NavigateToCall) {
-                        Navigator.of(context).pushReplacementNamed(
+                        Navigator.of(context).pushNamed(
                           Routes.call,
                           arguments: CallScreenState.outgoing,
                         );

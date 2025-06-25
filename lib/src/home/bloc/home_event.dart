@@ -26,3 +26,9 @@ final class _UpdatedUser extends HomeEvent {
 
   final UserModel user;
 }
+
+final class RemoveContact extends HomeEvent {
+  RemoveContact({required this.contact});
+
+  final String contact;
+}
