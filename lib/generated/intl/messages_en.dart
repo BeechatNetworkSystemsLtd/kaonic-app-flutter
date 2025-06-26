@@ -34,6 +34,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createUsername":
             MessageLookupByLibrary.simpleMessage("Create username:"),
         "deviceVersion": MessageLookupByLibrary.simpleMessage("Device version"),
+        "doYouWantToEndTheCall": MessageLookupByLibrary.simpleMessage(
+            "Do you want to end the call and exit the screen?"),
         "enterPasscode": MessageLookupByLibrary.simpleMessage("Enter passcode"),
         "hint": MessageLookupByLibrary.simpleMessage("type..."),
         "invalidPasscode":
@@ -67,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginFailure": MessageLookupByLibrary.simpleMessage(
             "User does not exist or passcode is incorrect"),
+        "ongoingCall": MessageLookupByLibrary.simpleMessage("Ongoing call"),
         "opt1": MessageLookupByLibrary.simpleMessage("Option 1"),
         "opt2": MessageLookupByLibrary.simpleMessage("Option 2"),
         "opt3": MessageLookupByLibrary.simpleMessage("Option 3"),

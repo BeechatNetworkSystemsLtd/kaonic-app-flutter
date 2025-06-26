@@ -23,3 +23,11 @@ final class FilePicked extends ChatEvent {
   FilePicked({required this.file});
   final FilePickerResult file;
 }
+
+final class _UpdateCallState extends ChatEvent {
+  _UpdateCallState({required this.callState});
+
+  final CallScreenStateInfo callState;
+}
+
+final class EndCallAndPop extends ChatEvent {}

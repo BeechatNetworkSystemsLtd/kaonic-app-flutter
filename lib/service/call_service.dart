@@ -22,6 +22,16 @@ enum CallScreenState {
       };
 }
 
+class CallScreenStateInfo {
+  final CallScreenState callScreenState;
+  final DateTime? callStart;
+
+  CallScreenStateInfo({
+    required this.callScreenState,
+    this.callStart,
+  });
+}
+
 class CallService {
   CallService(KaonicCommunicationService kaonicService) {
     _kaonicService = kaonicService;
@@ -33,8 +43,9 @@ class CallService {
   final _navigationEventsController = BehaviorSubject<String>();
   Stream<String> get navigationEvents => _navigationEventsController.stream;
 
-  final _callStateController = StreamController<CallScreenState>.broadcast();
-  Stream<CallScreenState> get callState => _callStateController.stream;
+  final _callStateController = BehaviorSubject<CallScreenStateInfo>.seeded(
+      CallScreenStateInfo(callScreenState: CallScreenState.idle));
+  Stream<CallScreenStateInfo> get callState => _callStateController.stream;
 
   String? _activeCallId;
   String? get activeCallId => _activeCallId;
@@ -71,24 +82,32 @@ class CallService {
     _activeCallAddress = address;
 
     _kaonicService.startCall(_activeCallId!, _activeCallAddress!);
-    _callStateController.add(CallScreenState.outgoing);
+    _callStateController
+        .add(CallScreenStateInfo(callScreenState: CallScreenState.outgoing));
   }
 
   void answerCall() {
     if (_activeCallId == null || _activeCallAddress == null) return;
 
     _kaonicService.answerCall(_activeCallId!, _activeCallAddress!);
-    _callStateController.add(CallScreenState.callInProgress);
+    _callStateController.add(CallScreenStateInfo(
+      callScreenState: CallScreenState.callInProgress,
+      callStart: DateTime.now(),
+    ));
   }
 
   void rejectCall() {
     if (_activeCallId == null || _activeCallAddress == null) return;
 
     _kaonicService.rejectCall(_activeCallId!, _activeCallAddress!);
-    _callStateController.add(CallScreenState.finished);
+    _callStateController.add(CallScreenStateInfo(
+      callScreenState: CallScreenState.finished,
+    ));
 
     Future.delayed(const Duration(milliseconds: 150), () {
-      _callStateController.add(CallScreenState.idle);
+      _callStateController.add(CallScreenStateInfo(
+        callScreenState: CallScreenState.idle,
+      ));
     });
 
     _activeCallId = null;
@@ -99,7 +118,10 @@ class CallService {
     _activeCallId = callId;
     _activeCallAddress = address;
 
-    _callStateController.add(CallScreenState.incoming);
+    _callStateController.add(CallScreenStateInfo(
+      callScreenState: CallScreenState.incoming,
+      callStart: DateTime.now(),
+    ));
 
     _navigationEventsController.add("incomingCall/$callId/$address");
   }
@@ -107,11 +129,15 @@ class CallService {
   void _handleCallReject(String callId, String address) {
     if (callId != _activeCallId) return;
 
-    _callStateController.add(CallScreenState.finished);
+    _callStateController.add(CallScreenStateInfo(
+      callScreenState: CallScreenState.finished,
+    ));
 
     // Delay before resetting to idle state
     Future.delayed(const Duration(milliseconds: 150), () {
-      _callStateController.add(CallScreenState.idle);
+      _callStateController.add(CallScreenStateInfo(
+        callScreenState: CallScreenState.idle,
+      ));
     });
 
     _activeCallId = null;
@@ -121,6 +147,9 @@ class CallService {
   void _handleCallAnswer(String callId, String address) {
     if (callId != _activeCallId) return;
 
-    _callStateController.add(CallScreenState.callInProgress);
+    _callStateController.add(CallScreenStateInfo(
+      callScreenState: CallScreenState.callInProgress,
+      callStart: DateTime.now(),
+    ));
   }
 }

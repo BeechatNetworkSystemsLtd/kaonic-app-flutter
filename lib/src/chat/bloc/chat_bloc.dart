@@ -19,12 +19,17 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   })  : _chatService = chatService,
         _address = address,
         _callService = callService,
-        super(ChatState(address: address)) {
+        super(ChatState(
+          address: address,
+          callState: CallScreenStateInfo(callScreenState: CallScreenState.idle),
+        )) {
     on<SendMessage>(_sendMessage);
     on<_UpdatedChats>(_updatedChats);
     on<_IntiChat>(_intiChat);
     on<InitiateCall>(_initiateCall);
     on<FilePicked>(_filePicked);
+    on<_UpdateCallState>(_onUpdateCallState);
+    on<EndCallAndPop>(_onEndCallAndPop);
 
     add(_IntiChat());
   }
@@ -32,10 +37,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   late final CallService _callService;
   final String _address;
   StreamSubscription<List<KaonicEvent<KaonicEventData>>>? _chatSubscription;
+  StreamSubscription<CallScreenStateInfo>? _callStateSubscription;
 
   @override
   Future<void> close() async {
     _chatSubscription?.cancel();
+    _callStateSubscription?.cancel();
     _chatService.onChatIDUpdated = null;
     super.close();
   }
@@ -47,6 +54,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     emit(state.copyWith(myAddress: myAddress));
     _chatSubscription = _chatService.getChatMessages(chatId).listen((messages) {
       add(_UpdatedChats(messages: messages));
+    });
+    _callStateSubscription = _callService.callState.listen((callState) {
+      add(_UpdateCallState(callState: callState));
     });
   }
 
@@ -81,6 +91,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       messages: state.messages,
       myAddress: state.myAddress,
       flagScrollToDown: state.flagScrollToDown,
+      callState: state.callState,
     ));
   }
 
@@ -96,5 +107,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     _chatSubscription = _chatService.getChatMessages(chatId).listen((messages) {
       add(_UpdatedChats(messages: messages));
     });
+  }
+
+  void _onUpdateCallState(_UpdateCallState event, Emitter<ChatState> emit) {
+    emit(state.copyWith(callState: event.callState));
+  }
+
+  void _onEndCallAndPop(_, Emitter<ChatState> emit) {
+    _callService.rejectCall();
+    emit(state.copyWith(isCallEndedOnPop: true));
   }
 }

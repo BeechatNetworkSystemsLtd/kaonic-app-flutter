@@ -12,13 +12,20 @@ import 'package:rxdart/subjects.dart';
 typedef OnChatIdChanged = Function(String, String);
 
 class ChatService {
-  ChatService(
+  ChatService._privateConstructor();
+
+  static final ChatService _instance = ChatService._privateConstructor();
+
+  factory ChatService(
     KaonicCommunicationService kaonicService,
     MessagesRepository messageRepository,
   ) {
-    _kaonicService = kaonicService;
-    _messageRepository = messageRepository;
-    _listenMessages();
+    _instance._kaonicService = kaonicService;
+    _instance._messageRepository = messageRepository;
+    _instance._listenMessages();
+    _instance.myAddress();
+
+    return _instance;
   }
 
   late final KaonicCommunicationService _kaonicService;
@@ -33,6 +40,7 @@ class ChatService {
   final _contactChats = <String, String>{};
 
   String? _activeContactAddress;
+  String? _myAddress;
 
   OnChatIdChanged? onChatIDUpdated;
 
@@ -60,7 +68,8 @@ class ChatService {
   }
 
   Future<String> myAddress() async {
-    return await _kaonicService.myAddress();
+    _myAddress = await _kaonicService.myAddress();
+    return _myAddress ?? '';
   }
 
   Future<String> createChat(String address) async {
@@ -109,7 +118,8 @@ class ChatService {
 
     _messagesSubject.add(currentMap);
 
-    _saveMessages(messageList);
+    final peerAdrees = data.address != _myAddress ? data.address : null;
+    _saveMessages(messageList, peerAdrees);
   }
 
   void _putOrUpdateChatId(String chatId, String address,
@@ -142,11 +152,17 @@ class ChatService {
     }
   }
 
-  void _saveMessages(List<KaonicEvent> messages) {
-    if (_activeContactAddress == null) return;
+  void _saveMessages(List<KaonicEvent> messages, [String? address]) {
+    if (address == null) {
+      if (_activeContactAddress == null) return;
 
-    _messageRepository.saveMessages({
-      _activeContactAddress!: messages,
-    });
+      _messageRepository.saveMessages({
+        _activeContactAddress!: messages,
+      });
+    } else {
+      _messageRepository.saveMessages({
+        address: messages,
+      });
+    }
   }
 }

@@ -50,5 +50,7 @@
     "uploadOTApackage": "Upload OTA package",
     "deviceVersion": "Device version",
     "upload": "Upload",
-    "softwareUpdate": "Software Update"
+    "softwareUpdate": "Software Update",
+    "ongoingCall": "Ongoing call",
+    "doYouWantToEndTheCall": "Do you want to end the call and exit the screen?"
 }

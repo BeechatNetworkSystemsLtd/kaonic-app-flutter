@@ -569,6 +569,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Ongoing call`
+  String get ongoingCall {
+    return Intl.message(
+      'Ongoing call',
+      name: 'ongoingCall',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want to end the call and exit the screen?`
+  String get doYouWantToEndTheCall {
+    return Intl.message(
+      'Do you want to end the call and exit the screen?',
+      name: 'doYouWantToEndTheCall',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

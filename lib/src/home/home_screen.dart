@@ -2,6 +2,7 @@ import 'package:kaonic/data/models/user_model.dart';
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/routes.dart';
 import 'package:kaonic/service/call_service.dart';
+import 'package:kaonic/service/chat_service.dart';
 import 'package:kaonic/service/user_service.dart';
 import 'package:kaonic/src/home/bloc/home_bloc.dart';
 import 'package:kaonic/src/home/widgets/contact_item.dart';
@@ -14,8 +15,19 @@ import 'package:kaonic/theme/assets.dart';
 import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/utils/dialog_util.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ChatService>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +96,13 @@ class HomeScreen extends StatelessWidget {
                       listener: (context, state) {
                         if (state is IncomingCall) {
                           Navigator.of(context).pushNamed(
+                            Routes.chat,
+                            arguments: state.address ?? '',
+                          );
+                          Navigator.of(context).pushNamed(
                             Routes.call,
-                            arguments: CallScreenState.incoming,
+                            arguments: CallScreenStateInfo(
+                                callScreenState: CallScreenState.incoming),
                           );
                         }
                       },
