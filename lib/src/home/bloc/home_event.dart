@@ -32,3 +32,9 @@ final class RemoveContact extends HomeEvent {
 
   final String contact;
 }
+
+final class OnChatNavigate extends HomeEvent {
+  OnChatNavigate(this.isInChatPage);
+
+  final bool isInChatPage;
+}

@@ -95,10 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: BlocConsumer<HomeBloc, HomeState>(
                       listener: (context, state) {
                         if (state is IncomingCall) {
-                          Navigator.of(context).pushNamed(
-                            Routes.chat,
-                            arguments: state.address ?? '',
-                          );
+                          if (!state.isInChatPage) {
+                            Navigator.of(context).pushNamed(
+                              Routes.chat,
+                              arguments: state.address ?? '',
+                            );
+                          }
                           Navigator.of(context).pushNamed(
                             Routes.call,
                             arguments: CallScreenStateInfo(
@@ -141,11 +143,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                     final contact =
                                         state.user!.contacts.elementAt(index);
                                     return ContactItem(
-                                      onTap: () {
-                                        Navigator.of(context).pushNamed(
+                                      onTap: () async {
+                                        context
+                                            .read<HomeBloc>()
+                                            .add(OnChatNavigate(true));
+
+                                        await Navigator.of(context)
+                                            .pushNamed(
                                           Routes.chat,
                                           arguments: contact.address,
-                                        );
+                                        )
+                                            .whenComplete(() {
+                                          if (context.mounted) {
+                                            context
+                                                .read<HomeBloc>()
+                                                .add(OnChatNavigate(false));
+                                          }
+                                        });
                                       },
                                       onIdentifyTap: () {},
                                       contact: contact,
