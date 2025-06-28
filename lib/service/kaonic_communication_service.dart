@@ -7,8 +7,23 @@ import 'package:kaonic/data/models/kaonic_create_chat_event.dart';
 import 'package:kaonic/data/models/kaonic_event.dart';
 import 'package:kaonic/data/models/kaonic_event_type.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
+import 'package:kaonic/generated/l10n.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:uuid/uuid.dart';
+
+enum KaonicCommunicationType {
+  tcp,
+  kaonicClient;
+
+  String get title {
+    switch (this) {
+      case KaonicCommunicationType.tcp:
+        return S.current.connectivityTypeTCP;
+      case KaonicCommunicationType.kaonicClient:
+        return S.current.connectivityTypeKaonic;
+    }
+  }
+}
 
 class KaonicCommunicationService {
   static const defaultFrequency = "869535";

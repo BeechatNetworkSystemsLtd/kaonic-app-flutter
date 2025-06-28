@@ -29,6 +29,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "OFDMOption": MessageLookupByLibrary.simpleMessage("OFDM Option"),
         "OFDMRate": MessageLookupByLibrary.simpleMessage("OFDM MCS"),
         "back": MessageLookupByLibrary.simpleMessage("Back"),
+        "connectivitySettings":
+            MessageLookupByLibrary.simpleMessage("Connectivity Settings"),
+        "connectivityType":
+            MessageLookupByLibrary.simpleMessage("Connectivity Type"),
+        "connectivityTypeKaonic":
+            MessageLookupByLibrary.simpleMessage("Kaonic Client"),
+        "connectivityTypeTCP":
+            MessageLookupByLibrary.simpleMessage("TCP Client"),
         "createPasscode":
             MessageLookupByLibrary.simpleMessage("Create passcode"),
         "createUsername":
@@ -38,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hint": MessageLookupByLibrary.simpleMessage("type..."),
         "invalidPasscode":
             MessageLookupByLibrary.simpleMessage("Invalid passcode"),
+        "ip": MessageLookupByLibrary.simpleMessage("IP"),
         "labelAddThisUserToContactList": MessageLookupByLibrary.simpleMessage(
             "Add this user to Contact List?"),
         "labelAddress": MessageLookupByLibrary.simpleMessage("Address:"),
@@ -76,7 +85,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "passcodeNotMatch":
             MessageLookupByLibrary.simpleMessage("Passcode did not match"),
         "pickFile": MessageLookupByLibrary.simpleMessage("Pick File"),
+        "port": MessageLookupByLibrary.simpleMessage("Port"),
         "radio": MessageLookupByLibrary.simpleMessage("Radio"),
+        "radioSettings": MessageLookupByLibrary.simpleMessage("Radio Settings"),
         "remote": MessageLookupByLibrary.simpleMessage("remote"),
         "repeatPasscode":
             MessageLookupByLibrary.simpleMessage("Repeat passcode"),

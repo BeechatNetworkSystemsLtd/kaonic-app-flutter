@@ -569,6 +569,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Radio Settings`
+  String get radioSettings {
+    return Intl.message(
+      'Radio Settings',
+      name: 'radioSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connectivity Settings`
+  String get connectivitySettings {
+    return Intl.message(
+      'Connectivity Settings',
+      name: 'connectivitySettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `IP`
+  String get ip {
+    return Intl.message(
+      'IP',
+      name: 'ip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Port`
+  String get port {
+    return Intl.message(
+      'Port',
+      name: 'port',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connectivity Type`
+  String get connectivityType {
+    return Intl.message(
+      'Connectivity Type',
+      name: 'connectivityType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `TCP Client`
+  String get connectivityTypeTCP {
+    return Intl.message(
+      'TCP Client',
+      name: 'connectivityTypeTCP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kaonic Client`
+  String get connectivityTypeKaonic {
+    return Intl.message(
+      'Kaonic Client',
+      name: 'connectivityTypeKaonic',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

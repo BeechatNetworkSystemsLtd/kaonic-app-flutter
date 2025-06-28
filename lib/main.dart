@@ -19,7 +19,9 @@ import 'package:kaonic/src/find_nearby/find_nearby_screen.dart';
 import 'package:kaonic/src/home/home_screen.dart';
 import 'package:kaonic/src/login/login_screen.dart';
 import 'package:kaonic/src/passcode/passcode_screen.dart';
+import 'package:kaonic/src/settings/connectivity_settings/connectivity_setting_screen.dart';
 import 'package:kaonic/src/settings/ota/ota_screen.dart';
+import 'package:kaonic/src/settings/radio_settings/radio_settings_screen.dart';
 import 'package:kaonic/src/settings/settings_screen.dart';
 import 'package:kaonic/src/sign_up/save_backup_screen.dart';
 import 'package:kaonic/src/sign_up/sign_up_screen.dart';
@@ -65,57 +67,59 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: designSize,
-        child: MultiRepositoryProvider(
-          providers: [
-            RepositoryProvider(
-                create: (context) => _kaonicCommunicationService),
-            RepositoryProvider(create: (context) => _chatService),
-            RepositoryProvider(create: (context) => _callService),
-            RepositoryProvider(create: (context) => _storageService),
-            RepositoryProvider(
-              create: (context) => UserService(
-                userRepository: UserRepository(storageService: _storageService),
-              ),
+      designSize: designSize,
+      child: MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider(create: (context) => _kaonicCommunicationService),
+          RepositoryProvider(create: (context) => _chatService),
+          RepositoryProvider(create: (context) => _callService),
+          RepositoryProvider(create: (context) => _storageService),
+          RepositoryProvider(
+            create: (context) => UserService(
+              userRepository: UserRepository(storageService: _storageService),
             ),
-            RepositoryProvider(create: (context) => _messagesRepository),
-            RepositoryProvider(create: (context) => OtaService()),
+          ),
+          RepositoryProvider(create: (context) => _messagesRepository),
+          RepositoryProvider(create: (context) => OtaService()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: Routes.initial,
+          theme: appThemeData,
+          localizationsDelegates: const [
+            S.delegate,
           ],
-          child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              initialRoute: Routes.initial,
-              theme: appThemeData,
-              localizationsDelegates: const [
-                S.delegate,
-              ],
-              routes: {
-                Routes.initial: (context) => const WelcomeScreen(),
-                Routes.signUp: (context) => const SignUpScreen(),
-                Routes.login: (context) => const LoginScreen(),
-                Routes.passcode: (context) => PasscodeScreen(
-                      username:
-                          ModalRoute.of(context)?.settings.arguments as String?,
-                    ),
-                Routes.saveBackup: (context) => SaveBackupScreen(
-                      user: ModalRoute.of(context)?.settings.arguments
-                          as UserModel,
-                    ),
-                Routes.home: (context) => const HomeScreen(),
-                Routes.findNearby: (context) => FindNearbyScreen(
-                      nodes: ModalRoute.of(context)?.settings.arguments
-                          as List<String>,
-                    ),
-                Routes.chat: (context) => ChatScreen(
-                      address:
-                          ModalRoute.of(context)?.settings.arguments as String,
-                    ),
-                Routes.call: (context) => CallScreen(
-                      callState: ModalRoute.of(context)?.settings.arguments
-                          as CallScreenState,
-                    ),
-                Routes.settings: (context) => const SettingsScreen(),
-                Routes.ota: (context) => const OtaScreen(),
-              }),
-        ));
+          routes: {
+            Routes.initial: (context) => const WelcomeScreen(),
+            Routes.signUp: (context) => const SignUpScreen(),
+            Routes.login: (context) => const LoginScreen(),
+            Routes.passcode: (context) => PasscodeScreen(
+                  username:
+                      ModalRoute.of(context)?.settings.arguments as String?,
+                ),
+            Routes.saveBackup: (context) => SaveBackupScreen(
+                  user: ModalRoute.of(context)?.settings.arguments as UserModel,
+                ),
+            Routes.home: (context) => const HomeScreen(),
+            Routes.findNearby: (context) => FindNearbyScreen(
+                  nodes: ModalRoute.of(context)?.settings.arguments
+                      as List<String>,
+                ),
+            Routes.chat: (context) => ChatScreen(
+                  address: ModalRoute.of(context)?.settings.arguments as String,
+                ),
+            Routes.call: (context) => CallScreen(
+                  callState: ModalRoute.of(context)?.settings.arguments
+                      as CallScreenState,
+                ),
+            Routes.settings: (context) => const SettingsScreen(),
+            Routes.ota: (context) => const OtaScreen(),
+            Routes.radioSettings: (context) => const RadioSettingsScreen(),
+            Routes.connectivitySettings: (context) =>
+                const ConnectivitySettingScreen(),
+          },
+        ),
+      ),
+    );
   }
 }

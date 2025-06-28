@@ -50,5 +50,12 @@
     "uploadOTApackage": "Upload OTA package",
     "deviceVersion": "Device version",
     "upload": "Upload",
-    "softwareUpdate": "Software Update"
+    "softwareUpdate": "Software Update",
+    "radioSettings": "Radio Settings",
+    "connectivitySettings": "Connectivity Settings",
+    "ip": "IP",
+    "port": "Port",
+    "connectivityType": "Connectivity Type",
+    "connectivityTypeTCP": "TCP Client",
+    "connectivityTypeKaonic": "Kaonic Client"
 }
