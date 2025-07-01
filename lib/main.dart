@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/data/models/user_model.dart';
+import 'package:kaonic/data/repository/connectivity_settings_repository.dart';
 import 'package:kaonic/data/repository/messages_repository.dart';
 import 'package:kaonic/data/repository/storage.dart';
 import 'package:kaonic/data/repository/user_repository.dart';
@@ -52,6 +53,9 @@ class _MainAppState extends State<MainApp> {
   final _storageService = StorageService();
   late final _messagesRepository =
       MessagesRepository(storageService: _storageService);
+  late final _connectivitySettingRepository =
+      ConnectivitySettingsRepository(storageService: _storageService);
+
   final _kaonicCommunicationService = KaonicCommunicationService();
   late final _chatService = ChatService(
     _kaonicCommunicationService,
@@ -80,6 +84,8 @@ class _MainAppState extends State<MainApp> {
             ),
           ),
           RepositoryProvider(create: (context) => _messagesRepository),
+          RepositoryProvider(
+              create: (context) => _connectivitySettingRepository),
           RepositoryProvider(create: (context) => OtaService()),
         ],
         child: MaterialApp(

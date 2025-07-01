@@ -3,26 +3,17 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:kaonic/data/models/call_event_data.dart';
+import 'package:kaonic/data/models/connectivity_settings.dart';
 import 'package:kaonic/data/models/kaonic_create_chat_event.dart';
 import 'package:kaonic/data/models/kaonic_event.dart';
 import 'package:kaonic/data/models/kaonic_event_type.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
-import 'package:kaonic/generated/l10n.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:uuid/uuid.dart';
 
 enum KaonicCommunicationType {
   tcp,
-  kaonicClient;
-
-  String get title {
-    switch (this) {
-      case KaonicCommunicationType.tcp:
-        return S.current.connectivityTypeTCP;
-      case KaonicCommunicationType.kaonicClient:
-        return S.current.connectivityTypeKaonic;
-    }
-  }
+  kaonicClient,
 }
 
 class KaonicCommunicationService {
@@ -45,8 +36,10 @@ class KaonicCommunicationService {
     kaonicEventChannel.receiveBroadcastStream().listen(_listenKaonicEvents);
   }
 
-  void startService() {
-    kaonicMethodChannel.invokeMethod('startService');
+  void startService(ConnectivitySettings connectivitySettings) {
+    kaonicMethodChannel.invokeMethod('startService', {
+      'connectivity': connectivitySettings.toJson(),
+    });
   }
 
   Future<String> createChat(String address) async {

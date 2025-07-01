@@ -14,6 +14,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'data/models/connectivity_settings.dart';
 import 'data/models/contact_model.dart';
 import 'data/models/message_data_container.dart';
 import 'data/models/user_model.dart';
@@ -111,6 +112,40 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(4, 4298777669170173375),
+    name: 'ConnectivitySettings',
+    lastPropertyId: const obx_int.IdUid(4, 449746006207797422),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 2156004470178154265),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 3229367661543257216),
+        name: 'ip',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 5944095016696951572),
+        name: 'port',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 449746006207797422),
+        name: 'connectivityType',
+        type: 5,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -151,7 +186,7 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(3, 4303160672216820288),
+    lastEntityId: const obx_int.IdUid(4, 4298777669170173375),
     lastIndexId: const obx_int.IdUid(0, 0),
     lastRelationId: const obx_int.IdUid(1, 4163491123646389794),
     lastSequenceId: const obx_int.IdUid(0, 0),
@@ -296,6 +331,56 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    ConnectivitySettings: obx_int.EntityDefinition<ConnectivitySettings>(
+      model: _entities[3],
+      toOneRelations: (ConnectivitySettings object) => [],
+      toManyRelations: (ConnectivitySettings object) => {},
+      getId: (ConnectivitySettings object) => object.id,
+      setId: (ConnectivitySettings object, int id) {
+        object.id = id;
+      },
+      objectToFB: (ConnectivitySettings object, fb.Builder fbb) {
+        final ipOffset = fbb.writeString(object.ip);
+        final portOffset = fbb.writeString(object.port);
+        fbb.startTable(5);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, ipOffset);
+        fbb.addOffset(2, portOffset);
+        fbb.addInt32(3, object.connectivityType);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final ipParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final portParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 8, '');
+        final connectivityTypeParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          10,
+          0,
+        );
+        final object = ConnectivitySettings(
+          id: idParam,
+          ip: ipParam,
+          port: portParam,
+          connectivityType: connectivityTypeParam,
+        );
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -358,4 +443,28 @@ class MessageDataContainer_ {
   static final jsonString = obx.QueryStringProperty<MessageDataContainer>(
     _entities[2].properties[1],
   );
+}
+
+/// [ConnectivitySettings] entity fields to define ObjectBox queries.
+class ConnectivitySettings_ {
+  /// See [ConnectivitySettings.id].
+  static final id = obx.QueryIntegerProperty<ConnectivitySettings>(
+    _entities[3].properties[0],
+  );
+
+  /// See [ConnectivitySettings.ip].
+  static final ip = obx.QueryStringProperty<ConnectivitySettings>(
+    _entities[3].properties[1],
+  );
+
+  /// See [ConnectivitySettings.port].
+  static final port = obx.QueryStringProperty<ConnectivitySettings>(
+    _entities[3].properties[2],
+  );
+
+  /// See [ConnectivitySettings.connectivityType].
+  static final connectivityType =
+      obx.QueryIntegerProperty<ConnectivitySettings>(
+        _entities[3].properties[3],
+      );
 }

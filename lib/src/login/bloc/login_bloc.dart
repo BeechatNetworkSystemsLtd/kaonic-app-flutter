@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kaonic/data/repository/connectivity_settings_repository.dart';
 import 'package:kaonic/service/kaonic_communication_service.dart';
 import 'package:kaonic/service/user_service.dart';
 
@@ -9,7 +10,10 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final KaonicCommunicationService _kaonicCommunicationService;
-  LoginBloc(this._kaonicCommunicationService,
+  final ConnectivitySettingsRepository _connectivitySettingRepository;
+
+  LoginBloc(
+      this._kaonicCommunicationService, this._connectivitySettingRepository,
       {required UserService userService})
       : _userService = userService,
         super(LoginInitial(btnEnabled: false)) {
@@ -30,7 +34,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (responseUser == null) {
       emit(LoginFailure());
     } else {
-      _kaonicCommunicationService.startService();
+      _kaonicCommunicationService.startService(
+        _connectivitySettingRepository.getConnectivitySetting(),
+      );
       emit(LoginSuccess());
     }
   }

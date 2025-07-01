@@ -80,9 +80,38 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:4298777669170173375",
+      "lastPropertyId": "4:449746006207797422",
+      "name": "ConnectivitySettings",
+      "properties": [
+        {
+          "id": "1:2156004470178154265",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3229367661543257216",
+          "name": "ip",
+          "type": 9
+        },
+        {
+          "id": "3:5944095016696951572",
+          "name": "port",
+          "type": 9
+        },
+        {
+          "id": "4:449746006207797422",
+          "name": "connectivityType",
+          "type": 5
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:4303160672216820288",
+  "lastEntityId": "4:4298777669170173375",
   "lastIndexId": "0:0",
   "lastRelationId": "1:4163491123646389794",
   "lastSequenceId": "0:0",

@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import network.beechat.app.kaonic.models.ConnectivitySettings
 import network.beechat.kaonic.audio.AudioService
 import network.beechat.kaonic.communication.KaonicCommunicationManager
 import network.beechat.kaonic.communication.KaonicEventListener
@@ -44,22 +45,31 @@ object KaonicService : KaonicEventListener {
 
     fun init(
         kaonicCommunicationHandler: KaonicCommunicationManager,
-        secureStorageHelper: SecureStorageHelper
+        secureStorageHelper: SecureStorageHelper,
+        connectivitySettings: ConnectivitySettings
     ) {
         this.kaonicCommunicationHandler = kaonicCommunicationHandler
         this.secureStorageHelper = secureStorageHelper
         audioService = AudioService()
         kaonicCommunicationHandler.setEventListener(this)
         _myAddress = kaonicCommunicationHandler.myAddress
+        val connection = if (connectivitySettings.connectivityType == 1) {
+            Connection(
+                ConnectionType.KaonicClient,
+                ConnectionInfo("http://${connectivitySettings.ip}:${connectivitySettings.port}")
+            )
+        } else {
+            Connection(
+                ConnectionType.TcpClient,
+                ConnectionInfo("${connectivitySettings.ip}:${connectivitySettings.port}")
+            )
+        }
 
         kaonicCommunicationHandler.start(
             loadSecret(),
             ConnectionConfig(
                 ConnectionContact("Kaonic"), arrayListOf(
-                    Connection(
-                        ConnectionType
-                            .KaonicClient, ConnectionInfo("http://192.168.10.1:8080")
-                    )
+                    connection
                 )
             )
         )

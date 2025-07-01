@@ -8,12 +8,14 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.google.gson.Gson
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import network.beechat.app.kaonic.models.ConnectivitySettings
 import network.beechat.app.kaonic.services.KaonicService
 import network.beechat.app.kaonic.services.SecureStorageHelper
 import network.beechat.kaonic.communication.KaonicCommunicationManager
@@ -125,7 +127,12 @@ class MainActivity : FlutterActivity() {
                     }
                 }
                 "startService" -> {
-                    initKaonicService()
+                    val json = call.argument<String>("connectivity")
+
+                    val gson = Gson()
+                    val connectivitySettings = gson.fromJson(json, ConnectivitySettings::class.java)
+
+                    initKaonicService(connectivitySettings)
                 }
 
                 "createChat" -> {
@@ -223,7 +230,7 @@ class MainActivity : FlutterActivity() {
     }
 
 
-    private fun initKaonicService() {
+    private fun initKaonicService(connectivitySettings: ConnectivitySettings) {
         checkStoragePermission()
         val ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
         val ringtone = RingtoneManager.getRingtone(this, ringtoneUri)
@@ -234,7 +241,8 @@ class MainActivity : FlutterActivity() {
                 contentResolver,
                 ringtone
             ),
-            secureStorageHelper
+            secureStorageHelper,
+            connectivitySettings,
         )
     }
 
