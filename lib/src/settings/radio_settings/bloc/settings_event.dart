@@ -45,5 +45,10 @@ class UpdateRate extends SettingsEvent {
   });
 }
 
-
 final class SaveSettings extends SettingsEvent {}
+
+class UpdateRadioType extends SettingsEvent {
+  final RadioSettingsType radioSettingsType;
+
+  UpdateRadioType(this.radioSettingsType);
+}
