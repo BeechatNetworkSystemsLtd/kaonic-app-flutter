@@ -4,26 +4,38 @@ part of 'settings_bloc.dart';
 class SettingsState {
   SettingsState({
     this.radioSettingsType = RadioSettingsType.rfa,
-    this.radioSettings = const RadioSettings(),
+    required this.radioSettingsA,
+    required this.radioSettingsB,
   });
 
   final RadioSettingsType radioSettingsType;
-  final RadioSettings radioSettings;
+  final RadioSettings radioSettingsA;
+  final RadioSettings radioSettingsB;
 
-  bool get buttonEnabled =>
-      radioSettings.frequency.isNotEmpty &&
-      int.tryParse(radioSettings.frequency) != null &&
-      radioSettings.txPower.isNotEmpty &&
-      int.tryParse(radioSettings.txPower) != null &&
-      radioSettings.channelSpacing.isNotEmpty &&
-      int.tryParse(radioSettings.channelSpacing) != null;
+  RadioSettings get radioSettings => radioSettingsType == RadioSettingsType.rfa
+      ? radioSettingsA
+      : radioSettingsB;
+
+  bool get buttonEnabled {
+    RadioSettings settings = radioSettingsType == RadioSettingsType.rfa
+        ? radioSettingsA
+        : radioSettingsB;
+    return settings.frequency.isNotEmpty &&
+        int.tryParse(settings.frequency) != null &&
+        settings.txPower.isNotEmpty &&
+        int.tryParse(settings.txPower) != null &&
+        settings.channelSpacing.isNotEmpty &&
+        int.tryParse(settings.channelSpacing) != null;
+  }
 
   SettingsState copyWith({
     RadioSettingsType? radioSettingsType,
-    RadioSettings? radioSettings,
+    RadioSettings? radioSettingsA,
+    RadioSettings? radioSettingsB,
   }) {
     return SettingsState(
-      radioSettings: radioSettings ?? this.radioSettings,
+      radioSettingsA: radioSettingsA ?? this.radioSettingsA,
+      radioSettingsB: radioSettingsB ?? this.radioSettingsB,
       radioSettingsType: radioSettingsType ?? this.radioSettingsType,
     );
   }

@@ -26,9 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ChannelSpacing":
             MessageLookupByLibrary.simpleMessage("Channel spacing"),
         "Frequency": MessageLookupByLibrary.simpleMessage("Frequency"),
-        "OFDMOption": MessageLookupByLibrary.simpleMessage("OFDM Option"),
-        "OFDMRate": MessageLookupByLibrary.simpleMessage("OFDM MCS"),
         "back": MessageLookupByLibrary.simpleMessage("Back"),
+        "bandwidthTime": MessageLookupByLibrary.simpleMessage("Bandwidth Time"),
         "connectivitySettings":
             MessageLookupByLibrary.simpleMessage("Connectivity Settings"),
         "connectivityType":
@@ -41,8 +40,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create passcode"),
         "createUsername":
             MessageLookupByLibrary.simpleMessage("Create username:"),
+        "csfd0": MessageLookupByLibrary.simpleMessage("CSFD0"),
+        "csfd1": MessageLookupByLibrary.simpleMessage("CSFD1"),
         "deviceVersion": MessageLookupByLibrary.simpleMessage("Device version"),
+        "dw": MessageLookupByLibrary.simpleMessage("DW"),
         "enterPasscode": MessageLookupByLibrary.simpleMessage("Enter passcode"),
+        "fecie": MessageLookupByLibrary.simpleMessage("FECIE"),
+        "fecs": MessageLookupByLibrary.simpleMessage("FECS"),
+        "fsk": MessageLookupByLibrary.simpleMessage("FSK"),
         "hint": MessageLookupByLibrary.simpleMessage("type..."),
         "invalidPasscode":
             MessageLookupByLibrary.simpleMessage("Invalid passcode"),
@@ -76,14 +81,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginFailure": MessageLookupByLibrary.simpleMessage(
             "User does not exist or passcode is incorrect"),
+        "mcs": MessageLookupByLibrary.simpleMessage("MCS"),
+        "modulationIndex":
+            MessageLookupByLibrary.simpleMessage("Modulation Index"),
+        "modulationIndexScale":
+            MessageLookupByLibrary.simpleMessage("Modulation Index Scale"),
+        "modulationOrder":
+            MessageLookupByLibrary.simpleMessage("Modulation Order"),
+        "mse": MessageLookupByLibrary.simpleMessage("MSE"),
+        "noRssi": MessageLookupByLibrary.simpleMessage(
+            "Preamble detection does not take RSSI values into account"),
+        "ofdm": MessageLookupByLibrary.simpleMessage("OFDM"),
         "opt1": MessageLookupByLibrary.simpleMessage("Option 1"),
         "opt2": MessageLookupByLibrary.simpleMessage("Option 2"),
         "opt3": MessageLookupByLibrary.simpleMessage("Option 3"),
         "opt4": MessageLookupByLibrary.simpleMessage("Option 4"),
+        "option": MessageLookupByLibrary.simpleMessage("Option"),
         "otaUpdate": MessageLookupByLibrary.simpleMessage("OTA Update"),
         "otaVersion": MessageLookupByLibrary.simpleMessage("OTA version"),
         "passcodeNotMatch":
             MessageLookupByLibrary.simpleMessage("Passcode did not match"),
+        "pdtm": MessageLookupByLibrary.simpleMessage("PDTM"),
         "pickFile": MessageLookupByLibrary.simpleMessage("Pick File"),
         "port": MessageLookupByLibrary.simpleMessage("Port"),
         "radio": MessageLookupByLibrary.simpleMessage("Radio"),
@@ -91,17 +109,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "remote": MessageLookupByLibrary.simpleMessage("remote"),
         "repeatPasscode":
             MessageLookupByLibrary.simpleMessage("Repeat passcode"),
+        "rxo": MessageLookupByLibrary.simpleMessage("RXO"),
+        "rxpto": MessageLookupByLibrary.simpleMessage("RXPTO"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "sfd": MessageLookupByLibrary.simpleMessage("SFD"),
+        "sfd32": MessageLookupByLibrary.simpleMessage("SFD32"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
         "softwareUpdate":
             MessageLookupByLibrary.simpleMessage("Software Update"),
+        "symbolRate": MessageLookupByLibrary.simpleMessage("Symbol Rate"),
         "txPower": MessageLookupByLibrary.simpleMessage("Tx Power"),
         "upload": MessageLookupByLibrary.simpleMessage("Upload"),
         "uploadOTApackage":
             MessageLookupByLibrary.simpleMessage("Upload OTA package"),
         "userExistError": MessageLookupByLibrary.simpleMessage(
             "User with this username is already exist"),
-        "username": MessageLookupByLibrary.simpleMessage("Username")
+        "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "withRssi": MessageLookupByLibrary.simpleMessage(
+            "Preamble detection takes RSSI values into account.")
       };
 }

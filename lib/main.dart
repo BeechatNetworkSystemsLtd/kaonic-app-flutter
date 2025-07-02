@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/data/models/user_model.dart';
 import 'package:kaonic/data/repository/connectivity_settings_repository.dart';
 import 'package:kaonic/data/repository/messages_repository.dart';
+import 'package:kaonic/data/repository/radio_settings_repository.dart';
 import 'package:kaonic/data/repository/storage.dart';
 import 'package:kaonic/data/repository/user_repository.dart';
 import 'package:kaonic/generated/l10n.dart';
@@ -55,7 +56,8 @@ class _MainAppState extends State<MainApp> {
       MessagesRepository(storageService: _storageService);
   late final _connectivitySettingRepository =
       ConnectivitySettingsRepository(storageService: _storageService);
-
+  late final _radioSettingsRepository =
+      RadioSettingsRepository(storageService: _storageService);
   final _kaonicCommunicationService = KaonicCommunicationService();
   late final _chatService = ChatService(
     _kaonicCommunicationService,
@@ -86,6 +88,7 @@ class _MainAppState extends State<MainApp> {
           RepositoryProvider(create: (context) => _messagesRepository),
           RepositoryProvider(
               create: (context) => _connectivitySettingRepository),
+          RepositoryProvider(create: (context) => _radioSettingsRepository),
           RepositoryProvider(create: (context) => OtaService()),
         ],
         child: MaterialApp(

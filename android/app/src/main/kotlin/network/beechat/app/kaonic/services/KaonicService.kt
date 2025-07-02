@@ -64,7 +64,6 @@ object KaonicService : KaonicEventListener {
                 ConnectionInfo("${connectivitySettings.ip}:${connectivitySettings.port}")
             )
         }
-
         kaonicCommunicationHandler.start(
             loadSecret(),
             ConnectionConfig(
@@ -103,7 +102,23 @@ object KaonicService : KaonicEventListener {
         frequency: Int,
         channel: Int,
         channelSpacing: Int,
-        txPower: Int
+        txPower: Int,
+        bt: Int,
+        midxs: Int,
+        midxsBits: Int,
+        mord: Int,
+        srate: Int,
+        pdtm: Int,
+        rxo: Int,
+        rxpto: Int,
+        mse: Int,
+        fecs: Int,
+        fecie: Int,
+        sfd32: Int,
+        csfd1: Int,
+        csfd0: Int,
+        sfd: Int,
+        dw: Int
     ) {
         kaonicCommunicationHandler.sendConfig(
             mcs,
@@ -112,7 +127,23 @@ object KaonicService : KaonicEventListener {
             frequency,
             channel,
             channelSpacing,
-            txPower
+            txPower,
+            bt,
+            midxs,
+            midxsBits,
+            mord,
+            srate,
+            pdtm,
+            rxo,
+            rxpto,
+            mse,
+            fecs,
+            fecie,
+            sfd32,
+            csfd1,
+            csfd0,
+            sfd,
+            dw
         )
     }
 

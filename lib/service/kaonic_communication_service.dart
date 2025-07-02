@@ -68,14 +68,31 @@ class KaonicCommunicationService {
     });
   }
 
-  void sendConfig(
-      {required int mcs,
-      required int optionNumber,
-      required int module,
-      required int frequency,
-      required int channel,
-      required int channelSpacing,
-      required int txPower}) {
+  void sendConfig({
+    required int mcs,
+    required int optionNumber,
+    required int module,
+    required int frequency,
+    required int channel,
+    required int channelSpacing,
+    required int txPower,
+    required int bt,
+    required int midxs,
+    required int midxsBits,
+    required int mord,
+    required int srate,
+    required int pdtm,
+    required int rxo,
+    required int rxpto,
+    required int mse,
+    required int fecs,
+    required int fecie,
+    required int sfd32,
+    required int csfd1,
+    required int csfd0,
+    required int sfd,
+    required int dw,
+  }) {
     kaonicMethodChannel.invokeMethod('sendConfig', {
       "mcs": mcs,
       "optionNumber": optionNumber,
@@ -84,6 +101,22 @@ class KaonicCommunicationService {
       "channel": channel,
       "channelSpacing": channelSpacing,
       "txPower": txPower,
+      "bt": bt,
+      "midxs": midxs,
+      "midxsBits": midxsBits,
+      "mord": mord,
+      "srate": srate,
+      "pdtm": pdtm,
+      "rxo": rxo,
+      "rxpto": rxpto,
+      "mse": mse,
+      "fecs": fecs,
+      "fecie": fecie,
+      "sfd32": sfd32,
+      "csfd1": csfd1,
+      "csfd0": csfd0,
+      "sfd": sfd,
+      "dw": dw,
     });
   }
 

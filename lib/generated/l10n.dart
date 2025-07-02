@@ -390,21 +390,21 @@ class S {
     );
   }
 
-  /// `OFDM Option`
-  String get OFDMOption {
+  /// `Option`
+  String get option {
     return Intl.message(
-      'OFDM Option',
-      name: 'OFDMOption',
+      'Option',
+      name: 'option',
       desc: '',
       args: [],
     );
   }
 
-  /// `OFDM MCS`
-  String get OFDMRate {
+  /// `MCS`
+  String get mcs {
     return Intl.message(
-      'OFDM MCS',
-      name: 'OFDMRate',
+      'MCS',
+      name: 'mcs',
       desc: '',
       args: [],
     );
@@ -635,6 +635,206 @@ class S {
     return Intl.message(
       'Kaonic Client',
       name: 'connectivityTypeKaonic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bandwidth Time`
+  String get bandwidthTime {
+    return Intl.message(
+      'Bandwidth Time',
+      name: 'bandwidthTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modulation Index Scale`
+  String get modulationIndexScale {
+    return Intl.message(
+      'Modulation Index Scale',
+      name: 'modulationIndexScale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OFDM`
+  String get ofdm {
+    return Intl.message(
+      'OFDM',
+      name: 'ofdm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FSK`
+  String get fsk {
+    return Intl.message(
+      'FSK',
+      name: 'fsk',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modulation Index`
+  String get modulationIndex {
+    return Intl.message(
+      'Modulation Index',
+      name: 'modulationIndex',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modulation Order`
+  String get modulationOrder {
+    return Intl.message(
+      'Modulation Order',
+      name: 'modulationOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Symbol Rate`
+  String get symbolRate {
+    return Intl.message(
+      'Symbol Rate',
+      name: 'symbolRate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preamble detection does not take RSSI values into account`
+  String get noRssi {
+    return Intl.message(
+      'Preamble detection does not take RSSI values into account',
+      name: 'noRssi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preamble detection takes RSSI values into account.`
+  String get withRssi {
+    return Intl.message(
+      'Preamble detection takes RSSI values into account.',
+      name: 'withRssi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PDTM`
+  String get pdtm {
+    return Intl.message(
+      'PDTM',
+      name: 'pdtm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `RXO`
+  String get rxo {
+    return Intl.message(
+      'RXO',
+      name: 'rxo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `RXPTO`
+  String get rxpto {
+    return Intl.message(
+      'RXPTO',
+      name: 'rxpto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MSE`
+  String get mse {
+    return Intl.message(
+      'MSE',
+      name: 'mse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FECS`
+  String get fecs {
+    return Intl.message(
+      'FECS',
+      name: 'fecs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FECIE`
+  String get fecie {
+    return Intl.message(
+      'FECIE',
+      name: 'fecie',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SFD32`
+  String get sfd32 {
+    return Intl.message(
+      'SFD32',
+      name: 'sfd32',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CSFD1`
+  String get csfd1 {
+    return Intl.message(
+      'CSFD1',
+      name: 'csfd1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CSFD0`
+  String get csfd0 {
+    return Intl.message(
+      'CSFD0',
+      name: 'csfd0',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SFD`
+  String get sfd {
+    return Intl.message(
+      'SFD',
+      name: 'sfd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `DW`
+  String get dw {
+    return Intl.message(
+      'DW',
+      name: 'dw',
       desc: '',
       args: [],
     );

@@ -100,7 +100,7 @@ class MainActivity : FlutterActivity() {
                     result.success(KaonicService.myAddress)
                 }
 
-                "sendConfigure" -> {
+                "sendConfig", "sendConfigure" -> {
                     try {
                         val mcs = call.argument<Int>("mcs") ?: 0
                         val optionNumber = call.argument<Int>("optionNumber") ?: 0
@@ -109,6 +109,22 @@ class MainActivity : FlutterActivity() {
                         val channel = call.argument<Int>("channel") ?: 0
                         val channelSpacing = call.argument<Int>("channelSpacing") ?: 0
                         val txPower = call.argument<Int>("txPower") ?: 0
+                        val bt = call.argument<Int>("bt") ?: 0
+                        val midxs = call.argument<Int>("midxs") ?: 0
+                        val midxsBits = call.argument<Int>("midxsBits") ?: 0
+                        val mord = call.argument<Int>("mord") ?: 0
+                        val srate = call.argument<Int>("srate") ?: 0
+                        val pdtm = call.argument<Int>("pdtm") ?: 0
+                        val rxo = call.argument<Int>("rxo") ?: 0
+                        val rxpto = call.argument<Int>("rxpto") ?: 0
+                        val mse = call.argument<Int>("mse") ?: 0
+                        val fecs = call.argument<Int>("fecs") ?: 0
+                        val fecie = call.argument<Int>("fecie") ?: 0
+                        val sfd32 = call.argument<Int>("sfd32") ?: 0
+                        val csfd1 = call.argument<Int>("csfd1") ?: 0
+                        val csfd0 = call.argument<Int>("csfd0") ?: 0
+                        val sfd = call.argument<Int>("sfd") ?: 0
+                        val dw = call.argument<Int>("dw") ?: 0
 
                         KaonicService.sendConfig(
                             mcs,
@@ -117,13 +133,29 @@ class MainActivity : FlutterActivity() {
                             frequency,
                             channel,
                             channelSpacing,
-                            txPower
+                            txPower,
+                            bt,
+                            midxs,
+                            midxsBits,
+                            mord,
+                            srate,
+                            pdtm,
+                            rxo,
+                            rxpto,
+                            mse,
+                            fecs,
+                            fecie,
+                            sfd32,
+                            csfd1,
+                            csfd0,
+                            sfd,
+                            dw
                         )
 
                         result.success(true)
                     } catch (ex: Exception) {
-                        Log.d("sendConfigure", ex.toString())
-                        result.error("sendConfigure", ex.message, "")
+                        Log.d("sendConfig", ex.toString())
+                        result.error("sendConfig", ex.message, "")
                     }
                 }
                 "startService" -> {
