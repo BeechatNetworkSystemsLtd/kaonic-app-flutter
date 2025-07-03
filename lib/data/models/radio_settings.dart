@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:kaonic/data/extensions/fsk_bandwidth_extension.dart';
 import 'package:kaonic/data/extensions/midsx_extension.dart';
 import 'package:kaonic/data/extensions/midx_bits_extension.dart';
+import 'package:kaonic/data/models/preset_models/radio_preset_model.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:kaonic/data/models/settings.dart';
 import 'package:kaonic/service/kaonic_communication_service.dart';
@@ -219,6 +220,46 @@ class RadioSettings {
       fskpe1: fskpe1 ?? this.fskpe1,
       fskpe2: fskpe2 ?? this.fskpe2,
       preambleLength: preambleLength ?? this.preambleLength,
+    );
+  }
+
+  RadioSettings fromRadioPreset(RadioPresetModel radioPreset) {
+    final data = radioPreset.phyConfig.data;
+
+    return copyWith(
+      id: id,
+      frequency: radioPreset.freq.toString(),
+      txPower: radioPreset.txPower.toString(),
+      channel: channel,
+      btIndex: data.btIndex ?? btIndex,
+      midxsIndex: data.midxsIndex ?? midxsIndex,
+      midxsBitsIndex: data.midxsBitsIndex ?? midxsBitsIndex,
+      channelSpacing: radioPreset.channelSpacing.toString(),
+      optionIndex: data.optIndex ?? optionIndex,
+      rateIndex: rateIndex,
+      mordIndex: data.mordIndex ?? mordIndex,
+      srateIndex: data.srateIndex ?? srateIndex,
+      pdtmIndex: data.pdtmIndex ?? pdtmIndex,
+      rxoIndex: data.rxoIndex ?? rxoIndex,
+      rxptoIndex: data.rxptoIndex ?? rxptoIndex,
+      mseIndex: data.mseIndex ?? mseIndex,
+      fecsIndex: data.fecsIndex ?? fecsIndex,
+      fecieIndex: fecieIndex,
+      sfd32Index: data.sfd32Index ?? sfd32Index,
+      csfd1Index: data.csfd1Index ?? csfd1Index,
+      csfd0Index: data.csfd0Index ?? csfd0Index,
+      sfdIndex: data.sfdIndex ?? sfdIndex,
+      dwIndex: data.dwIndex ?? dwIndex,
+      freqInversion: data.freqInversion ?? freqInversion,
+      preambleInversion: data.preambleInversion ?? preambleInversion,
+      sftq: data.sftq ?? sftq,
+      rawbit: data.rawbit ?? rawbit,
+      pe: data.pe ?? pe,
+      en: en,
+      fskpe0: fskpe0,
+      fskpe1: fskpe1,
+      fskpe2: fskpe2,
+      preambleLength: data.preambleLength ?? preambleLength,
     );
   }
 
