@@ -111,7 +111,7 @@ class MainActivity : FlutterActivity() {
                         val txPower = call.argument<Int>("txPower") ?: 0
                         val bt = call.argument<Int>("bt") ?: 0
                         val midxs = call.argument<Int>("midxs") ?: 0
-                        val midxsBits = call.argument<Int>("midxsBits") ?: 0
+                        val midxsBits = call.argument<Int>("midx") ?: 0
                         val mord = call.argument<Int>("mord") ?: 0
                         val srate = call.argument<Int>("srate") ?: 0
                         val pdtm = call.argument<Int>("pdtm") ?: 0
@@ -125,6 +125,16 @@ class MainActivity : FlutterActivity() {
                         val csfd0 = call.argument<Int>("csfd0") ?: 0
                         val sfd = call.argument<Int>("sfd") ?: 0
                         val dw = call.argument<Int>("dw") ?: 0
+                        val freqInversion = call.argument<Boolean>("freq_inversion") ?: false
+                        val preambleInversion = call.argument<Boolean>("preamble_inversion") ?: false
+                        val sftq = call.argument<Boolean>("sftq") ?: false
+                        val rawbit = call.argument<Boolean>("rawbit") ?: false
+                        val pe = call.argument<Boolean>("pe") ?: false
+                        val en = call.argument<Boolean>("en") ?: false
+                        val fskpe0 = call.argument<Int>("fskpe0") ?: 0
+                        val fskpe1 = call.argument<Int>("fskpe1") ?: 0
+                        val fskpe2 = call.argument<Int>("fskpe2") ?: 0
+                        val preambleLength = call.argument<Int>("preamble_length") ?: 0
 
                         KaonicService.sendConfig(
                             mcs,
@@ -149,7 +159,17 @@ class MainActivity : FlutterActivity() {
                             csfd1,
                             csfd0,
                             sfd,
-                            dw
+                            dw,
+                            fskpe0,
+                            fskpe1,
+                            fskpe2,
+                            preambleLength,
+                            freqInversion,
+                            preambleInversion,
+                            rawbit,
+                            pe,
+                            en,
+                            sftq
                         )
 
                         result.success(true)

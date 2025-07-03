@@ -53,6 +53,14 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdateCSFD0>(_onUpdateCSFD0);
     on<UpdateSFD>(_onUpdateSFD);
     on<UpdateDW>(_onUpdateDW);
+    on<UpdateFreqInversion>(_onUpdateFreqInversion);
+    on<UpdatePreambleInversion>(_onUpdatePreambleInversion);
+    on<UpdateSftq>(_onUpdateSftq);
+    on<UpdateRawbit>(_onUpdateRawbit);
+    on<UpdatePe>(_onUpdatePe);
+    on<UpdateEn>(_onUpdateEn);
+    on<UpdateFSKPE>(_onUpdateFSKPE);
+    on<UpdatePreambleLenght>(_onUpdatePreambleLenght);
   }
   final KaonicCommunicationService _communicationService;
 
@@ -82,6 +90,16 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       csfd0: state.radioSettings.csfd0.value,
       sfd: state.radioSettings.sfd.value,
       dw: state.radioSettings.dw.value,
+      freqInversion: state.radioSettings.freqInversion,
+      preambleInversion: state.radioSettings.preambleInversion,
+      sftq: state.radioSettings.sftq,
+      rawbit: state.radioSettings.rawbit,
+      pe: state.radioSettings.pe,
+      en: state.radioSettings.en,
+      fskpe0: state.radioSettings.fskpe0,
+      fskpe1: state.radioSettings.fskpe1,
+      fskpe2: state.radioSettings.fskpe2,
+      preambleLength: state.radioSettings.preambleLength,
     );
 
     _radioSettingsRepository.saveSettings(
@@ -381,6 +399,121 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
             : state.radioSettingsA,
         radioSettingsB: !isRfa
             ? state.radioSettingsB.copyWith(dwIndex: event.dw.index)
+            : state.radioSettingsB,
+      ),
+    );
+  }
+
+  void _onUpdateFreqInversion(
+      UpdateFreqInversion event, Emitter<SettingsState> emit) {
+    emit(
+      state.copyWith(
+        radioSettingsA: isRfa
+            ? state.radioSettingsA.copyWith(freqInversion: event.value)
+            : state.radioSettingsA,
+        radioSettingsB: !isRfa
+            ? state.radioSettingsB.copyWith(freqInversion: event.value)
+            : state.radioSettingsB,
+      ),
+    );
+  }
+
+  void _onUpdatePreambleInversion(
+      UpdatePreambleInversion event, Emitter<SettingsState> emit) {
+    emit(
+      state.copyWith(
+        radioSettingsA: isRfa
+            ? state.radioSettingsA.copyWith(preambleInversion: event.value)
+            : state.radioSettingsA,
+        radioSettingsB: !isRfa
+            ? state.radioSettingsB.copyWith(preambleInversion: event.value)
+            : state.radioSettingsB,
+      ),
+    );
+  }
+
+  void _onUpdateSftq(UpdateSftq event, Emitter<SettingsState> emit) {
+    emit(
+      state.copyWith(
+        radioSettingsA: isRfa
+            ? state.radioSettingsA.copyWith(sftq: event.value)
+            : state.radioSettingsA,
+        radioSettingsB: !isRfa
+            ? state.radioSettingsB.copyWith(sftq: event.value)
+            : state.radioSettingsB,
+      ),
+    );
+  }
+
+  void _onUpdateRawbit(UpdateRawbit event, Emitter<SettingsState> emit) {
+    emit(
+      state.copyWith(
+        radioSettingsA: isRfa
+            ? state.radioSettingsA.copyWith(rawbit: event.value)
+            : state.radioSettingsA,
+        radioSettingsB: !isRfa
+            ? state.radioSettingsB.copyWith(rawbit: event.value)
+            : state.radioSettingsB,
+      ),
+    );
+  }
+
+  void _onUpdatePe(UpdatePe event, Emitter<SettingsState> emit) {
+    emit(
+      state.copyWith(
+        radioSettingsA: isRfa
+            ? state.radioSettingsA.copyWith(pe: event.value)
+            : state.radioSettingsA,
+        radioSettingsB: !isRfa
+            ? state.radioSettingsB.copyWith(pe: event.value)
+            : state.radioSettingsB,
+      ),
+    );
+  }
+
+  void _onUpdateEn(UpdateEn event, Emitter<SettingsState> emit) {
+    emit(
+      state.copyWith(
+        radioSettingsA: isRfa
+            ? state.radioSettingsA.copyWith(en: event.value)
+            : state.radioSettingsA,
+        radioSettingsB: !isRfa
+            ? state.radioSettingsB.copyWith(en: event.value)
+            : state.radioSettingsB,
+      ),
+    );
+  }
+
+  void _onUpdateFSKPE(UpdateFSKPE event, Emitter<SettingsState> emit) {
+    emit(
+      state.copyWith(
+        radioSettingsA: isRfa
+            ? state.radioSettingsA.copyWith(
+                fskpe0: event.fskpe0,
+                fskpe1: event.fskpe1,
+                fskpe2: event.fskpe2,
+              )
+            : state.radioSettingsA,
+        radioSettingsB: !isRfa
+            ? state.radioSettingsB.copyWith(
+                fskpe0: event.fskpe0,
+                fskpe1: event.fskpe1,
+                fskpe2: event.fskpe2,
+              )
+            : state.radioSettingsB,
+      ),
+    );
+  }
+
+  void _onUpdatePreambleLenght(
+      UpdatePreambleLenght event, Emitter<SettingsState> emit) {
+    emit(
+      state.copyWith(
+        radioSettingsA: isRfa
+            ? state.radioSettingsA.copyWith(preambleLength: event.value)
+            : state.radioSettingsA,
+        radioSettingsB: !isRfa
+            ? state.radioSettingsB.copyWith(preambleLength: event.value)
             : state.radioSettingsB,
       ),
     );

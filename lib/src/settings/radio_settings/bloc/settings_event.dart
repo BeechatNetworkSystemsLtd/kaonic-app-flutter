@@ -148,3 +148,51 @@ class UpdateDW extends SettingsEvent {
 
   UpdateDW(this.dw);
 }
+
+class UpdateFreqInversion extends SettingsEvent {
+  final bool value;
+
+  UpdateFreqInversion(this.value);
+}
+
+class UpdatePreambleInversion extends SettingsEvent {
+  final bool value;
+  UpdatePreambleInversion(this.value);
+}
+
+class UpdateSftq extends SettingsEvent {
+  final bool value;
+  UpdateSftq(this.value);
+}
+
+class UpdateRawbit extends SettingsEvent {
+  final bool value;
+  UpdateRawbit(this.value);
+}
+
+class UpdatePe extends SettingsEvent {
+  final bool value;
+  UpdatePe(this.value);
+}
+
+class UpdateEn extends SettingsEvent {
+  final bool value;
+  UpdateEn(this.value);
+}
+
+class UpdateFSKPE extends SettingsEvent {
+  final int? fskpe0;
+  final int? fskpe1;
+  final int? fskpe2;
+  UpdateFSKPE({
+    this.fskpe0,
+    this.fskpe1,
+    this.fskpe2,
+  });
+}
+
+class UpdatePreambleLenght extends SettingsEvent {
+  final int value;
+
+  UpdatePreambleLenght(this.value);
+}

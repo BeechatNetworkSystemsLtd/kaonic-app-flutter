@@ -151,7 +151,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(5, 5682150587337205642),
     name: 'RadioSettings',
-    lastPropertyId: const obx_int.IdUid(23, 4757170100482921805),
+    lastPropertyId: const obx_int.IdUid(33, 5038736048883723188),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -290,6 +290,66 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(23, 4757170100482921805),
         name: 'dwIndex',
         type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(24, 7188624748287602854),
+        name: 'freqInversion',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(25, 3546744950328064703),
+        name: 'preambleInversion',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(26, 771053965259570932),
+        name: 'sftq',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(27, 1484971056269303843),
+        name: 'rawbit',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(28, 1779876996382457318),
+        name: 'pe',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(29, 2597559626782214802),
+        name: 'en',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(30, 632923781530440974),
+        name: 'fskpe0',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(31, 2830949805580950188),
+        name: 'fskpe1',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(32, 3612565437145912507),
+        name: 'fskpe2',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(33, 5038736048883723188),
+        name: 'preambleLength',
+        type: 6,
         flags: 0,
       ),
     ],
@@ -575,7 +635,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final frequencyOffset = fbb.writeString(object.frequency);
         final txPowerOffset = fbb.writeString(object.txPower);
         final channelSpacingOffset = fbb.writeString(object.channelSpacing);
-        fbb.startTable(24);
+        fbb.startTable(34);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, frequencyOffset);
         fbb.addOffset(2, txPowerOffset);
@@ -599,6 +659,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addInt32(20, object.csfd0Index);
         fbb.addInt32(21, object.sfdIndex);
         fbb.addInt32(22, object.dwIndex);
+        fbb.addBool(23, object.freqInversion);
+        fbb.addBool(24, object.preambleInversion);
+        fbb.addBool(25, object.sftq);
+        fbb.addBool(26, object.rawbit);
+        fbb.addBool(27, object.pe);
+        fbb.addBool(28, object.en);
+        fbb.addInt64(29, object.fskpe0);
+        fbb.addInt64(30, object.fskpe1);
+        fbb.addInt64(31, object.fskpe2);
+        fbb.addInt64(32, object.preambleLength);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -734,6 +804,66 @@ obx_int.ModelDefinition getObjectBoxModel() {
           48,
           0,
         );
+        final freqInversionParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          50,
+          false,
+        );
+        final preambleInversionParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          52,
+          false,
+        );
+        final sftqParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          54,
+          false,
+        );
+        final rawbitParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          56,
+          false,
+        );
+        final peParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          58,
+          false,
+        );
+        final enParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          60,
+          false,
+        );
+        final fskpe0Param = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          62,
+          0,
+        );
+        final fskpe1Param = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          64,
+          0,
+        );
+        final fskpe2Param = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          66,
+          0,
+        );
+        final preambleLengthParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          68,
+          0,
+        );
         final object = RadioSettings(
           id: idParam,
           frequency: frequencyParam,
@@ -758,6 +888,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
           csfd0Index: csfd0IndexParam,
           sfdIndex: sfdIndexParam,
           dwIndex: dwIndexParam,
+          freqInversion: freqInversionParam,
+          preambleInversion: preambleInversionParam,
+          sftq: sftqParam,
+          rawbit: rawbitParam,
+          pe: peParam,
+          en: enParam,
+          fskpe0: fskpe0Param,
+          fskpe1: fskpe1Param,
+          fskpe2: fskpe2Param,
+          preambleLength: preambleLengthParam,
         );
 
         return object;
@@ -1012,6 +1152,56 @@ class RadioSettings_ {
   /// See [RadioSettings.dwIndex].
   static final dwIndex = obx.QueryIntegerProperty<RadioSettings>(
     _entities[4].properties[22],
+  );
+
+  /// See [RadioSettings.freqInversion].
+  static final freqInversion = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[23],
+  );
+
+  /// See [RadioSettings.preambleInversion].
+  static final preambleInversion = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[24],
+  );
+
+  /// See [RadioSettings.sftq].
+  static final sftq = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[25],
+  );
+
+  /// See [RadioSettings.rawbit].
+  static final rawbit = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[26],
+  );
+
+  /// See [RadioSettings.pe].
+  static final pe = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[27],
+  );
+
+  /// See [RadioSettings.en].
+  static final en = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[28],
+  );
+
+  /// See [RadioSettings.fskpe0].
+  static final fskpe0 = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[29],
+  );
+
+  /// See [RadioSettings.fskpe1].
+  static final fskpe1 = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[30],
+  );
+
+  /// See [RadioSettings.fskpe2].
+  static final fskpe2 = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[31],
+  );
+
+  /// See [RadioSettings.preambleLength].
+  static final preambleLength = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[32],
   );
 }
 

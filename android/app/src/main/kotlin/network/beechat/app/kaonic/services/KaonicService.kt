@@ -118,7 +118,17 @@ object KaonicService : KaonicEventListener {
         csfd1: Int,
         csfd0: Int,
         sfd: Int,
-        dw: Int
+        dw: Int,
+        fskpe0: Int,
+        fskpe1: Int,
+        fskpe2: Int,
+        preambleLength: Int,
+        freqInversion: Boolean,
+        preambleInversion: Boolean,
+        rawbit: Boolean,
+        pe: Boolean,
+        en: Boolean,
+        sftq: Boolean,
     ) {
         kaonicCommunicationHandler.sendConfig(
             mcs,
@@ -128,22 +138,7 @@ object KaonicService : KaonicEventListener {
             channel,
             channelSpacing,
             txPower,
-            bt,
-            midxs,
-            midxsBits,
-            mord,
-            srate,
-            pdtm,
-            rxo,
-            rxpto,
-            mse,
-            fecs,
-            fecie,
-            sfd32,
-            csfd1,
-            csfd0,
-            sfd,
-            dw
+
         )
     }
 

@@ -46,6 +46,16 @@ class RadioSettings {
   int sfdIndex;
   @Property(type: PropertyType.int)
   int dwIndex;
+  final bool freqInversion;
+  final bool preambleInversion;
+  final bool sftq;
+  final bool rawbit;
+  final bool pe;
+  final bool en;
+  final int fskpe0;
+  final int fskpe1;
+  final int fskpe2;
+  final int preambleLength;
 
   @Transient()
   OFDMOptions get option => OFDMOptions.values[optionIndex];
@@ -108,6 +118,16 @@ class RadioSettings {
     this.csfd0Index = 0,
     this.sfdIndex = 0,
     this.dwIndex = 0,
+    this.freqInversion = false,
+    this.preambleInversion = false,
+    this.sftq = false,
+    this.rawbit = false,
+    this.pe = false,
+    this.en = false,
+    this.fskpe0 = 0x0,
+    this.fskpe1 = 0x0,
+    this.fskpe2 = 0x0,
+    this.preambleLength = 0x0,
   });
 
   RadioSettings copyWith({
@@ -149,6 +169,16 @@ class RadioSettings {
     CSFD0Option? csfd0,
     SFDOption? sfd,
     DWOption? dw,
+    bool? freqInversion,
+    bool? preambleInversion,
+    bool? sftq,
+    bool? rawbit,
+    bool? pe,
+    bool? en,
+    int? fskpe0,
+    int? fskpe1,
+    int? fskpe2,
+    int? preambleLength,
   }) {
     return RadioSettings(
       id: id ?? this.id,
@@ -174,6 +204,16 @@ class RadioSettings {
       csfd0Index: csfd0Index ?? csfd0?.index ?? this.csfd0Index,
       sfdIndex: sfdIndex ?? sfd?.index ?? this.sfdIndex,
       dwIndex: dwIndex ?? dw?.index ?? this.dwIndex,
+      freqInversion: freqInversion ?? this.freqInversion,
+      preambleInversion: preambleInversion ?? this.preambleInversion,
+      sftq: sftq ?? this.sftq,
+      rawbit: rawbit ?? this.rawbit,
+      pe: pe ?? this.pe,
+      en: en ?? this.en,
+      fskpe0: fskpe0 ?? this.fskpe0,
+      fskpe1: fskpe1 ?? this.fskpe1,
+      fskpe2: fskpe2 ?? this.fskpe2,
+      preambleLength: preambleLength ?? this.preambleLength,
     );
   }
 
@@ -202,6 +242,16 @@ class RadioSettings {
       'csfd0Index': csfd0Index,
       'sfdIndex': sfdIndex,
       'dwIndex': dwIndex,
+      'freq_inversion': freqInversion,
+      'preamble_inversion': preambleInversion,
+      'sftq': sftq,
+      'rawbit': rawbit,
+      'pe': pe,
+      'en': en,
+      'fskpe0': fskpe0,
+      'fskpe1': fskpe1,
+      'fskpe2': fskpe2,
+      'preambleLength': preambleLength,
     };
   }
 
@@ -232,6 +282,16 @@ class RadioSettings {
       csfd0Index: json['csfd0Index'] ?? 0,
       sfdIndex: json['sfdIndex'] ?? 0,
       dwIndex: json['dwIndex'] ?? 0,
+      freqInversion: json['freq_inversion'],
+      preambleInversion: json['preamble_inversion'],
+      sftq: json['sftq'],
+      rawbit: json['rawbit'],
+      pe: json['pe'],
+      en: json['en'],
+      fskpe0: json['fskpe0'],
+      fskpe1: json['fskpe1'],
+      fskpe2: json['fskpe2'],
+      preambleLength: json['preambleLength'],
     );
   }
 }

@@ -92,6 +92,16 @@ class KaonicCommunicationService {
     required int csfd0,
     required int sfd,
     required int dw,
+    required bool freqInversion,
+    required bool preambleInversion,
+    required bool sftq,
+    required bool rawbit,
+    required bool pe,
+    required bool en,
+    required int fskpe0,
+    required int fskpe1,
+    required int fskpe2,
+    required int preambleLength,
   }) {
     kaonicMethodChannel.invokeMethod('sendConfig', {
       "mcs": mcs,
@@ -103,7 +113,7 @@ class KaonicCommunicationService {
       "txPower": txPower,
       "bt": bt,
       "midxs": midxs,
-      "midxsBits": midxsBits,
+      "midx": midxsBits,
       "mord": mord,
       "srate": srate,
       "pdtm": pdtm,
@@ -117,6 +127,16 @@ class KaonicCommunicationService {
       "csfd0": csfd0,
       "sfd": sfd,
       "dw": dw,
+      "freq_inversion": freqInversion,
+      "preamble_inversion": preambleInversion,
+      "sftq": sftq,
+      "rawbit": rawbit,
+      "pe": pe,
+      "en": en,
+      "fskpe0": fskpe0,
+      "fskpe1": fskpe1,
+      "fskpe2": fskpe2,
+      "preamble_length": preambleLength,
     });
   }
 

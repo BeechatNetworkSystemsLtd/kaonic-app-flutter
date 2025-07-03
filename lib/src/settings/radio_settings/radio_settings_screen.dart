@@ -62,6 +62,7 @@ class RadioSettingsScreen extends StatelessWidget {
                                       .add(UpdateRadioType(value));
                                 },
                                 value: value,
+                                borderRadius: 12,
                                 groupValue: state.radioSettingsType,
                               ),
                             ),
@@ -230,7 +231,7 @@ class _RadioSettingsWidgetState extends State<_RadioSettingsWidget> {
                       ))),
               SizedBox(height: 8),
               OfdmSettingWidget(),
-              FskSettingWidget(),
+              FskSettingWidget(radioSettings: state.radioSettings),
             ],
           ),
         );

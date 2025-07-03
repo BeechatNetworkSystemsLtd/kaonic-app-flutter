@@ -77,5 +77,13 @@
     "csfd1": "CSFD1",
     "csfd0": "CSFD0",
     "sfd": "SFD",
-    "dw": "DW"
+    "dw": "DW",
+    "frequencyInversion": "Frequency Inversion",
+    "preambleInversion": "Preamble Inversion",
+    "sftq": "SFTQ",
+    "rawbit": "RAWBIT",
+    "pe": "PE",
+    "en": "EN",
+    "preemphasis": "Preemphasis",
+    "preambleLength": "Preamble Length"
 }

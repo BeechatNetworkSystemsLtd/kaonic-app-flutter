@@ -839,6 +839,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Frequency Inversion`
+  String get frequencyInversion {
+    return Intl.message(
+      'Frequency Inversion',
+      name: 'frequencyInversion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preamble Inversion`
+  String get preambleInversion {
+    return Intl.message(
+      'Preamble Inversion',
+      name: 'preambleInversion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SFTQ`
+  String get sftq {
+    return Intl.message(
+      'SFTQ',
+      name: 'sftq',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `RAWBIT`
+  String get rawbit {
+    return Intl.message(
+      'RAWBIT',
+      name: 'rawbit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PE`
+  String get pe {
+    return Intl.message(
+      'PE',
+      name: 'pe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `EN`
+  String get en {
+    return Intl.message(
+      'EN',
+      name: 'en',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preemphasis`
+  String get preemphasis {
+    return Intl.message(
+      'Preemphasis',
+      name: 'preemphasis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preamble Length`
+  String get preambleLength {
+    return Intl.message(
+      'Preamble Length',
+      name: 'preambleLength',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -44,9 +44,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "csfd1": MessageLookupByLibrary.simpleMessage("CSFD1"),
         "deviceVersion": MessageLookupByLibrary.simpleMessage("Device version"),
         "dw": MessageLookupByLibrary.simpleMessage("DW"),
+        "en": MessageLookupByLibrary.simpleMessage("EN"),
         "enterPasscode": MessageLookupByLibrary.simpleMessage("Enter passcode"),
         "fecie": MessageLookupByLibrary.simpleMessage("FECIE"),
         "fecs": MessageLookupByLibrary.simpleMessage("FECS"),
+        "frequencyInversion":
+            MessageLookupByLibrary.simpleMessage("Frequency Inversion"),
         "fsk": MessageLookupByLibrary.simpleMessage("FSK"),
         "hint": MessageLookupByLibrary.simpleMessage("type..."),
         "invalidPasscode":
@@ -102,10 +105,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "passcodeNotMatch":
             MessageLookupByLibrary.simpleMessage("Passcode did not match"),
         "pdtm": MessageLookupByLibrary.simpleMessage("PDTM"),
+        "pe": MessageLookupByLibrary.simpleMessage("PE"),
         "pickFile": MessageLookupByLibrary.simpleMessage("Pick File"),
         "port": MessageLookupByLibrary.simpleMessage("Port"),
+        "preambleInversion":
+            MessageLookupByLibrary.simpleMessage("Preamble Inversion"),
+        "preambleLength":
+            MessageLookupByLibrary.simpleMessage("Preamble Length"),
+        "preemphasis": MessageLookupByLibrary.simpleMessage("Preemphasis"),
         "radio": MessageLookupByLibrary.simpleMessage("Radio"),
         "radioSettings": MessageLookupByLibrary.simpleMessage("Radio Settings"),
+        "rawbit": MessageLookupByLibrary.simpleMessage("RAWBIT"),
         "remote": MessageLookupByLibrary.simpleMessage("remote"),
         "repeatPasscode":
             MessageLookupByLibrary.simpleMessage("Repeat passcode"),
@@ -115,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "sfd": MessageLookupByLibrary.simpleMessage("SFD"),
         "sfd32": MessageLookupByLibrary.simpleMessage("SFD32"),
+        "sftq": MessageLookupByLibrary.simpleMessage("SFTQ"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
         "softwareUpdate":
             MessageLookupByLibrary.simpleMessage("Software Update"),
