@@ -27,7 +27,8 @@ class CustomSelectedButton<T> extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: bgColor,
+        color: isSelected ? bgColor : null,
+        border: isSelected ? null : Border.all(color: bgColor, width: 3),
         borderRadius: BorderRadius.circular(borderRadius ?? 100),
       ),
       child: InkWell(
@@ -43,12 +44,15 @@ class CustomSelectedButton<T> extends StatelessWidget {
               ? Align(
                   child: Text(
                     text,
-                    style: TextStyles.text18.copyWith(color: AppColors.black),
+                    style: TextStyles.text18.copyWith(
+                        color: isSelected ? AppColors.black : Colors.white,
+                        fontWeight: isSelected ? FontWeight.bold : null),
                   ),
                 )
               : Text(
                   text,
-                  style: TextStyles.text18.copyWith(color: AppColors.black),
+                  style: TextStyles.text18.copyWith(
+                      color: isSelected ? AppColors.black : Colors.white),
                 ),
         ),
       ),

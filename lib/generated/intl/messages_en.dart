@@ -104,6 +104,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "otaVersion": MessageLookupByLibrary.simpleMessage("OTA version"),
         "passcodeNotMatch":
             MessageLookupByLibrary.simpleMessage("Passcode did not match"),
+        "pdt": MessageLookupByLibrary.simpleMessage(
+            "Preamble Detection Threshold"),
         "pdtm": MessageLookupByLibrary.simpleMessage("PDTM"),
         "pe": MessageLookupByLibrary.simpleMessage("PE"),
         "pickFile": MessageLookupByLibrary.simpleMessage("Pick File"),
@@ -122,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "rxo": MessageLookupByLibrary.simpleMessage("RXO"),
         "rxpto": MessageLookupByLibrary.simpleMessage("RXPTO"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "sdtd": MessageLookupByLibrary.simpleMessage("SFD Detection Threshold"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "sfd": MessageLookupByLibrary.simpleMessage("SFD"),
         "sfd32": MessageLookupByLibrary.simpleMessage("SFD32"),

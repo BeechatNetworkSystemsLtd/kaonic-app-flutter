@@ -4,11 +4,13 @@ part of 'settings_bloc.dart';
 class SettingsState {
   SettingsState({
     this.radioSettingsType = RadioSettingsType.rfa,
+    this.phyConfig = PhyConfigTypeEnum.ofdm,
     required this.radioSettingsA,
     required this.radioSettingsB,
   });
 
   final RadioSettingsType radioSettingsType;
+  final PhyConfigTypeEnum phyConfig;
   final RadioSettings radioSettingsA;
   final RadioSettings radioSettingsB;
 
@@ -30,11 +32,13 @@ class SettingsState {
 
   SettingsState copyWith({
     RadioSettingsType? radioSettingsType,
+    PhyConfigTypeEnum? phyConfig,
     RadioSettings? radioSettingsA,
     RadioSettings? radioSettingsB,
   }) {
     return SettingsState(
       radioSettingsA: radioSettingsA ?? this.radioSettingsA,
+      phyConfig: phyConfig ?? this.phyConfig,
       radioSettingsB: radioSettingsB ?? this.radioSettingsB,
       radioSettingsType: radioSettingsType ?? this.radioSettingsType,
     );

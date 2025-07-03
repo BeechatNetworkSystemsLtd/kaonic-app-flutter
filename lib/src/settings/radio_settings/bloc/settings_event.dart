@@ -53,6 +53,12 @@ class UpdateRadioType extends SettingsEvent {
   UpdateRadioType(this.radioSettingsType);
 }
 
+class UpdateRadioOfdmFckType extends SettingsEvent {
+  final PhyConfigTypeEnum phyConfig;
+
+  UpdateRadioOfdmFckType(this.phyConfig);
+}
+
 class UpdateBandwidthTime extends SettingsEvent {
   final FSKBandwidthTime bandwidthTime;
 
@@ -141,6 +147,16 @@ class UpdateSFD extends SettingsEvent {
   final SFDOption sfd;
 
   UpdateSFD(this.sfd);
+}
+
+class UpdateSFDT extends SettingsEvent {
+  final int value;
+  UpdateSFDT(this.value);
+}
+
+class UpdatePDT extends SettingsEvent {
+  final int value;
+  UpdatePDT(this.value);
 }
 
 class UpdateDW extends SettingsEvent {

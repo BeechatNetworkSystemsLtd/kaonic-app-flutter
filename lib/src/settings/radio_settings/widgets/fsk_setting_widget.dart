@@ -31,6 +31,8 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
   late final TextEditingController _preemphasis1Controller;
   late final TextEditingController _preemphasis2Controller;
   late final TextEditingController _preambleLengthController;
+  late final TextEditingController _sfdtController;
+  late final TextEditingController _pdtController;
 
   @override
   void initState() {
@@ -43,6 +45,10 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
         TextEditingController(text: widget.radioSettings.fskpe2.toString());
     _preambleLengthController = TextEditingController(
         text: widget.radioSettings.preambleLength.toString());
+    _sfdtController =
+        TextEditingController(text: widget.radioSettings.sfdt.toString());
+    _pdtController =
+        TextEditingController(text: widget.radioSettings.pdt.toString());
   }
 
   @override
@@ -76,7 +82,6 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
           return Column(
             spacing: 16,
             children: [
-              SettingTitle(title: S.of(context).fsk),
               SettingsItem(
                 S.current.bandwidthTime,
                 child: Theme(
@@ -555,6 +560,30 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
                   onChange: (value) {
                     if (value.isEmpty) return;
                     bloc.add(UpdatePreambleLenght(int.parse(value)));
+                  },
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              SettingsItem(
+                S.current.sdtd,
+                child: MainTextField(
+                  controller: _sfdtController,
+                  hint: 'values 0 - 256',
+                  onChange: (value) {
+                    if (value.isEmpty) return;
+                    bloc.add(UpdateSFDT(int.parse(value)));
+                  },
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              SettingsItem(
+                S.current.pdt,
+                child: MainTextField(
+                  controller: _pdtController,
+                  hint: 'values 0 - 256',
+                  onChange: (value) {
+                    if (value.isEmpty) return;
+                    bloc.add(UpdatePDT(int.parse(value)));
                   },
                   keyboardType: TextInputType.number,
                 ),

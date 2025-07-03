@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kaonic/data/enums/phy_config_type_enum.dart';
 import 'package:kaonic/data/enums/radio_settings_type_enum.dart';
 import 'package:kaonic/data/extensions/radio_settings_type_extension.dart';
 import 'package:kaonic/data/models/radio_settings.dart';
@@ -30,25 +31,21 @@ class RadioSettingsScreen extends StatelessWidget {
           appBar: CustomAppbar(
             title: S.of(context).radioSettings,
           ),
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32),
-            child: MainButton(
-              label: S.of(context).save,
-              onPressed: () {
-                context.read<SettingsBloc>().add(SaveSettings());
-              },
-            ),
+          floatingActionButton: MainButton(
+            label: S.of(context).save,
+            onPressed: () {
+              context.read<SettingsBloc>().add(SaveSettings());
+            },
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: BlocBuilder<SettingsBloc, SettingsState>(
               builder: (ctxBloc, state) {
                 return Column(
-                  spacing: 24,
+                  spacing: 32,
                   children: [
-                    SizedBox.shrink(),
                     Row(
                       spacing: 25,
                       children: RadioSettingsType.values
@@ -74,7 +71,7 @@ class RadioSettingsScreen extends StatelessWidget {
                         radioSettings: state.radioSettings,
                       ),
                     ),
-                    SizedBox(height: 76),
+                    SizedBox(height: 55),
                   ],
                 );
               },
@@ -89,7 +86,6 @@ class RadioSettingsScreen extends StatelessWidget {
 class _RadioSettingsWidget extends StatefulWidget {
   final RadioSettings radioSettings;
   const _RadioSettingsWidget({
-    super.key,
     required this.radioSettings,
   });
 
@@ -229,9 +225,40 @@ class _RadioSettingsWidgetState extends State<_RadioSettingsWidget> {
                               color: Colors.white,
                             )),
                       ))),
-              SizedBox(height: 8),
-              OfdmSettingWidget(),
-              FskSettingWidget(radioSettings: state.radioSettings),
+              SizedBox(height: 2),
+              Text(
+                "Modulation Settings".toUpperCase(),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              SizedBox(height: 2),
+              Row(
+                spacing: 25,
+                children: PhyConfigTypeEnum.values
+                    .map(
+                      (value) => Expanded(
+                        child: CustomSelectedButton<PhyConfigTypeEnum>(
+                          text: value.name.toUpperCase(),
+                          onTap: (value) {
+                            context
+                                .read<SettingsBloc>()
+                                .add(UpdateRadioOfdmFckType(value));
+                          },
+                          value: value,
+                          borderRadius: 12,
+                          groupValue: state.phyConfig,
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+              switch (state.phyConfig) {
+                PhyConfigTypeEnum.ofdm => OfdmSettingWidget(),
+                PhyConfigTypeEnum.fsk =>
+                  FskSettingWidget(radioSettings: state.radioSettings),
+              }
             ],
           ),
         );

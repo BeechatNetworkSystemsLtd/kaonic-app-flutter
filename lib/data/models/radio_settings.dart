@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:kaonic/data/enums/phy_config_type_enum.dart';
 import 'package:kaonic/data/extensions/fsk_bandwidth_extension.dart';
 import 'package:kaonic/data/extensions/midsx_extension.dart';
 import 'package:kaonic/data/extensions/midx_bits_extension.dart';
+import 'package:kaonic/data/models/preset_models/phy_config_model.dart';
 import 'package:kaonic/data/models/preset_models/radio_preset_model.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:kaonic/data/models/settings.dart';
@@ -12,14 +14,21 @@ import 'package:kaonic/service/kaonic_communication_service.dart';
 class RadioSettings {
   @Id()
   int id;
+  // GENERAL
   final String frequency;
   final String txPower;
   final int channel;
   final String channelSpacing;
+  // rfa=0, rfb=1
+  final int module;
+
+  // PHY OFDM
   @Property(type: PropertyType.int)
   int optionIndex;
   @Property(type: PropertyType.int)
   int rateIndex;
+
+  //PHY FCK
   @Property(type: PropertyType.int)
   int btIndex;
   @Property(type: PropertyType.int)
@@ -62,7 +71,10 @@ class RadioSettings {
   final int fskpe1;
   final int fskpe2;
   final int preambleLength;
+  final int sfdt;
+  final int pdt;
 
+  // HELPERS
   @Transient()
   OFDMOptions get option => OFDMOptions.values[optionIndex];
   @Transient()
@@ -104,6 +116,7 @@ class RadioSettings {
     this.id = 0,
     this.frequency = KaonicCommunicationService.defaultFrequency,
     this.channelSpacing = KaonicCommunicationService.defaultChannelSpacing,
+    this.module = 1,
     this.channel = 11,
     this.optionIndex = 0,
     this.rateIndex = 6,
@@ -127,6 +140,7 @@ class RadioSettings {
     this.freqInversion = false,
     this.preambleInversion = false,
     this.sftq = false,
+    this.sfdt = 8,
     this.rawbit = false,
     this.pe = false,
     this.en = false,
@@ -134,6 +148,7 @@ class RadioSettings {
     this.fskpe1 = 0x0,
     this.fskpe2 = 0x0,
     this.preambleLength = 0x0,
+    this.pdt = 5,
   });
 
   RadioSettings copyWith({
@@ -159,6 +174,7 @@ class RadioSettings {
     int? csfd1Index,
     int? csfd0Index,
     int? sfdIndex,
+    int? sfdt,
     int? dwIndex,
     OFDMOptions? option,
     OFDMRate? rate,
@@ -185,6 +201,7 @@ class RadioSettings {
     int? fskpe1,
     int? fskpe2,
     int? preambleLength,
+    int? pdt,
   }) {
     return RadioSettings(
       id: id ?? this.id,
@@ -209,6 +226,7 @@ class RadioSettings {
       csfd1Index: csfd1Index ?? csfd1?.index ?? this.csfd1Index,
       csfd0Index: csfd0Index ?? csfd0?.index ?? this.csfd0Index,
       sfdIndex: sfdIndex ?? sfd?.index ?? this.sfdIndex,
+      sfdt: sfdt ?? this.sfdt,
       dwIndex: dwIndex ?? dw?.index ?? this.dwIndex,
       freqInversion: freqInversion ?? this.freqInversion,
       preambleInversion: preambleInversion ?? this.preambleInversion,
@@ -220,6 +238,7 @@ class RadioSettings {
       fskpe1: fskpe1 ?? this.fskpe1,
       fskpe2: fskpe2 ?? this.fskpe2,
       preambleLength: preambleLength ?? this.preambleLength,
+      pdt: pdt ?? this.pdt,
     );
   }
 
@@ -249,6 +268,7 @@ class RadioSettings {
       csfd1Index: data.csfd1Index ?? csfd1Index,
       csfd0Index: data.csfd0Index ?? csfd0Index,
       sfdIndex: data.sfdIndex ?? sfdIndex,
+      sfdt: data.sfdt ?? sfdt,
       dwIndex: data.dwIndex ?? dwIndex,
       freqInversion: data.freqInversion ?? freqInversion,
       preambleInversion: data.preambleInversion ?? preambleInversion,
@@ -259,6 +279,7 @@ class RadioSettings {
       fskpe0: fskpe0,
       fskpe1: fskpe1,
       fskpe2: fskpe2,
+      pdt: data.pdt ?? pdt,
       preambleLength: data.preambleLength ?? preambleLength,
     );
   }
@@ -287,6 +308,7 @@ class RadioSettings {
       'csfd1Index': csfd1Index,
       'csfd0Index': csfd0Index,
       'sfdIndex': sfdIndex,
+      'sfdt': sfdt,
       'dwIndex': dwIndex,
       'freq_inversion': freqInversion,
       'preamble_inversion': preambleInversion,
@@ -298,6 +320,7 @@ class RadioSettings {
       'fskpe1': fskpe1,
       'fskpe2': fskpe2,
       'preambleLength': preambleLength,
+      'pdt': pdt
     };
   }
 
@@ -327,6 +350,7 @@ class RadioSettings {
       csfd1Index: json['csfd1Index'] ?? 0,
       csfd0Index: json['csfd0Index'] ?? 0,
       sfdIndex: json['sfdIndex'] ?? 0,
+      sfdt: json['sfdt'] ?? 1,
       dwIndex: json['dwIndex'] ?? 0,
       freqInversion: json['freq_inversion'],
       preambleInversion: json['preamble_inversion'],
@@ -338,44 +362,59 @@ class RadioSettings {
       fskpe1: json['fskpe1'],
       fskpe2: json['fskpe2'],
       preambleLength: json['preambleLength'],
+      pdt: json['pdt'],
     );
   }
 
-  String toJsonStringConfig() {
+  String toJsonStringConfig(PhyConfigTypeEnum phyConfigType) {
     return jsonEncode({
-      'mcs': rateIndex,
-      'opt': optionIndex,
-      'module': 0,
       'freq': int.parse(frequency),
       'channel': channel,
       'channel_spacing': int.parse(channelSpacing),
       'tx_power': int.parse(txPower),
-      'bt': bandwidthTime.value,
-      'midxs': midxs.value,
-      'midx': midxsBits.value,
-      'mord': mord.value,
-      'srate': srate.value,
-      'pdtm': pdtm.value,
-      'rxo': rxo.value,
-      'rxpto': rxpto.value,
-      'mse': mse.value,
-      'fecs': fecs.value,
-      'fecie': fecie.value,
-      'sfd32': sfd32.value,
-      'csfd1': csfd1.value,
-      'csfd0': csfd0.value,
-      'sfd': sfd.value,
-      'dw': dw.value,
-      'fskpe0': fskpe0,
-      'fskpe1': fskpe1,
-      'fskpe2': fskpe2,
-      'preamble_length': preambleLength,
-      'freq_inversion': freqInversion,
-      'preamble_inversion': preambleInversion,
-      'rawbit': rawbit,
-      'pe': pe,
-      'en': en,
-      'sftq': sftq,
+      'module': 0,
+      'phy_config': {
+        'type': switch (phyConfigType) {
+          PhyConfigTypeEnum.ofdm => 'Ofdm',
+          PhyConfigTypeEnum.fsk => 'Fsk'
+        },
+        'data': switch (phyConfigType) {
+          PhyConfigTypeEnum.ofdm => {
+              'mcs': rateIndex,
+              'opt': optionIndex,
+            },
+          PhyConfigTypeEnum.fsk => {
+              'bt': bandwidthTime.value,
+              'midxs': midxs.value,
+              'midx': midxsBits.value,
+              'mord': mord.value,
+              'srate': srate.value,
+              'pdtm': pdtm.value,
+              'pdt': pdt,
+              'rxo': rxo.value,
+              'rxpto': rxpto.value,
+              'mse': mse.value,
+              'fecs': fecs.value,
+              'fecie': fecie.value,
+              'sfd32': sfd32.value,
+              'csfd1': csfd1.value,
+              'csfd0': csfd0.value,
+              'sfd': sfd.value,
+              'sfdt': sfdt,
+              'dw': dw.value,
+              'fskpe0': fskpe0,
+              'fskpe1': fskpe1,
+              'fskpe2': fskpe2,
+              'preamble_length': preambleLength,
+              'freq_inversion': freqInversion,
+              'preamble_inversion': preambleInversion,
+              'rawbit': rawbit,
+              'pe': pe,
+              'en': en,
+              'sftq': sftq,
+            }
+        }
+      },
     });
   }
 }

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kaonic/data/enums/phy_config_type_enum.dart';
 import 'package:kaonic/data/enums/radio_settings_type_enum.dart';
 import 'package:kaonic/data/extensions/fsk_bandwidth_extension.dart';
 import 'package:kaonic/data/extensions/midsx_extension.dart';
@@ -52,6 +55,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdateCSFD1>(_onUpdateCSFD1);
     on<UpdateCSFD0>(_onUpdateCSFD0);
     on<UpdateSFD>(_onUpdateSFD);
+    on<UpdateSFDT>(_onUpdateSFDT);
     on<UpdateDW>(_onUpdateDW);
     on<UpdateFreqInversion>(_onUpdateFreqInversion);
     on<UpdatePreambleInversion>(_onUpdatePreambleInversion);
@@ -61,12 +65,19 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdateEn>(_onUpdateEn);
     on<UpdateFSKPE>(_onUpdateFSKPE);
     on<UpdatePreambleLenght>(_onUpdatePreambleLenght);
+    on<UpdateRadioOfdmFckType>(_onUpdateRadioOfdmFck);
+    on<UpdatePDT>(_updatePDT);
   }
   final KaonicCommunicationService _communicationService;
 
   Future<void> _saveSettings(
       SaveSettings event, Emitter<SettingsState> emit) async {
-    _communicationService.sendConfig(radioSettings: state.radioSettings);
+    final jsonStr = state.radioSettings.toJsonStringConfig(state.phyConfig);
+    // print(jsonStr.substring(0, jsonStr.length ~/ 2));
+    // print(jsonStr.substring(jsonStr.length ~/ 2));
+    print(jsonStr.substring(400));
+    _communicationService.sendConfig(
+        radioSettings: state.radioSettings, configType: state.phyConfig);
 
     _radioSettingsRepository.saveSettings(
       state.radioSettingsA,
@@ -483,5 +494,33 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
             : state.radioSettingsB,
       ),
     );
+  }
+
+  FutureOr<void> _onUpdateRadioOfdmFck(
+      UpdateRadioOfdmFckType event, Emitter<SettingsState> emit) {
+    emit(state.copyWith(phyConfig: event.phyConfig));
+  }
+
+  FutureOr<void> _onUpdateSFDT(
+      UpdateSFDT event, Emitter<SettingsState> emit) async {
+    emit(state.copyWith(
+      radioSettingsA: isRfa
+          ? state.radioSettingsA.copyWith(sfdt: event.value)
+          : state.radioSettingsA,
+      radioSettingsB: !isRfa
+          ? state.radioSettingsB.copyWith(preambleLength: event.value)
+          : state.radioSettingsB,
+    ));
+  }
+
+  FutureOr<void> _updatePDT(UpdatePDT event, Emitter<SettingsState> emit) {
+    emit(state.copyWith(
+      radioSettingsA: isRfa
+          ? state.radioSettingsA.copyWith(pdt: event.value)
+          : state.radioSettingsA,
+      radioSettingsB: !isRfa
+          ? state.radioSettingsB.copyWith(pdt: event.value)
+          : state.radioSettingsB,
+    ));
   }
 }

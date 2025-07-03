@@ -5,9 +5,7 @@ import 'package:kaonic/data/models/settings.dart';
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/src/settings/radio_settings/bloc/settings_bloc.dart';
 import 'package:kaonic/src/settings/radio_settings/widgets/setting_item_with_radio.dart';
-import 'package:kaonic/src/settings/radio_settings/widgets/settings_title.dart';
 import 'package:kaonic/src/widgets/radio_button.dart';
-import 'package:kaonic/theme/text_styles.dart';
 
 class OfdmSettingWidget extends StatelessWidget {
   const OfdmSettingWidget({super.key});
@@ -20,7 +18,6 @@ class OfdmSettingWidget extends StatelessWidget {
         return Column(
           spacing: 16,
           children: [
-            SettingTitle(title: S.of(context).ofdm),
             ItemWithRadio(
               label: S.current.option,
               list: OFDMOptions.values

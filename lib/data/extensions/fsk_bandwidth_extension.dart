@@ -203,12 +203,12 @@ extension FECIEOptionExtension on FECIEOption {
     }
   }
 
-  int get value {
+  bool get value {
     switch (this) {
       case FECIEOption.disabled:
-        return 0x0;
+        return false;
       case FECIEOption.enabled:
-        return 0x1;
+        return true;
     }
   }
 }

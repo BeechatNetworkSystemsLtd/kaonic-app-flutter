@@ -919,6 +919,26 @@ class S {
       args: [],
     );
   }
+
+  /// `SFD Detection Threshold`
+  String get sdtd {
+    return Intl.message(
+      'SFD Detection Threshold',
+      name: 'sdtd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preamble Detection Threshold`
+  String get pdt {
+    return Intl.message(
+      'Preamble Detection Threshold',
+      name: 'pdt',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

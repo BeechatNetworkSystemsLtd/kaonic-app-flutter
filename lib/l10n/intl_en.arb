@@ -85,5 +85,7 @@
     "pe": "PE",
     "en": "EN",
     "preemphasis": "Preemphasis",
-    "preambleLength": "Preamble Length"
+    "preambleLength": "Preamble Length",
+    "sdtd":"SFD Detection Threshold",
+    "pdt":"Preamble Detection Threshold"
 }

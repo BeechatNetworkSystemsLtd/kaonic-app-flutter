@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:kaonic/data/enums/phy_config_type_enum.dart';
 import 'package:kaonic/data/models/call_event_data.dart';
 import 'package:kaonic/data/models/connectivity_settings.dart';
 import 'package:kaonic/data/models/kaonic_create_chat_event.dart';
@@ -69,10 +70,12 @@ class KaonicCommunicationService {
     });
   }
 
-  void sendConfig({required RadioSettings radioSettings}) {
+  void sendConfig(
+      {required RadioSettings radioSettings,
+      required PhyConfigTypeEnum configType}) {
     kaonicMethodChannel.invokeMethod(
       'sendConfig',
-      radioSettings.toJsonStringConfig(),
+      radioSettings.toJsonStringConfig(configType),
     );
   }
 
