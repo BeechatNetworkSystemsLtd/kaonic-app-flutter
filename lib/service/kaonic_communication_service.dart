@@ -8,6 +8,7 @@ import 'package:kaonic/data/models/kaonic_create_chat_event.dart';
 import 'package:kaonic/data/models/kaonic_event.dart';
 import 'package:kaonic/data/models/kaonic_event_type.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
+import 'package:kaonic/data/models/radio_settings.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:uuid/uuid.dart';
 
@@ -68,76 +69,11 @@ class KaonicCommunicationService {
     });
   }
 
-  void sendConfig({
-    required int mcs,
-    required int optionNumber,
-    required int module,
-    required int frequency,
-    required int channel,
-    required int channelSpacing,
-    required int txPower,
-    required int bt,
-    required int midxs,
-    required int midxsBits,
-    required int mord,
-    required int srate,
-    required int pdtm,
-    required int rxo,
-    required int rxpto,
-    required int mse,
-    required int fecs,
-    required int fecie,
-    required int sfd32,
-    required int csfd1,
-    required int csfd0,
-    required int sfd,
-    required int dw,
-    required bool freqInversion,
-    required bool preambleInversion,
-    required bool sftq,
-    required bool rawbit,
-    required bool pe,
-    required bool en,
-    required int fskpe0,
-    required int fskpe1,
-    required int fskpe2,
-    required int preambleLength,
-  }) {
-    kaonicMethodChannel.invokeMethod('sendConfig', {
-      "mcs": mcs,
-      "optionNumber": optionNumber,
-      "module": module,
-      "frequency": frequency,
-      "channel": channel,
-      "channelSpacing": channelSpacing,
-      "txPower": txPower,
-      "bt": bt,
-      "midxs": midxs,
-      "midx": midxsBits,
-      "mord": mord,
-      "srate": srate,
-      "pdtm": pdtm,
-      "rxo": rxo,
-      "rxpto": rxpto,
-      "mse": mse,
-      "fecs": fecs,
-      "fecie": fecie,
-      "sfd32": sfd32,
-      "csfd1": csfd1,
-      "csfd0": csfd0,
-      "sfd": sfd,
-      "dw": dw,
-      "freq_inversion": freqInversion,
-      "preamble_inversion": preambleInversion,
-      "sftq": sftq,
-      "rawbit": rawbit,
-      "pe": pe,
-      "en": en,
-      "fskpe0": fskpe0,
-      "fskpe1": fskpe1,
-      "fskpe2": fskpe2,
-      "preamble_length": preambleLength,
-    });
+  void sendConfig({required RadioSettings radioSettings}) {
+    kaonicMethodChannel.invokeMethod(
+      'sendConfig',
+      radioSettings.toJsonStringConfig(),
+    );
   }
 
   void startCall(String callId, String address) {

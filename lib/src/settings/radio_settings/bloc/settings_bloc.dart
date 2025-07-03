@@ -66,41 +66,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   Future<void> _saveSettings(
       SaveSettings event, Emitter<SettingsState> emit) async {
-    _communicationService.sendConfig(
-      mcs: state.radioSettings.rate.index,
-      optionNumber: state.radioSettings.option.index,
-      module: 0,
-      frequency: int.parse(state.radioSettings.frequency),
-      channel: state.radioSettings.channel,
-      channelSpacing: int.parse(state.radioSettings.channelSpacing),
-      txPower: int.parse(state.radioSettings.txPower),
-      bt: state.radioSettings.bandwidthTime.value,
-      midxs: state.radioSettings.midxs.value,
-      midxsBits: state.radioSettings.midxsBits.value,
-      mord: state.radioSettings.mord.value,
-      srate: state.radioSettings.srate.value,
-      pdtm: state.radioSettings.pdtm.value,
-      rxo: state.radioSettings.rxo.value,
-      rxpto: state.radioSettings.rxpto.value,
-      mse: state.radioSettings.mse.value,
-      fecs: state.radioSettings.fecs.value,
-      fecie: state.radioSettings.fecie.value,
-      sfd32: state.radioSettings.sfd32.value,
-      csfd1: state.radioSettings.csfd1.value,
-      csfd0: state.radioSettings.csfd0.value,
-      sfd: state.radioSettings.sfd.value,
-      dw: state.radioSettings.dw.value,
-      freqInversion: state.radioSettings.freqInversion,
-      preambleInversion: state.radioSettings.preambleInversion,
-      sftq: state.radioSettings.sftq,
-      rawbit: state.radioSettings.rawbit,
-      pe: state.radioSettings.pe,
-      en: state.radioSettings.en,
-      fskpe0: state.radioSettings.fskpe0,
-      fskpe1: state.radioSettings.fskpe1,
-      fskpe2: state.radioSettings.fskpe2,
-      preambleLength: state.radioSettings.preambleLength,
-    );
+    _communicationService.sendConfig(radioSettings: state.radioSettings);
 
     _radioSettingsRepository.saveSettings(
       state.radioSettingsA,

@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:kaonic/data/extensions/fsk_bandwidth_extension.dart';
+import 'package:kaonic/data/extensions/midsx_extension.dart';
+import 'package:kaonic/data/extensions/midx_bits_extension.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:kaonic/data/models/settings.dart';
 import 'package:kaonic/service/kaonic_communication_service.dart';
@@ -293,5 +298,43 @@ class RadioSettings {
       fskpe2: json['fskpe2'],
       preambleLength: json['preambleLength'],
     );
+  }
+
+  String toJsonStringConfig() {
+    return jsonEncode({
+      'mcs': rateIndex,
+      'opt': optionIndex,
+      'module': 0,
+      'freq': int.parse(frequency),
+      'channel': channel,
+      'channel_spacing': int.parse(channelSpacing),
+      'tx_power': int.parse(txPower),
+      'bt': bandwidthTime.value,
+      'midxs': midxs.value,
+      'midx': midxsBits.value,
+      'mord': mord.value,
+      'srate': srate.value,
+      'pdtm': pdtm.value,
+      'rxo': rxo.value,
+      'rxpto': rxpto.value,
+      'mse': mse.value,
+      'fecs': fecs.value,
+      'fecie': fecie.value,
+      'sfd32': sfd32.value,
+      'csfd1': csfd1.value,
+      'csfd0': csfd0.value,
+      'sfd': sfd.value,
+      'dw': dw.value,
+      'fskpe0': fskpe0,
+      'fskpe1': fskpe1,
+      'fskpe2': fskpe2,
+      'preamble_length': preambleLength,
+      'freq_inversion': freqInversion,
+      'preamble_inversion': preambleInversion,
+      'rawbit': rawbit,
+      'pe': pe,
+      'en': en,
+      'sftq': sftq,
+    });
   }
 }

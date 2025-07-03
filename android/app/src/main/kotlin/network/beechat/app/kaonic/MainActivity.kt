@@ -102,75 +102,9 @@ class MainActivity : FlutterActivity() {
 
                 "sendConfig", "sendConfigure" -> {
                     try {
-                        val mcs = call.argument<Int>("mcs") ?: 0
-                        val optionNumber = call.argument<Int>("optionNumber") ?: 0
-                        val module = call.argument<Int>("module") ?: 0
-                        val frequency = call.argument<Int>("frequency") ?: 0
-                        val channel = call.argument<Int>("channel") ?: 0
-                        val channelSpacing = call.argument<Int>("channelSpacing") ?: 0
-                        val txPower = call.argument<Int>("txPower") ?: 0
-                        val bt = call.argument<Int>("bt") ?: 0
-                        val midxs = call.argument<Int>("midxs") ?: 0
-                        val midxsBits = call.argument<Int>("midx") ?: 0
-                        val mord = call.argument<Int>("mord") ?: 0
-                        val srate = call.argument<Int>("srate") ?: 0
-                        val pdtm = call.argument<Int>("pdtm") ?: 0
-                        val rxo = call.argument<Int>("rxo") ?: 0
-                        val rxpto = call.argument<Int>("rxpto") ?: 0
-                        val mse = call.argument<Int>("mse") ?: 0
-                        val fecs = call.argument<Int>("fecs") ?: 0
-                        val fecie = call.argument<Int>("fecie") ?: 0
-                        val sfd32 = call.argument<Int>("sfd32") ?: 0
-                        val csfd1 = call.argument<Int>("csfd1") ?: 0
-                        val csfd0 = call.argument<Int>("csfd0") ?: 0
-                        val sfd = call.argument<Int>("sfd") ?: 0
-                        val dw = call.argument<Int>("dw") ?: 0
-                        val freqInversion = call.argument<Boolean>("freq_inversion") ?: false
-                        val preambleInversion = call.argument<Boolean>("preamble_inversion") ?: false
-                        val sftq = call.argument<Boolean>("sftq") ?: false
-                        val rawbit = call.argument<Boolean>("rawbit") ?: false
-                        val pe = call.argument<Boolean>("pe") ?: false
-                        val en = call.argument<Boolean>("en") ?: false
-                        val fskpe0 = call.argument<Int>("fskpe0") ?: 0
-                        val fskpe1 = call.argument<Int>("fskpe1") ?: 0
-                        val fskpe2 = call.argument<Int>("fskpe2") ?: 0
-                        val preambleLength = call.argument<Int>("preamble_length") ?: 0
+                        val jsonConfig = call.arguments as? String ?: return@setMethodCallHandler
 
-                        KaonicService.sendConfig(
-                            mcs,
-                            optionNumber,
-                            module,
-                            frequency,
-                            channel,
-                            channelSpacing,
-                            txPower,
-                            bt,
-                            midxs,
-                            midxsBits,
-                            mord,
-                            srate,
-                            pdtm,
-                            rxo,
-                            rxpto,
-                            mse,
-                            fecs,
-                            fecie,
-                            sfd32,
-                            csfd1,
-                            csfd0,
-                            sfd,
-                            dw,
-                            fskpe0,
-                            fskpe1,
-                            fskpe2,
-                            preambleLength,
-                            freqInversion,
-                            preambleInversion,
-                            rawbit,
-                            pe,
-                            en,
-                            sftq
-                        )
+                        KaonicService.sendConfig(jsonConfig)
 
                         result.success(true)
                     } catch (ex: Exception) {
