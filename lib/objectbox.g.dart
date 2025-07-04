@@ -151,7 +151,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(5, 5682150587337205642),
     name: 'RadioSettings',
-    lastPropertyId: const obx_int.IdUid(33, 5038736048883723188),
+    lastPropertyId: const obx_int.IdUid(36, 6910608422716623409),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -349,6 +349,24 @@ final _entities = <obx_int.ModelEntity>[
       obx_int.ModelProperty(
         id: const obx_int.IdUid(33, 5038736048883723188),
         name: 'preambleLength',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(34, 7488543016608192120),
+        name: 'module',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(35, 6728592806818309010),
+        name: 'sfdt',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(36, 6910608422716623409),
+        name: 'pdt',
         type: 6,
         flags: 0,
       ),
@@ -635,7 +653,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final frequencyOffset = fbb.writeString(object.frequency);
         final txPowerOffset = fbb.writeString(object.txPower);
         final channelSpacingOffset = fbb.writeString(object.channelSpacing);
-        fbb.startTable(34);
+        fbb.startTable(37);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, frequencyOffset);
         fbb.addOffset(2, txPowerOffset);
@@ -669,6 +687,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addInt64(30, object.fskpe1);
         fbb.addInt64(31, object.fskpe2);
         fbb.addInt64(32, object.preambleLength);
+        fbb.addInt64(33, object.module);
+        fbb.addInt64(34, object.sfdt);
+        fbb.addInt64(35, object.pdt);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -687,6 +708,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final channelSpacingParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 12, '');
+        final moduleParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          70,
+          0,
+        );
         final channelParam = const fb.Int64Reader().vTableGet(
           buffer,
           rootOffset,
@@ -822,6 +849,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
           54,
           false,
         );
+        final sfdtParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          72,
+          0,
+        );
         final rawbitParam = const fb.BoolReader().vTableGet(
           buffer,
           rootOffset,
@@ -864,10 +897,17 @@ obx_int.ModelDefinition getObjectBoxModel() {
           68,
           0,
         );
+        final pdtParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          74,
+          0,
+        );
         final object = RadioSettings(
           id: idParam,
           frequency: frequencyParam,
           channelSpacing: channelSpacingParam,
+          module: moduleParam,
           channel: channelParam,
           optionIndex: optionIndexParam,
           rateIndex: rateIndexParam,
@@ -891,6 +931,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           freqInversion: freqInversionParam,
           preambleInversion: preambleInversionParam,
           sftq: sftqParam,
+          sfdt: sfdtParam,
           rawbit: rawbitParam,
           pe: peParam,
           en: enParam,
@@ -898,6 +939,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fskpe1: fskpe1Param,
           fskpe2: fskpe2Param,
           preambleLength: preambleLengthParam,
+          pdt: pdtParam,
         );
 
         return object;
@@ -1202,6 +1244,21 @@ class RadioSettings_ {
   /// See [RadioSettings.preambleLength].
   static final preambleLength = obx.QueryIntegerProperty<RadioSettings>(
     _entities[4].properties[32],
+  );
+
+  /// See [RadioSettings.module].
+  static final module = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[33],
+  );
+
+  /// See [RadioSettings.sfdt].
+  static final sfdt = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[34],
+  );
+
+  /// See [RadioSettings.pdt].
+  static final pdt = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[35],
   );
 }
 

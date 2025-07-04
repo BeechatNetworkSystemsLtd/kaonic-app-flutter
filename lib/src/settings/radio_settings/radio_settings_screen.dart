@@ -15,6 +15,7 @@ import 'package:kaonic/src/widgets/custom_selected_button.dart';
 import 'package:kaonic/src/widgets/main_button.dart';
 import 'package:kaonic/src/widgets/main_text_field.dart';
 import 'package:kaonic/theme/theme.dart';
+import 'package:kaonic/utils/dialog_util.dart';
 
 class RadioSettingsScreen extends StatelessWidget {
   const RadioSettingsScreen({super.key});
@@ -26,59 +27,82 @@ class RadioSettingsScreen extends StatelessWidget {
         context.read(),
         communicationService: context.read(),
       ),
-      child: Builder(builder: (context) {
-        return Scaffold(
-          appBar: CustomAppbar(
-            title: S.of(context).radioSettings,
-          ),
-          floatingActionButton: MainButton(
-            label: S.of(context).save,
-            onPressed: () {
-              context.read<SettingsBloc>().add(SaveSettings());
-            },
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: BlocBuilder<SettingsBloc, SettingsState>(
-              builder: (ctxBloc, state) {
-                return Column(
-                  spacing: 32,
-                  children: [
-                    Row(
-                      spacing: 25,
-                      children: RadioSettingsType.values
-                          .map(
-                            (value) => Expanded(
-                              child: CustomSelectedButton<RadioSettingsType>(
-                                text: value.title,
-                                onTap: (value) {
-                                  ctxBloc
-                                      .read<SettingsBloc>()
-                                      .add(UpdateRadioType(value));
-                                },
-                                value: value,
-                                borderRadius: 12,
-                                groupValue: state.radioSettingsType,
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    Expanded(
-                      child: _RadioSettingsWidget(
-                        radioSettings: state.radioSettings,
-                      ),
-                    ),
-                    SizedBox(height: 55),
-                  ],
-                );
-              },
+      child: Builder(
+        builder: (context) {
+          final bloc = context.read<SettingsBloc>();
+
+          return Scaffold(
+            appBar: CustomAppbar(
+              title: S.of(context).radioSettings,
             ),
-          ),
-        );
-      }),
+            floatingActionButton: Row(
+              spacing: 8,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MainButton(
+                  label: S.of(context).save,
+                  onPressed: () {
+                    bloc.add(SaveSettings());
+                  },
+                ),
+                MainButton(
+                  label: S.of(context).presets,
+                  width: 150,
+                  onPressed: () {
+                    DialogUtil.showPresetsDialog(
+                      context,
+                      onYes: (preset) {
+                        bloc.add(SetPreset(preset));
+                      },
+                      presets: bloc.state.presets,
+                    );
+                  },
+                ),
+              ],
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: BlocBuilder<SettingsBloc, SettingsState>(
+                builder: (ctxBloc, state) {
+                  return Column(
+                    spacing: 32,
+                    children: [
+                      Row(
+                        spacing: 25,
+                        children: RadioSettingsType.values
+                            .map(
+                              (value) => Expanded(
+                                child: CustomSelectedButton<RadioSettingsType>(
+                                  text: value.title,
+                                  onTap: (value) {
+                                    ctxBloc
+                                        .read<SettingsBloc>()
+                                        .add(UpdateRadioType(value));
+                                  },
+                                  value: value,
+                                  borderRadius: 12,
+                                  groupValue: state.radioSettingsType,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      Expanded(
+                        child: _RadioSettingsWidget(
+                          radioSettings: state.radioSettings,
+                        ),
+                      ),
+                      SizedBox(height: 55),
+                    ],
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -113,6 +137,23 @@ class _RadioSettingsWidgetState extends State<_RadioSettingsWidget> {
         TextEditingController(text: widget.radioSettings.channelSpacing);
     _txPowerController =
         TextEditingController(text: widget.radioSettings.txPower);
+  }
+
+  @override
+  void didUpdateWidget(covariant _RadioSettingsWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final freqChanged =
+        oldWidget.radioSettings.frequency != widget.radioSettings.frequency;
+    final channelSpacingChanged = oldWidget.radioSettings.channelSpacing !=
+        widget.radioSettings.channelSpacing;
+    final txPowerChanged =
+        oldWidget.radioSettings.txPower != widget.radioSettings.txPower;
+
+    if (freqChanged) _frequencyController.text = widget.radioSettings.frequency;
+    if (channelSpacingChanged) {
+      _spacingController.text = widget.radioSettings.channelSpacing;
+    }
+    if (txPowerChanged) _txPowerController.text = widget.radioSettings.txPower;
   }
 
   @override

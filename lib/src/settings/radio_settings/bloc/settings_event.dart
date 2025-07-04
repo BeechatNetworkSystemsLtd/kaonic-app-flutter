@@ -212,3 +212,11 @@ class UpdatePreambleLenght extends SettingsEvent {
 
   UpdatePreambleLenght(this.value);
 }
+
+class _GetPresets extends SettingsEvent {}
+
+class SetPreset extends SettingsEvent {
+  final RadioPresetModel preset;
+
+  SetPreset(this.preset);
+}

@@ -74,8 +74,8 @@
     "fecs": "FECS",
     "fecie": "FECIE",
     "sfd32": "SFD32",
-    "csfd1": "CSFD1",
-    "csfd0": "CSFD0",
+    "csfd1": "SFD1",
+    "csfd0": "SFD0",
     "sfd": "SFD",
     "dw": "DW",
     "frequencyInversion": "Frequency Inversion",
@@ -86,6 +86,9 @@
     "en": "EN",
     "preemphasis": "Preemphasis",
     "preambleLength": "Preamble Length",
-    "sdtd":"SFD Detection Threshold",
-    "pdt":"Preamble Detection Threshold"
+    "sdtd": "SFD Detection Threshold",
+    "pdt": "Preamble Detection Threshold",
+    "presets": "Presets",
+    "apply": "Apply",
+    "cancel": "Cancel"
 }

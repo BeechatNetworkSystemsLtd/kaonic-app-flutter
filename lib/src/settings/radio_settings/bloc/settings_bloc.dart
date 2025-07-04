@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kaonic/data/enums/phy_config_type_enum.dart';
 import 'package:kaonic/data/enums/radio_settings_type_enum.dart';
-import 'package:kaonic/data/extensions/fsk_bandwidth_extension.dart';
-import 'package:kaonic/data/extensions/midsx_extension.dart';
-import 'package:kaonic/data/extensions/midx_bits_extension.dart';
+import 'package:kaonic/data/models/preset_models/radio_preset_model.dart';
 import 'package:kaonic/data/models/radio_settings.dart';
 import 'package:kaonic/data/models/settings.dart';
 import 'package:kaonic/data/repository/radio_settings_repository.dart';
@@ -13,6 +11,8 @@ import 'package:kaonic/service/kaonic_communication_service.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';
+
+typedef RadioValueChanged = RadioSettings Function(RadioSettings);
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final RadioSettingsRepository _radioSettingsRepository;
@@ -67,15 +67,26 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdatePreambleLenght>(_onUpdatePreambleLenght);
     on<UpdateRadioOfdmFckType>(_onUpdateRadioOfdmFck);
     on<UpdatePDT>(_updatePDT);
+    on<_GetPresets>(_onGetPresets);
+    on<SetPreset>(_onSetPreset);
+
+    add(_GetPresets());
   }
   final KaonicCommunicationService _communicationService;
 
+  void _updateSetting(
+    Emitter<SettingsState> emit,
+    RadioValueChanged update,
+  ) {
+    emit(
+      isRfa
+          ? state.copyWith(radioSettingsA: update(state.radioSettingsA))
+          : state.copyWith(radioSettingsB: update(state.radioSettingsB)),
+    );
+  }
+
   Future<void> _saveSettings(
       SaveSettings event, Emitter<SettingsState> emit) async {
-    final jsonStr = state.radioSettings.toJsonStringConfig(state.phyConfig);
-    // print(jsonStr.substring(0, jsonStr.length ~/ 2));
-    // print(jsonStr.substring(jsonStr.length ~/ 2));
-    print(jsonStr.substring(400));
     _communicationService.sendConfig(
         radioSettings: state.radioSettings, configType: state.phyConfig);
 
@@ -92,408 +103,136 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   }
 
   void _onUpdateFrequency(UpdateFrequency event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(frequency: event.frequency)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(frequency: event.frequency)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(frequency: event.frequency));
   }
 
   void _onUpdateChannelSpacing(
       UpdateChannelSpacing event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(channelSpacing: event.spacing)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(channelSpacing: event.spacing)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(channelSpacing: event.spacing));
   }
 
   void _onUpdateChannel(UpdateChannel event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(channel: event.channel)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(channel: event.channel)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(channel: event.channel));
   }
 
   void _onUpdateOption(UpdateOption event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(option: event.option)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(option: event.option)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(option: event.option));
   }
 
   void _onUpdateRate(UpdateRate event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(rate: event.rate)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(rate: event.rate)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(rate: event.rate));
   }
 
   void _onUpdateTxPower(UpdateTxPower event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(txPower: event.txPower)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(txPower: event.txPower)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(txPower: event.txPower));
   }
 
   void _onUpdateBandwidthTime(
       UpdateBandwidthTime event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(btIndex: event.bandwidthTime.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(btIndex: event.bandwidthTime.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(
+        emit, (rs) => rs.copyWith(btIndex: event.bandwidthTime.index));
   }
 
   void _onUpdateMIDXS(UpdateMIDXS event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(midxsIndex: event.midxs.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(midxsIndex: event.midxs.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(midxsIndex: event.midxs.index));
   }
 
   void _onUpdateMIDXSBits(UpdateMIDXSBits event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA
-                .copyWith(midxsBitsIndex: event.midxsBits.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB
-                .copyWith(midxsBitsIndex: event.midxsBits.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(
+        emit, (rs) => rs.copyWith(midxsBitsIndex: event.midxsBits.index));
   }
 
   void _onUpdateMord(UpdateMord event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(mordIndex: event.mord.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(mordIndex: event.mord.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(mordIndex: event.mord.index));
   }
 
   void _onUpdateSRate(UpdateSRate event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(srateIndex: event.sRate.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(srateIndex: event.sRate.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(srateIndex: event.sRate.index));
   }
 
   void _onUpdatePDTM(UpdatePDTM event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(pdtmIndex: event.pdtm.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(pdtmIndex: event.pdtm.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(pdtmIndex: event.pdtm.index));
   }
 
   void _onUpdateRXO(UpdateRXO event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(rxoIndex: event.rxo.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(rxoIndex: event.rxo.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(rxoIndex: event.rxo.index));
   }
 
   void _onUpdateRXPTO(UpdateRXPTO event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(rxptoIndex: event.rxpto.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(rxptoIndex: event.rxpto.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(rxptoIndex: event.rxpto.index));
   }
 
   void _onUpdateMSE(UpdateMSE event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(mseIndex: event.mse.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(mseIndex: event.mse.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(mseIndex: event.mse.index));
   }
 
   void _onUpdateFECS(UpdateFECS event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(fecsIndex: event.fecs.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(fecsIndex: event.fecs.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(fecsIndex: event.fecs.index));
   }
 
   void _onUpdateFECIE(UpdateFECIE event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(fecieIndex: event.fecie.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(fecieIndex: event.fecie.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(fecieIndex: event.fecie.index));
   }
 
   void _onUpdateSFD32(UpdateSFD32 event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(sfd32Index: event.sfd32.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(sfd32Index: event.sfd32.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(sfd32Index: event.sfd32.index));
   }
 
   void _onUpdateCSFD1(UpdateCSFD1 event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(csfd1Index: event.csfd1.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(csfd1Index: event.csfd1.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(csfd1Index: event.csfd1.index));
   }
 
   void _onUpdateCSFD0(UpdateCSFD0 event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(csfd0Index: event.csfd0.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(csfd0Index: event.csfd0.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(csfd0Index: event.csfd0.index));
   }
 
   void _onUpdateSFD(UpdateSFD event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(sfdIndex: event.sfd.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(sfdIndex: event.sfd.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(sfdIndex: event.sfd.index));
   }
 
   void _onUpdateDW(UpdateDW event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(dwIndex: event.dw.index)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(dwIndex: event.dw.index)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(dwIndex: event.dw.index));
   }
 
   void _onUpdateFreqInversion(
       UpdateFreqInversion event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(freqInversion: event.value)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(freqInversion: event.value)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(freqInversion: event.value));
   }
 
   void _onUpdatePreambleInversion(
       UpdatePreambleInversion event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(preambleInversion: event.value)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(preambleInversion: event.value)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(preambleInversion: event.value));
   }
 
   void _onUpdateSftq(UpdateSftq event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(sftq: event.value)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(sftq: event.value)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(sftq: event.value));
   }
 
   void _onUpdateRawbit(UpdateRawbit event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(rawbit: event.value)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(rawbit: event.value)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(rawbit: event.value));
   }
 
   void _onUpdatePe(UpdatePe event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(pe: event.value)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(pe: event.value)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(pe: event.value));
   }
 
   void _onUpdateEn(UpdateEn event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(en: event.value)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(en: event.value)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(en: event.value));
   }
 
   void _onUpdateFSKPE(UpdateFSKPE event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(
-                fskpe0: event.fskpe0,
-                fskpe1: event.fskpe1,
-                fskpe2: event.fskpe2,
-              )
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(
-                fskpe0: event.fskpe0,
-                fskpe1: event.fskpe1,
-                fskpe2: event.fskpe2,
-              )
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(
+        emit,
+        (rs) => rs.copyWith(
+              fskpe0: event.fskpe0,
+              fskpe1: event.fskpe1,
+              fskpe2: event.fskpe2,
+            ));
   }
 
   void _onUpdatePreambleLenght(
       UpdatePreambleLenght event, Emitter<SettingsState> emit) {
-    emit(
-      state.copyWith(
-        radioSettingsA: isRfa
-            ? state.radioSettingsA.copyWith(preambleLength: event.value)
-            : state.radioSettingsA,
-        radioSettingsB: !isRfa
-            ? state.radioSettingsB.copyWith(preambleLength: event.value)
-            : state.radioSettingsB,
-      ),
-    );
+    _updateSetting(emit, (rs) => rs.copyWith(preambleLength: event.value));
   }
 
   FutureOr<void> _onUpdateRadioOfdmFck(
@@ -503,24 +242,20 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   FutureOr<void> _onUpdateSFDT(
       UpdateSFDT event, Emitter<SettingsState> emit) async {
-    emit(state.copyWith(
-      radioSettingsA: isRfa
-          ? state.radioSettingsA.copyWith(sfdt: event.value)
-          : state.radioSettingsA,
-      radioSettingsB: !isRfa
-          ? state.radioSettingsB.copyWith(preambleLength: event.value)
-          : state.radioSettingsB,
-    ));
+    _updateSetting(emit, (rs) => rs.copyWith(sfdt: event.value));
   }
 
   FutureOr<void> _updatePDT(UpdatePDT event, Emitter<SettingsState> emit) {
-    emit(state.copyWith(
-      radioSettingsA: isRfa
-          ? state.radioSettingsA.copyWith(pdt: event.value)
-          : state.radioSettingsA,
-      radioSettingsB: !isRfa
-          ? state.radioSettingsB.copyWith(pdt: event.value)
-          : state.radioSettingsB,
-    ));
+    _updateSetting(emit, (rs) => rs.copyWith(pdt: event.value));
+  }
+
+  void _onGetPresets(_, Emitter<SettingsState> emit) async {
+    final presets = await _communicationService.getPresets();
+
+    emit(state.copyWith(presets: presets));
+  }
+
+  void _onSetPreset(SetPreset event, Emitter<SettingsState> emit) {
+    _updateSetting(emit, (rs) => rs.fromRadioPreset(event.preset));
   }
 }

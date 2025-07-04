@@ -7,21 +7,21 @@ class SettingsState {
     this.phyConfig = PhyConfigTypeEnum.ofdm,
     required this.radioSettingsA,
     required this.radioSettingsB,
+    this.presets = const [],
   });
 
   final RadioSettingsType radioSettingsType;
   final PhyConfigTypeEnum phyConfig;
   final RadioSettings radioSettingsA;
   final RadioSettings radioSettingsB;
+  final List<RadioPresetModel> presets;
 
-  RadioSettings get radioSettings => radioSettingsType == RadioSettingsType.rfa
-      ? radioSettingsA
-      : radioSettingsB;
+  bool get _isRfa => radioSettingsType == RadioSettingsType.rfa;
+
+  RadioSettings get radioSettings => _isRfa ? radioSettingsA : radioSettingsB;
 
   bool get buttonEnabled {
-    RadioSettings settings = radioSettingsType == RadioSettingsType.rfa
-        ? radioSettingsA
-        : radioSettingsB;
+    RadioSettings settings = _isRfa ? radioSettingsA : radioSettingsB;
     return settings.frequency.isNotEmpty &&
         int.tryParse(settings.frequency) != null &&
         settings.txPower.isNotEmpty &&
@@ -35,8 +35,10 @@ class SettingsState {
     PhyConfigTypeEnum? phyConfig,
     RadioSettings? radioSettingsA,
     RadioSettings? radioSettingsB,
+    List<RadioPresetModel>? presets,
   }) {
     return SettingsState(
+      presets: presets ?? this.presets,
       radioSettingsA: radioSettingsA ?? this.radioSettingsA,
       phyConfig: phyConfig ?? this.phyConfig,
       radioSettingsB: radioSettingsB ?? this.radioSettingsB,

@@ -9,6 +9,7 @@ import 'package:kaonic/data/models/kaonic_create_chat_event.dart';
 import 'package:kaonic/data/models/kaonic_event.dart';
 import 'package:kaonic/data/models/kaonic_event_type.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
+import 'package:kaonic/data/models/preset_models/radio_preset_model.dart';
 import 'package:kaonic/data/models/radio_settings.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:uuid/uuid.dart';
@@ -77,6 +78,15 @@ class KaonicCommunicationService {
       'sendConfig',
       radioSettings.toJsonStringConfig(configType),
     );
+  }
+
+  Future<List<RadioPresetModel>> getPresets() async {
+    final result = await kaonicMethodChannel.invokeMethod('getPresets');
+    final json = jsonDecode(result);
+
+    return (json as List)
+        .map((preset) => RadioPresetModel.fromJson(preset))
+        .toList();
   }
 
   void startCall(String callId, String address) {

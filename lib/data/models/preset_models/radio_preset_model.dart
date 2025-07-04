@@ -7,7 +7,9 @@ part 'radio_preset_model.g.dart';
 class RadioPresetModel {
   final String name;
   final int freq;
+  @JsonKey(name: 'channel_spacing')
   final int channelSpacing;
+  @JsonKey(name: 'tx_power')
   final int txPower;
   @JsonKey(name: 'phy_config')
   final PhyConfig phyConfig;

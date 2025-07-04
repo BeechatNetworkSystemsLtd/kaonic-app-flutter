@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.media.RingtoneManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -100,17 +102,50 @@ class MainActivity : FlutterActivity() {
                     result.success(KaonicService.myAddress)
                 }
 
-                "sendConfig", "sendConfigure" -> {
+                "getPresets" -> {
                     try {
-                        val jsonConfig = call.arguments as? String ?: return@setMethodCallHandler
-
-                        KaonicService.sendConfig(jsonConfig)
-
-                        result.success(true)
+                        val presets = KaonicService.getPresets()
+                        result.success(presets)
                     } catch (ex: Exception) {
                         Log.d("sendConfig", ex.toString())
                         result.error("sendConfig", ex.message, "")
                     }
+                }
+
+                "sendConfig", "sendConfigure" -> {
+                    val executor = java.util.concurrent.Executors.newSingleThreadExecutor()
+                    val future = executor.submit(java.util.concurrent.Callable {
+                        try {
+                            val jsonConfig = call.arguments as? String ?: return@Callable false
+                            KaonicService.sendConfig(jsonConfig)
+                            true
+                        } catch (ex: Exception) {
+                            throw ex
+                        }
+                    })
+
+                    Thread {
+                        try {
+                            val resultValue = future.get(5, java.util.concurrent.TimeUnit.SECONDS)
+                            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                                Log.d("sendConfig", "success")
+                                result.success(resultValue)
+                            }
+                        } catch (e: java.util.concurrent.TimeoutException) {
+                            future.cancel(true)
+                            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                                Log.d("sendConfig", "timeout")
+                                result.error("sendConfigTimeout", "Timeout while sending config", "")
+                            }
+                        } catch (e: Exception) {
+                            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                                Log.d("sendConfig", "error: ${e.message}")
+                                result.error("sendConfig", e.message, "")
+                            }
+                        } finally {
+                            executor.shutdown()
+                        }
+                    }.start()
                 }
                 "startService" -> {
                     val json = call.argument<String>("connectivity")

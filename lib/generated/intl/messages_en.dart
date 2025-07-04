@@ -26,8 +26,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "ChannelSpacing":
             MessageLookupByLibrary.simpleMessage("Channel spacing"),
         "Frequency": MessageLookupByLibrary.simpleMessage("Frequency"),
+        "apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "back": MessageLookupByLibrary.simpleMessage("Back"),
         "bandwidthTime": MessageLookupByLibrary.simpleMessage("Bandwidth Time"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "connectivitySettings":
             MessageLookupByLibrary.simpleMessage("Connectivity Settings"),
         "connectivityType":
@@ -40,8 +42,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create passcode"),
         "createUsername":
             MessageLookupByLibrary.simpleMessage("Create username:"),
-        "csfd0": MessageLookupByLibrary.simpleMessage("CSFD0"),
-        "csfd1": MessageLookupByLibrary.simpleMessage("CSFD1"),
+        "csfd0": MessageLookupByLibrary.simpleMessage("SFD0"),
+        "csfd1": MessageLookupByLibrary.simpleMessage("SFD1"),
         "deviceVersion": MessageLookupByLibrary.simpleMessage("Device version"),
         "dw": MessageLookupByLibrary.simpleMessage("DW"),
         "en": MessageLookupByLibrary.simpleMessage("EN"),
@@ -115,6 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preambleLength":
             MessageLookupByLibrary.simpleMessage("Preamble Length"),
         "preemphasis": MessageLookupByLibrary.simpleMessage("Preemphasis"),
+        "presets": MessageLookupByLibrary.simpleMessage("Presets"),
         "radio": MessageLookupByLibrary.simpleMessage("Radio"),
         "radioSettings": MessageLookupByLibrary.simpleMessage("Radio Settings"),
         "rawbit": MessageLookupByLibrary.simpleMessage("RAWBIT"),

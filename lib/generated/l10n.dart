@@ -800,20 +800,20 @@ class S {
     );
   }
 
-  /// `CSFD1`
+  /// `SFD1`
   String get csfd1 {
     return Intl.message(
-      'CSFD1',
+      'SFD1',
       name: 'csfd1',
       desc: '',
       args: [],
     );
   }
 
-  /// `CSFD0`
+  /// `SFD0`
   String get csfd0 {
     return Intl.message(
-      'CSFD0',
+      'SFD0',
       name: 'csfd0',
       desc: '',
       args: [],
@@ -935,6 +935,36 @@ class S {
     return Intl.message(
       'Preamble Detection Threshold',
       name: 'pdt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Presets`
+  String get presets {
+    return Intl.message(
+      'Presets',
+      name: 'presets',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply`
+  String get apply {
+    return Intl.message(
+      'Apply',
+      name: 'apply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
       desc: '',
       args: [],
     );

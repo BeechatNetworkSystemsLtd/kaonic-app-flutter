@@ -91,6 +91,10 @@ object KaonicService : KaonicEventListener {
         kaonicCommunicationHandler.sendBroadcast(id, topic, bytes)
     }
 
+    fun getPresets(): String {
+        return  kaonicCommunicationHandler.presets
+    }
+
     fun sendCallEvent(callEvent: String, callId: String, address: String) {
         kaonicCommunicationHandler.sendCallEvent(callEvent, address, callId)
     }

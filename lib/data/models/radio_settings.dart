@@ -399,6 +399,8 @@ class RadioSettings {
               'sfd32': sfd32.value,
               'csfd1': csfd1.value,
               'csfd0': csfd0.value,
+              'sfd0': csfd0.value,
+              'sfd1': csfd1.value,
               'sfd': sfd.value,
               'sfdt': sfdt,
               'dw': dw.value,

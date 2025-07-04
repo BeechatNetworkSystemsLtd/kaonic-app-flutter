@@ -17,6 +17,6 @@ Map<String, dynamic> _$PhyConfigToJson(PhyConfig instance) => <String, dynamic>{
     };
 
 const _$PhyConfigTypeEnumEnumMap = {
-  PhyConfigTypeEnum.fsk: 'Fsk',
   PhyConfigTypeEnum.ofdm: 'Ofdm',
+  PhyConfigTypeEnum.fsk: 'Fsk',
 };

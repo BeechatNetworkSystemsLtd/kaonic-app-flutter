@@ -1,6 +1,8 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:kaonic/data/models/preset_models/radio_preset_model.dart';
 import 'package:kaonic/generated/l10n.dart';
+import 'package:kaonic/src/widgets/dialogs/preset_dialog_widget.dart';
 import 'package:kaonic/src/widgets/main_button.dart';
 import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/theme/theme.dart';
@@ -59,4 +61,19 @@ abstract class DialogUtil {
                   ),
                 ),
               ));
+
+  static void showPresetsDialog(
+    BuildContext context, {
+    required ValueSetter<RadioPresetModel> onYes,
+    required List<RadioPresetModel> presets,
+  }) =>
+      showDialog(
+        context: context,
+        builder: (context) {
+          return PresetsDialog(
+            onYes: onYes,
+            presets: presets,
+          );
+        },
+      );
 }
