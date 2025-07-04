@@ -54,9 +54,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Frequency Inversion"),
         "fsk": MessageLookupByLibrary.simpleMessage("FSK"),
         "hint": MessageLookupByLibrary.simpleMessage("type..."),
+        "invalidIpAddress":
+            MessageLookupByLibrary.simpleMessage("Invalid ip address."),
         "invalidPasscode":
             MessageLookupByLibrary.simpleMessage("Invalid passcode"),
         "ip": MessageLookupByLibrary.simpleMessage("IP"),
+        "ipCannotBeEmpty":
+            MessageLookupByLibrary.simpleMessage("Ip cannot be empty."),
         "labelAddThisUserToContactList": MessageLookupByLibrary.simpleMessage(
             "Add this user to Contact List?"),
         "labelAddress": MessageLookupByLibrary.simpleMessage("Address:"),

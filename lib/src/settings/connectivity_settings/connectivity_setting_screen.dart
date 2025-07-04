@@ -81,6 +81,7 @@ class _ConnectivitySettingScreenState extends State<ConnectivitySettingScreen> {
                     child: MainTextField(
                       controller: _ipController,
                       keyboardType: TextInputType.number,
+                      errorText: state.ipAddressValidationErrorText,
                       onChange: (ip) => _bloc.add(ChangeSettings(
                           state.connectivitySettings.copyWith(ip: ip))),
                     ),

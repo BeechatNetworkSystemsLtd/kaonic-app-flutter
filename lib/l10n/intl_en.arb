@@ -90,5 +90,7 @@
     "pdt": "Preamble Detection Threshold",
     "presets": "Presets",
     "apply": "Apply",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "ipCannotBeEmpty": "Ip cannot be empty.",
+    "invalidIpAddress": "Invalid ip address."
 }

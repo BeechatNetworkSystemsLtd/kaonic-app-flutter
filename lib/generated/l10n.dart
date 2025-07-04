@@ -969,6 +969,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Ip cannot be empty.`
+  String get ipCannotBeEmpty {
+    return Intl.message(
+      'Ip cannot be empty.',
+      name: 'ipCannotBeEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid ip address.`
+  String get invalidIpAddress {
+    return Intl.message(
+      'Invalid ip address.',
+      name: 'invalidIpAddress',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
