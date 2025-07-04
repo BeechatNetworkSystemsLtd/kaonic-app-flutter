@@ -220,3 +220,13 @@ class SetPreset extends SettingsEvent {
 
   SetPreset(this.preset);
 }
+
+class UpdateSfd extends SettingsEvent {
+  final int? sfd0;
+  final int? sfd1;
+
+  UpdateSfd({
+    this.sfd0,
+    this.sfd1,
+  });
+}

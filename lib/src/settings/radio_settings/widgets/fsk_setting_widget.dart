@@ -33,6 +33,8 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
   late final TextEditingController _preambleLengthController;
   late final TextEditingController _sfdtController;
   late final TextEditingController _pdtController;
+  late final TextEditingController _sfd0Controller;
+  late final TextEditingController _sfd1Controller;
 
   @override
   void initState() {
@@ -49,10 +51,16 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
         TextEditingController(text: widget.radioSettings.sfdt.toString());
     _pdtController =
         TextEditingController(text: widget.radioSettings.pdt.toString());
+    _sfd0Controller =
+        TextEditingController(text: widget.radioSettings.sfd0.toString());
+    _sfd1Controller =
+        TextEditingController(text: widget.radioSettings.sfd1.toString());
   }
 
   @override
   void dispose() {
+    _sfd0Controller.dispose();
+    _sfd1Controller.dispose();
     _preemphasis0Controller.dispose();
     _preemphasis1Controller.dispose();
     _preemphasis2Controller.dispose();
@@ -61,6 +69,8 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
   }
 
   void _updateControllers(RadioSettings settings) {
+    _sfd0Controller.text = settings.sfd0.toString();
+    _sfd1Controller.text = settings.sfd1.toString();
     _preemphasis0Controller.text = settings.fskpe0.toString();
     _preemphasis1Controller.text = settings.fskpe1.toString();
     _preemphasis2Controller.text = settings.fskpe2.toString();
@@ -71,7 +81,8 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
   Widget build(BuildContext context) {
     return BlocListener<SettingsBloc, SettingsState>(
       listenWhen: (prev, curr) =>
-          prev.radioSettingsType != curr.radioSettingsType,
+          prev.radioSettingsType != curr.radioSettingsType ||
+          prev.radioSettings != curr.radioSettings,
       listener: (context, state) {
         _updateControllers(state.radioSettings);
       },
@@ -434,6 +445,28 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
                   ),
                 ),
               ),
+              SettingsItem(
+                S.current.sfd0,
+                child: MainTextField(
+                  controller: _sfd0Controller,
+                  onChange: (value) {
+                    if (value.isEmpty) return;
+                    bloc.add(UpdateSfd(sfd0: int.parse(value)));
+                  },
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              SettingsItem(
+                S.current.sfd1,
+                child: MainTextField(
+                  controller: _sfd1Controller,
+                  onChange: (value) {
+                    if (value.isEmpty) return;
+                    bloc.add(UpdateSfd(sfd1: int.parse(value)));
+                  },
+                  keyboardType: TextInputType.number,
+                ),
+              ),
               ItemWithRadio(
                 label: S.current.sfd,
                 list: SFDOption.values
@@ -517,7 +550,7 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
                 },
               ),
               SettingsItem(
-                '${S.current.preemphasis} 0',
+                S.current.preemphasis(0),
                 child: MainTextField(
                   controller: _preemphasis0Controller,
                   hint: 'values 0 - 255',
@@ -529,7 +562,7 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
                 ),
               ),
               SettingsItem(
-                '${S.current.preemphasis} 1',
+                S.current.preemphasis(1),
                 child: MainTextField(
                   controller: _preemphasis1Controller,
                   hint: 'values 0 - 255',
@@ -541,7 +574,7 @@ class _FskSettingWidgetState extends State<FskSettingWidget> {
                 ),
               ),
               SettingsItem(
-                '${S.current.preemphasis} 2',
+                S.current.preemphasis(2),
                 child: MainTextField(
                   controller: _preemphasis2Controller,
                   hint: 'values 0 - 255',

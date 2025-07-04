@@ -140,23 +140,6 @@ class _RadioSettingsWidgetState extends State<_RadioSettingsWidget> {
   }
 
   @override
-  void didUpdateWidget(covariant _RadioSettingsWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    final freqChanged =
-        oldWidget.radioSettings.frequency != widget.radioSettings.frequency;
-    final channelSpacingChanged = oldWidget.radioSettings.channelSpacing !=
-        widget.radioSettings.channelSpacing;
-    final txPowerChanged =
-        oldWidget.radioSettings.txPower != widget.radioSettings.txPower;
-
-    if (freqChanged) _frequencyController.text = widget.radioSettings.frequency;
-    if (channelSpacingChanged) {
-      _spacingController.text = widget.radioSettings.channelSpacing;
-    }
-    if (txPowerChanged) _txPowerController.text = widget.radioSettings.txPower;
-  }
-
-  @override
   void dispose() {
     _frequencyController.dispose();
     _spacingController.dispose();
@@ -168,7 +151,8 @@ class _RadioSettingsWidgetState extends State<_RadioSettingsWidget> {
   Widget build(BuildContext context) {
     return BlocConsumer<SettingsBloc, SettingsState>(
       listenWhen: (prev, curr) =>
-          prev.radioSettingsType != curr.radioSettingsType,
+          prev.radioSettingsType != curr.radioSettingsType ||
+          prev.radioSettings != curr.radioSettings,
       listener: (context, state) {
         _updateControllers(state);
       },

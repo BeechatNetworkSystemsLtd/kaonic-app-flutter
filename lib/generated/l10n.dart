@@ -800,21 +800,41 @@ class S {
     );
   }
 
-  /// `SFD1`
+  /// `CSFD1`
   String get csfd1 {
     return Intl.message(
-      'SFD1',
+      'CSFD1',
       name: 'csfd1',
       desc: '',
       args: [],
     );
   }
 
-  /// `SFD0`
+  /// `CSFD0`
   String get csfd0 {
     return Intl.message(
-      'SFD0',
+      'CSFD0',
       name: 'csfd0',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SFD1`
+  String get sfd1 {
+    return Intl.message(
+      'SFD1',
+      name: 'sfd1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SFD0`
+  String get sfd0 {
+    return Intl.message(
+      'SFD0',
+      name: 'sfd0',
       desc: '',
       args: [],
     );
@@ -900,13 +920,13 @@ class S {
     );
   }
 
-  /// `Preemphasis`
-  String get preemphasis {
+  /// `Preemphasis {count}`
+  String preemphasis(Object count) {
     return Intl.message(
-      'Preemphasis',
+      'Preemphasis $count',
       name: 'preemphasis',
       desc: '',
-      args: [],
+      args: [count],
     );
   }
 

@@ -20,6 +20,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(count) => "Preemphasis ${count}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "Channel": MessageLookupByLibrary.simpleMessage("Channel"),
@@ -42,8 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create passcode"),
         "createUsername":
             MessageLookupByLibrary.simpleMessage("Create username:"),
-        "csfd0": MessageLookupByLibrary.simpleMessage("SFD0"),
-        "csfd1": MessageLookupByLibrary.simpleMessage("SFD1"),
+        "csfd0": MessageLookupByLibrary.simpleMessage("CSFD0"),
+        "csfd1": MessageLookupByLibrary.simpleMessage("CSFD1"),
         "deviceVersion": MessageLookupByLibrary.simpleMessage("Device version"),
         "dw": MessageLookupByLibrary.simpleMessage("DW"),
         "en": MessageLookupByLibrary.simpleMessage("EN"),
@@ -120,7 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Preamble Inversion"),
         "preambleLength":
             MessageLookupByLibrary.simpleMessage("Preamble Length"),
-        "preemphasis": MessageLookupByLibrary.simpleMessage("Preemphasis"),
+        "preemphasis": m0,
         "presets": MessageLookupByLibrary.simpleMessage("Presets"),
         "radio": MessageLookupByLibrary.simpleMessage("Radio"),
         "radioSettings": MessageLookupByLibrary.simpleMessage("Radio Settings"),
@@ -134,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sdtd": MessageLookupByLibrary.simpleMessage("SFD Detection Threshold"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "sfd": MessageLookupByLibrary.simpleMessage("SFD"),
+        "sfd0": MessageLookupByLibrary.simpleMessage("SFD0"),
+        "sfd1": MessageLookupByLibrary.simpleMessage("SFD1"),
         "sfd32": MessageLookupByLibrary.simpleMessage("SFD32"),
         "sftq": MessageLookupByLibrary.simpleMessage("SFTQ"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),

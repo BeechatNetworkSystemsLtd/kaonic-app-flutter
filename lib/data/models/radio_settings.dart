@@ -73,6 +73,8 @@ class RadioSettings {
   final int preambleLength;
   final int sfdt;
   final int pdt;
+  final int sfd0;
+  final int sfd1;
 
   // HELPERS
   @Transient()
@@ -149,6 +151,8 @@ class RadioSettings {
     this.fskpe2 = 0x0,
     this.preambleLength = 0x0,
     this.pdt = 5,
+    this.sfd0 = 0,
+    this.sfd1 = 0,
   });
 
   RadioSettings copyWith({
@@ -202,6 +206,8 @@ class RadioSettings {
     int? fskpe2,
     int? preambleLength,
     int? pdt,
+    int? sfd0,
+    int? sfd1,
   }) {
     return RadioSettings(
       id: id ?? this.id,
@@ -239,6 +245,8 @@ class RadioSettings {
       fskpe2: fskpe2 ?? this.fskpe2,
       preambleLength: preambleLength ?? this.preambleLength,
       pdt: pdt ?? this.pdt,
+      sfd0: sfd0 ?? this.sfd0,
+      sfd1: sfd1 ?? this.sfd1,
     );
   }
 
@@ -281,6 +289,8 @@ class RadioSettings {
       fskpe2: fskpe2,
       pdt: data.pdt ?? pdt,
       preambleLength: data.preambleLength ?? preambleLength,
+      sfd0: data.sfd0 ?? sfd0,
+      sfd1: data.sfd1 ?? sfd1,
     );
   }
 
@@ -320,7 +330,9 @@ class RadioSettings {
       'fskpe1': fskpe1,
       'fskpe2': fskpe2,
       'preambleLength': preambleLength,
-      'pdt': pdt
+      'pdt': pdt,
+      'sfd0': sfd0,
+      'sfd1': sfd1,
     };
   }
 
@@ -363,6 +375,8 @@ class RadioSettings {
       fskpe2: json['fskpe2'],
       preambleLength: json['preambleLength'],
       pdt: json['pdt'],
+      sfd0: json['sfd0'],
+      sfd1: json['sfd1'],
     );
   }
 
@@ -399,8 +413,8 @@ class RadioSettings {
               'sfd32': sfd32.value,
               'csfd1': csfd1.value,
               'csfd0': csfd0.value,
-              'sfd0': csfd0.value,
-              'sfd1': csfd1.value,
+              'sfd0': sfd0,
+              'sfd1': sfd1,
               'sfd': sfd.value,
               'sfdt': sfdt,
               'dw': dw.value,

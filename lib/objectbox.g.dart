@@ -151,7 +151,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(5, 5682150587337205642),
     name: 'RadioSettings',
-    lastPropertyId: const obx_int.IdUid(36, 6910608422716623409),
+    lastPropertyId: const obx_int.IdUid(38, 7078203948307785387),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -367,6 +367,18 @@ final _entities = <obx_int.ModelEntity>[
       obx_int.ModelProperty(
         id: const obx_int.IdUid(36, 6910608422716623409),
         name: 'pdt',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(37, 9042287008884328243),
+        name: 'sfd0',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(38, 7078203948307785387),
+        name: 'sfd1',
         type: 6,
         flags: 0,
       ),
@@ -653,7 +665,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final frequencyOffset = fbb.writeString(object.frequency);
         final txPowerOffset = fbb.writeString(object.txPower);
         final channelSpacingOffset = fbb.writeString(object.channelSpacing);
-        fbb.startTable(37);
+        fbb.startTable(39);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, frequencyOffset);
         fbb.addOffset(2, txPowerOffset);
@@ -690,6 +702,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addInt64(33, object.module);
         fbb.addInt64(34, object.sfdt);
         fbb.addInt64(35, object.pdt);
+        fbb.addInt64(36, object.sfd0);
+        fbb.addInt64(37, object.sfd1);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -903,6 +917,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
           74,
           0,
         );
+        final sfd0Param = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          76,
+          0,
+        );
+        final sfd1Param = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          78,
+          0,
+        );
         final object = RadioSettings(
           id: idParam,
           frequency: frequencyParam,
@@ -940,6 +966,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fskpe2: fskpe2Param,
           preambleLength: preambleLengthParam,
           pdt: pdtParam,
+          sfd0: sfd0Param,
+          sfd1: sfd1Param,
         );
 
         return object;
@@ -1259,6 +1287,16 @@ class RadioSettings_ {
   /// See [RadioSettings.pdt].
   static final pdt = obx.QueryIntegerProperty<RadioSettings>(
     _entities[4].properties[35],
+  );
+
+  /// See [RadioSettings.sfd0].
+  static final sfd0 = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[36],
+  );
+
+  /// See [RadioSettings.sfd1].
+  static final sfd1 = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[37],
   );
 }
 

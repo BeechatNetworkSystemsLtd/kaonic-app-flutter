@@ -69,6 +69,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdatePDT>(_updatePDT);
     on<_GetPresets>(_onGetPresets);
     on<SetPreset>(_onSetPreset);
+    on<UpdateSfd>(_onUpdateSfd);
 
     add(_GetPresets());
   }
@@ -257,5 +258,15 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   void _onSetPreset(SetPreset event, Emitter<SettingsState> emit) {
     _updateSetting(emit, (rs) => rs.fromRadioPreset(event.preset));
+  }
+
+  FutureOr<void> _onUpdateSfd(
+      UpdateSfd event, Emitter<SettingsState> emit) async {
+    _updateSetting(
+        emit,
+        (rs) => rs.copyWith(
+              sfd0: event.sfd0,
+              sfd1: event.sfd1,
+            ));
   }
 }
