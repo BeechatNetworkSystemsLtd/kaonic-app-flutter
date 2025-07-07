@@ -80,10 +80,268 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:4298777669170173375",
+      "lastPropertyId": "4:449746006207797422",
+      "name": "ConnectivitySettings",
+      "properties": [
+        {
+          "id": "1:2156004470178154265",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3229367661543257216",
+          "name": "ip",
+          "type": 9
+        },
+        {
+          "id": "3:5944095016696951572",
+          "name": "port",
+          "type": 9
+        },
+        {
+          "id": "4:449746006207797422",
+          "name": "connectivityType",
+          "type": 5
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:5682150587337205642",
+      "lastPropertyId": "38:7078203948307785387",
+      "name": "RadioSettings",
+      "properties": [
+        {
+          "id": "1:4205852491195163841",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2978026170452572140",
+          "name": "frequency",
+          "type": 9
+        },
+        {
+          "id": "3:7790725567471161197",
+          "name": "txPower",
+          "type": 9
+        },
+        {
+          "id": "4:1415154255113837108",
+          "name": "channel",
+          "type": 6
+        },
+        {
+          "id": "5:4527811043842285039",
+          "name": "channelSpacing",
+          "type": 9
+        },
+        {
+          "id": "6:586093384057534998",
+          "name": "optionIndex",
+          "type": 5
+        },
+        {
+          "id": "7:8675938909844947049",
+          "name": "rateIndex",
+          "type": 5
+        },
+        {
+          "id": "8:8949517358300751069",
+          "name": "btIndex",
+          "type": 5
+        },
+        {
+          "id": "9:2750253182174540372",
+          "name": "midxsIndex",
+          "type": 5
+        },
+        {
+          "id": "10:3796365557309838740",
+          "name": "midxsBitsIndex",
+          "type": 5
+        },
+        {
+          "id": "11:4291634358899244253",
+          "name": "mordIndex",
+          "type": 5
+        },
+        {
+          "id": "12:3653684880107009018",
+          "name": "srateIndex",
+          "type": 5
+        },
+        {
+          "id": "13:6249516595394776624",
+          "name": "pdtmIndex",
+          "type": 5
+        },
+        {
+          "id": "14:6462614936145789071",
+          "name": "rxoIndex",
+          "type": 5
+        },
+        {
+          "id": "15:793376665738396909",
+          "name": "rxptoIndex",
+          "type": 5
+        },
+        {
+          "id": "16:4449449947861748160",
+          "name": "mseIndex",
+          "type": 5
+        },
+        {
+          "id": "17:1917525154531306003",
+          "name": "fecsIndex",
+          "type": 5
+        },
+        {
+          "id": "18:5727484176016352224",
+          "name": "fecieIndex",
+          "type": 5
+        },
+        {
+          "id": "19:4550550545069022158",
+          "name": "sfd32Index",
+          "type": 5
+        },
+        {
+          "id": "20:8976982532682365785",
+          "name": "csfd1Index",
+          "type": 5
+        },
+        {
+          "id": "21:6087476592737852085",
+          "name": "csfd0Index",
+          "type": 5
+        },
+        {
+          "id": "22:5775586210786295826",
+          "name": "sfdIndex",
+          "type": 5
+        },
+        {
+          "id": "23:4757170100482921805",
+          "name": "dwIndex",
+          "type": 5
+        },
+        {
+          "id": "24:7188624748287602854",
+          "name": "freqInversion",
+          "type": 1
+        },
+        {
+          "id": "25:3546744950328064703",
+          "name": "preambleInversion",
+          "type": 1
+        },
+        {
+          "id": "26:771053965259570932",
+          "name": "sftq",
+          "type": 1
+        },
+        {
+          "id": "27:1484971056269303843",
+          "name": "rawbit",
+          "type": 1
+        },
+        {
+          "id": "28:1779876996382457318",
+          "name": "pe",
+          "type": 1
+        },
+        {
+          "id": "29:2597559626782214802",
+          "name": "en",
+          "type": 1
+        },
+        {
+          "id": "30:632923781530440974",
+          "name": "fskpe0",
+          "type": 6
+        },
+        {
+          "id": "31:2830949805580950188",
+          "name": "fskpe1",
+          "type": 6
+        },
+        {
+          "id": "32:3612565437145912507",
+          "name": "fskpe2",
+          "type": 6
+        },
+        {
+          "id": "33:5038736048883723188",
+          "name": "preambleLength",
+          "type": 6
+        },
+        {
+          "id": "34:7488543016608192120",
+          "name": "module",
+          "type": 6
+        },
+        {
+          "id": "35:6728592806818309010",
+          "name": "sfdt",
+          "type": 6
+        },
+        {
+          "id": "36:6910608422716623409",
+          "name": "pdt",
+          "type": 6
+        },
+        {
+          "id": "37:9042287008884328243",
+          "name": "sfd0",
+          "type": 6
+        },
+        {
+          "id": "38:7078203948307785387",
+          "name": "sfd1",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:1276151104916648780",
+      "lastPropertyId": "3:7692050720648622374",
+      "name": "RadioSettingsContainer",
+      "properties": [
+        {
+          "id": "1:9150077653626435520",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1984877620764095221",
+          "name": "radioSettingsAId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:5139370016371030247",
+          "relationTarget": "RadioSettings"
+        },
+        {
+          "id": "3:7692050720648622374",
+          "name": "radioSettingsBId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:3533216531977425030",
+          "relationTarget": "RadioSettings"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:4303160672216820288",
-  "lastIndexId": "0:0",
+  "lastEntityId": "6:1276151104916648780",
+  "lastIndexId": "2:3533216531977425030",
   "lastRelationId": "1:4163491123646389794",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

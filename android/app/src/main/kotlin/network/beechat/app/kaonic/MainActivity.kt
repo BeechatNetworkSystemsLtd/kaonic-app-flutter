@@ -4,16 +4,20 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.media.RingtoneManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.google.gson.Gson
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import network.beechat.app.kaonic.models.ConnectivitySettings
 import network.beechat.app.kaonic.services.KaonicService
 import network.beechat.app.kaonic.services.SecureStorageHelper
 import network.beechat.kaonic.communication.KaonicCommunicationManager
@@ -98,34 +102,58 @@ class MainActivity : FlutterActivity() {
                     result.success(KaonicService.myAddress)
                 }
 
-                "sendConfigure" -> {
+                "getPresets" -> {
                     try {
-                        val mcs = call.argument<Int>("mcs") ?: 0
-                        val optionNumber = call.argument<Int>("optionNumber") ?: 0
-                        val module = call.argument<Int>("module") ?: 0
-                        val frequency = call.argument<Int>("frequency") ?: 0
-                        val channel = call.argument<Int>("channel") ?: 0
-                        val channelSpacing = call.argument<Int>("channelSpacing") ?: 0
-                        val txPower = call.argument<Int>("txPower") ?: 0
-
-                        KaonicService.sendConfig(
-                            mcs,
-                            optionNumber,
-                            module,
-                            frequency,
-                            channel,
-                            channelSpacing,
-                            txPower
-                        )
-
-                        result.success(true)
+                        val presets = KaonicService.getPresets()
+                        result.success(presets)
                     } catch (ex: Exception) {
-                        Log.d("sendConfigure", ex.toString())
-                        result.error("sendConfigure", ex.message, "")
+                        Log.d("sendConfig", ex.toString())
+                        result.error("sendConfig", ex.message, "")
                     }
                 }
+
+                "sendConfig", "sendConfigure" -> {
+                    val executor = java.util.concurrent.Executors.newSingleThreadExecutor()
+                    val future = executor.submit(java.util.concurrent.Callable {
+                        try {
+                            val jsonConfig = call.arguments as? String ?: return@Callable false
+                            KaonicService.sendConfig(jsonConfig)
+                            true
+                        } catch (ex: Exception) {
+                            throw ex
+                        }
+                    })
+
+                    Thread {
+                        try {
+                            val resultValue = future.get(5, java.util.concurrent.TimeUnit.SECONDS)
+                            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                                Log.d("sendConfig", "success")
+                                result.success(resultValue)
+                            }
+                        } catch (e: java.util.concurrent.TimeoutException) {
+                            future.cancel(true)
+                            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                                Log.d("sendConfig", "timeout")
+                                result.error("sendConfigTimeout", "Timeout while sending config", "")
+                            }
+                        } catch (e: Exception) {
+                            android.os.Handler(android.os.Looper.getMainLooper()).post {
+                                Log.d("sendConfig", "error: ${e.message}")
+                                result.error("sendConfig", e.message, "")
+                            }
+                        } finally {
+                            executor.shutdown()
+                        }
+                    }.start()
+                }
                 "startService" -> {
-                    initKaonicService()
+                    val json = call.argument<String>("connectivity")
+
+                    val gson = Gson()
+                    val connectivitySettings = gson.fromJson(json, ConnectivitySettings::class.java)
+
+                    initKaonicService(connectivitySettings)
                 }
 
                 "createChat" -> {
@@ -223,7 +251,7 @@ class MainActivity : FlutterActivity() {
     }
 
 
-    private fun initKaonicService() {
+    private fun initKaonicService(connectivitySettings: ConnectivitySettings) {
         checkStoragePermission()
         val ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
         val ringtone = RingtoneManager.getRingtone(this, ringtoneUri)
@@ -234,7 +262,8 @@ class MainActivity : FlutterActivity() {
                 contentResolver,
                 ringtone
             ),
-            secureStorageHelper
+            secureStorageHelper,
+            connectivitySettings,
         )
     }
 

@@ -14,8 +14,11 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'data/models/connectivity_settings.dart';
 import 'data/models/contact_model.dart';
 import 'data/models/message_data_container.dart';
+import 'data/models/radio_settings.dart';
+import 'data/models/radio_settings_container.dart';
 import 'data/models/user_model.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
@@ -111,6 +114,310 @@ final _entities = <obx_int.ModelEntity>[
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
   ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(4, 4298777669170173375),
+    name: 'ConnectivitySettings',
+    lastPropertyId: const obx_int.IdUid(4, 449746006207797422),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 2156004470178154265),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 3229367661543257216),
+        name: 'ip',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 5944095016696951572),
+        name: 'port',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 449746006207797422),
+        name: 'connectivityType',
+        type: 5,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(5, 5682150587337205642),
+    name: 'RadioSettings',
+    lastPropertyId: const obx_int.IdUid(38, 7078203948307785387),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 4205852491195163841),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 2978026170452572140),
+        name: 'frequency',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 7790725567471161197),
+        name: 'txPower',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 1415154255113837108),
+        name: 'channel',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 4527811043842285039),
+        name: 'channelSpacing',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 586093384057534998),
+        name: 'optionIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(7, 8675938909844947049),
+        name: 'rateIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 8949517358300751069),
+        name: 'btIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 2750253182174540372),
+        name: 'midxsIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(10, 3796365557309838740),
+        name: 'midxsBitsIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(11, 4291634358899244253),
+        name: 'mordIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(12, 3653684880107009018),
+        name: 'srateIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(13, 6249516595394776624),
+        name: 'pdtmIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(14, 6462614936145789071),
+        name: 'rxoIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(15, 793376665738396909),
+        name: 'rxptoIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(16, 4449449947861748160),
+        name: 'mseIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(17, 1917525154531306003),
+        name: 'fecsIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(18, 5727484176016352224),
+        name: 'fecieIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(19, 4550550545069022158),
+        name: 'sfd32Index',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(20, 8976982532682365785),
+        name: 'csfd1Index',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(21, 6087476592737852085),
+        name: 'csfd0Index',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(22, 5775586210786295826),
+        name: 'sfdIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(23, 4757170100482921805),
+        name: 'dwIndex',
+        type: 5,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(24, 7188624748287602854),
+        name: 'freqInversion',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(25, 3546744950328064703),
+        name: 'preambleInversion',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(26, 771053965259570932),
+        name: 'sftq',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(27, 1484971056269303843),
+        name: 'rawbit',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(28, 1779876996382457318),
+        name: 'pe',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(29, 2597559626782214802),
+        name: 'en',
+        type: 1,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(30, 632923781530440974),
+        name: 'fskpe0',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(31, 2830949805580950188),
+        name: 'fskpe1',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(32, 3612565437145912507),
+        name: 'fskpe2',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(33, 5038736048883723188),
+        name: 'preambleLength',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(34, 7488543016608192120),
+        name: 'module',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(35, 6728592806818309010),
+        name: 'sfdt',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(36, 6910608422716623409),
+        name: 'pdt',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(37, 9042287008884328243),
+        name: 'sfd0',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(38, 7078203948307785387),
+        name: 'sfd1',
+        type: 6,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(6, 1276151104916648780),
+    name: 'RadioSettingsContainer',
+    lastPropertyId: const obx_int.IdUid(3, 7692050720648622374),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 9150077653626435520),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 1984877620764095221),
+        name: 'radioSettingsAId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(1, 5139370016371030247),
+        relationTarget: 'RadioSettings',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 7692050720648622374),
+        name: 'radioSettingsBId',
+        type: 11,
+        flags: 520,
+        indexId: const obx_int.IdUid(2, 3533216531977425030),
+        relationTarget: 'RadioSettings',
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -151,8 +458,8 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(3, 4303160672216820288),
-    lastIndexId: const obx_int.IdUid(0, 0),
+    lastEntityId: const obx_int.IdUid(6, 1276151104916648780),
+    lastIndexId: const obx_int.IdUid(2, 3533216531977425030),
     lastRelationId: const obx_int.IdUid(1, 4163491123646389794),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
@@ -296,6 +603,422 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    ConnectivitySettings: obx_int.EntityDefinition<ConnectivitySettings>(
+      model: _entities[3],
+      toOneRelations: (ConnectivitySettings object) => [],
+      toManyRelations: (ConnectivitySettings object) => {},
+      getId: (ConnectivitySettings object) => object.id,
+      setId: (ConnectivitySettings object, int id) {
+        object.id = id;
+      },
+      objectToFB: (ConnectivitySettings object, fb.Builder fbb) {
+        final ipOffset = fbb.writeString(object.ip);
+        final portOffset = fbb.writeString(object.port);
+        fbb.startTable(5);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, ipOffset);
+        fbb.addOffset(2, portOffset);
+        fbb.addInt32(3, object.connectivityType);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final portParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 8, '');
+        final ipParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final connectivityTypeParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          10,
+          0,
+        );
+        final object = ConnectivitySettings(
+          id: idParam,
+          port: portParam,
+          ip: ipParam,
+          connectivityType: connectivityTypeParam,
+        );
+
+        return object;
+      },
+    ),
+    RadioSettings: obx_int.EntityDefinition<RadioSettings>(
+      model: _entities[4],
+      toOneRelations: (RadioSettings object) => [],
+      toManyRelations: (RadioSettings object) => {},
+      getId: (RadioSettings object) => object.id,
+      setId: (RadioSettings object, int id) {
+        object.id = id;
+      },
+      objectToFB: (RadioSettings object, fb.Builder fbb) {
+        final frequencyOffset = fbb.writeString(object.frequency);
+        final txPowerOffset = fbb.writeString(object.txPower);
+        final channelSpacingOffset = fbb.writeString(object.channelSpacing);
+        fbb.startTable(39);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, frequencyOffset);
+        fbb.addOffset(2, txPowerOffset);
+        fbb.addInt64(3, object.channel);
+        fbb.addOffset(4, channelSpacingOffset);
+        fbb.addInt32(5, object.optionIndex);
+        fbb.addInt32(6, object.rateIndex);
+        fbb.addInt32(7, object.btIndex);
+        fbb.addInt32(8, object.midxsIndex);
+        fbb.addInt32(9, object.midxsBitsIndex);
+        fbb.addInt32(10, object.mordIndex);
+        fbb.addInt32(11, object.srateIndex);
+        fbb.addInt32(12, object.pdtmIndex);
+        fbb.addInt32(13, object.rxoIndex);
+        fbb.addInt32(14, object.rxptoIndex);
+        fbb.addInt32(15, object.mseIndex);
+        fbb.addInt32(16, object.fecsIndex);
+        fbb.addInt32(17, object.fecieIndex);
+        fbb.addInt32(18, object.sfd32Index);
+        fbb.addInt32(19, object.csfd1Index);
+        fbb.addInt32(20, object.csfd0Index);
+        fbb.addInt32(21, object.sfdIndex);
+        fbb.addInt32(22, object.dwIndex);
+        fbb.addBool(23, object.freqInversion);
+        fbb.addBool(24, object.preambleInversion);
+        fbb.addBool(25, object.sftq);
+        fbb.addBool(26, object.rawbit);
+        fbb.addBool(27, object.pe);
+        fbb.addBool(28, object.en);
+        fbb.addInt64(29, object.fskpe0);
+        fbb.addInt64(30, object.fskpe1);
+        fbb.addInt64(31, object.fskpe2);
+        fbb.addInt64(32, object.preambleLength);
+        fbb.addInt64(33, object.module);
+        fbb.addInt64(34, object.sfdt);
+        fbb.addInt64(35, object.pdt);
+        fbb.addInt64(36, object.sfd0);
+        fbb.addInt64(37, object.sfd1);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final frequencyParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final channelSpacingParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 12, '');
+        final moduleParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          70,
+          0,
+        );
+        final channelParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          10,
+          0,
+        );
+        final optionIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          14,
+          0,
+        );
+        final rateIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          16,
+          0,
+        );
+        final txPowerParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 8, '');
+        final btIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          18,
+          0,
+        );
+        final midxsIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          20,
+          0,
+        );
+        final midxsBitsIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          22,
+          0,
+        );
+        final mordIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          24,
+          0,
+        );
+        final srateIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          26,
+          0,
+        );
+        final pdtmIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          28,
+          0,
+        );
+        final rxoIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          30,
+          0,
+        );
+        final rxptoIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          32,
+          0,
+        );
+        final mseIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          34,
+          0,
+        );
+        final fecsIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          36,
+          0,
+        );
+        final fecieIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          38,
+          0,
+        );
+        final sfd32IndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          40,
+          0,
+        );
+        final csfd1IndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          42,
+          0,
+        );
+        final csfd0IndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          44,
+          0,
+        );
+        final sfdIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          46,
+          0,
+        );
+        final dwIndexParam = const fb.Int32Reader().vTableGet(
+          buffer,
+          rootOffset,
+          48,
+          0,
+        );
+        final freqInversionParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          50,
+          false,
+        );
+        final preambleInversionParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          52,
+          false,
+        );
+        final sftqParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          54,
+          false,
+        );
+        final sfdtParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          72,
+          0,
+        );
+        final rawbitParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          56,
+          false,
+        );
+        final peParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          58,
+          false,
+        );
+        final enParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          60,
+          false,
+        );
+        final fskpe0Param = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          62,
+          0,
+        );
+        final fskpe1Param = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          64,
+          0,
+        );
+        final fskpe2Param = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          66,
+          0,
+        );
+        final preambleLengthParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          68,
+          0,
+        );
+        final pdtParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          74,
+          0,
+        );
+        final sfd0Param = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          76,
+          0,
+        );
+        final sfd1Param = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          78,
+          0,
+        );
+        final object = RadioSettings(
+          id: idParam,
+          frequency: frequencyParam,
+          channelSpacing: channelSpacingParam,
+          module: moduleParam,
+          channel: channelParam,
+          optionIndex: optionIndexParam,
+          rateIndex: rateIndexParam,
+          txPower: txPowerParam,
+          btIndex: btIndexParam,
+          midxsIndex: midxsIndexParam,
+          midxsBitsIndex: midxsBitsIndexParam,
+          mordIndex: mordIndexParam,
+          srateIndex: srateIndexParam,
+          pdtmIndex: pdtmIndexParam,
+          rxoIndex: rxoIndexParam,
+          rxptoIndex: rxptoIndexParam,
+          mseIndex: mseIndexParam,
+          fecsIndex: fecsIndexParam,
+          fecieIndex: fecieIndexParam,
+          sfd32Index: sfd32IndexParam,
+          csfd1Index: csfd1IndexParam,
+          csfd0Index: csfd0IndexParam,
+          sfdIndex: sfdIndexParam,
+          dwIndex: dwIndexParam,
+          freqInversion: freqInversionParam,
+          preambleInversion: preambleInversionParam,
+          sftq: sftqParam,
+          sfdt: sfdtParam,
+          rawbit: rawbitParam,
+          pe: peParam,
+          en: enParam,
+          fskpe0: fskpe0Param,
+          fskpe1: fskpe1Param,
+          fskpe2: fskpe2Param,
+          preambleLength: preambleLengthParam,
+          pdt: pdtParam,
+          sfd0: sfd0Param,
+          sfd1: sfd1Param,
+        );
+
+        return object;
+      },
+    ),
+    RadioSettingsContainer: obx_int.EntityDefinition<RadioSettingsContainer>(
+      model: _entities[5],
+      toOneRelations: (RadioSettingsContainer object) => [
+        object.radioSettingsA,
+        object.radioSettingsB,
+      ],
+      toManyRelations: (RadioSettingsContainer object) => {},
+      getId: (RadioSettingsContainer object) => object.id,
+      setId: (RadioSettingsContainer object, int id) {
+        object.id = id;
+      },
+      objectToFB: (RadioSettingsContainer object, fb.Builder fbb) {
+        fbb.startTable(4);
+        fbb.addInt64(0, object.id);
+        fbb.addInt64(1, object.radioSettingsA.targetId);
+        fbb.addInt64(2, object.radioSettingsB.targetId);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final object = RadioSettingsContainer(id: idParam);
+        object.radioSettingsA.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          6,
+          0,
+        );
+        object.radioSettingsA.attach(store);
+        object.radioSettingsB.targetId = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          8,
+          0,
+        );
+        object.radioSettingsB.attach(store);
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -358,4 +1081,241 @@ class MessageDataContainer_ {
   static final jsonString = obx.QueryStringProperty<MessageDataContainer>(
     _entities[2].properties[1],
   );
+}
+
+/// [ConnectivitySettings] entity fields to define ObjectBox queries.
+class ConnectivitySettings_ {
+  /// See [ConnectivitySettings.id].
+  static final id = obx.QueryIntegerProperty<ConnectivitySettings>(
+    _entities[3].properties[0],
+  );
+
+  /// See [ConnectivitySettings.ip].
+  static final ip = obx.QueryStringProperty<ConnectivitySettings>(
+    _entities[3].properties[1],
+  );
+
+  /// See [ConnectivitySettings.port].
+  static final port = obx.QueryStringProperty<ConnectivitySettings>(
+    _entities[3].properties[2],
+  );
+
+  /// See [ConnectivitySettings.connectivityType].
+  static final connectivityType =
+      obx.QueryIntegerProperty<ConnectivitySettings>(
+        _entities[3].properties[3],
+      );
+}
+
+/// [RadioSettings] entity fields to define ObjectBox queries.
+class RadioSettings_ {
+  /// See [RadioSettings.id].
+  static final id = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[0],
+  );
+
+  /// See [RadioSettings.frequency].
+  static final frequency = obx.QueryStringProperty<RadioSettings>(
+    _entities[4].properties[1],
+  );
+
+  /// See [RadioSettings.txPower].
+  static final txPower = obx.QueryStringProperty<RadioSettings>(
+    _entities[4].properties[2],
+  );
+
+  /// See [RadioSettings.channel].
+  static final channel = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[3],
+  );
+
+  /// See [RadioSettings.channelSpacing].
+  static final channelSpacing = obx.QueryStringProperty<RadioSettings>(
+    _entities[4].properties[4],
+  );
+
+  /// See [RadioSettings.optionIndex].
+  static final optionIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[5],
+  );
+
+  /// See [RadioSettings.rateIndex].
+  static final rateIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[6],
+  );
+
+  /// See [RadioSettings.btIndex].
+  static final btIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[7],
+  );
+
+  /// See [RadioSettings.midxsIndex].
+  static final midxsIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[8],
+  );
+
+  /// See [RadioSettings.midxsBitsIndex].
+  static final midxsBitsIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[9],
+  );
+
+  /// See [RadioSettings.mordIndex].
+  static final mordIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[10],
+  );
+
+  /// See [RadioSettings.srateIndex].
+  static final srateIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[11],
+  );
+
+  /// See [RadioSettings.pdtmIndex].
+  static final pdtmIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[12],
+  );
+
+  /// See [RadioSettings.rxoIndex].
+  static final rxoIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[13],
+  );
+
+  /// See [RadioSettings.rxptoIndex].
+  static final rxptoIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[14],
+  );
+
+  /// See [RadioSettings.mseIndex].
+  static final mseIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[15],
+  );
+
+  /// See [RadioSettings.fecsIndex].
+  static final fecsIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[16],
+  );
+
+  /// See [RadioSettings.fecieIndex].
+  static final fecieIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[17],
+  );
+
+  /// See [RadioSettings.sfd32Index].
+  static final sfd32Index = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[18],
+  );
+
+  /// See [RadioSettings.csfd1Index].
+  static final csfd1Index = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[19],
+  );
+
+  /// See [RadioSettings.csfd0Index].
+  static final csfd0Index = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[20],
+  );
+
+  /// See [RadioSettings.sfdIndex].
+  static final sfdIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[21],
+  );
+
+  /// See [RadioSettings.dwIndex].
+  static final dwIndex = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[22],
+  );
+
+  /// See [RadioSettings.freqInversion].
+  static final freqInversion = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[23],
+  );
+
+  /// See [RadioSettings.preambleInversion].
+  static final preambleInversion = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[24],
+  );
+
+  /// See [RadioSettings.sftq].
+  static final sftq = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[25],
+  );
+
+  /// See [RadioSettings.rawbit].
+  static final rawbit = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[26],
+  );
+
+  /// See [RadioSettings.pe].
+  static final pe = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[27],
+  );
+
+  /// See [RadioSettings.en].
+  static final en = obx.QueryBooleanProperty<RadioSettings>(
+    _entities[4].properties[28],
+  );
+
+  /// See [RadioSettings.fskpe0].
+  static final fskpe0 = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[29],
+  );
+
+  /// See [RadioSettings.fskpe1].
+  static final fskpe1 = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[30],
+  );
+
+  /// See [RadioSettings.fskpe2].
+  static final fskpe2 = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[31],
+  );
+
+  /// See [RadioSettings.preambleLength].
+  static final preambleLength = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[32],
+  );
+
+  /// See [RadioSettings.module].
+  static final module = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[33],
+  );
+
+  /// See [RadioSettings.sfdt].
+  static final sfdt = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[34],
+  );
+
+  /// See [RadioSettings.pdt].
+  static final pdt = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[35],
+  );
+
+  /// See [RadioSettings.sfd0].
+  static final sfd0 = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[36],
+  );
+
+  /// See [RadioSettings.sfd1].
+  static final sfd1 = obx.QueryIntegerProperty<RadioSettings>(
+    _entities[4].properties[37],
+  );
+}
+
+/// [RadioSettingsContainer] entity fields to define ObjectBox queries.
+class RadioSettingsContainer_ {
+  /// See [RadioSettingsContainer.id].
+  static final id = obx.QueryIntegerProperty<RadioSettingsContainer>(
+    _entities[5].properties[0],
+  );
+
+  /// See [RadioSettingsContainer.radioSettingsA].
+  static final radioSettingsA =
+      obx.QueryRelationToOne<RadioSettingsContainer, RadioSettings>(
+        _entities[5].properties[1],
+      );
+
+  /// See [RadioSettingsContainer.radioSettingsB].
+  static final radioSettingsB =
+      obx.QueryRelationToOne<RadioSettingsContainer, RadioSettings>(
+        _entities[5].properties[2],
+      );
 }

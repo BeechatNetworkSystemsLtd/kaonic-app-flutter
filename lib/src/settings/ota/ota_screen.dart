@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/src/settings/ota/bloc/ota_bloc.dart';
+import 'package:kaonic/src/widgets/custom_appbar.dart';
 import 'package:kaonic/src/widgets/solid_button.dart';
 import 'package:kaonic/theme/theme.dart';
 
@@ -19,9 +20,7 @@ class _OtaScreenState extends State<OtaScreen> {
     return BlocProvider(
         create: (_) => OtaBloc(otaService: context.read()),
         child: Scaffold(
-          appBar: AppBar(
-            title: Text(S.of(context).otaUpdate),
-          ),
+          appBar: CustomAppbar(title: S.of(context).otaUpdate),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(

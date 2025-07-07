@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     _bloc = LoginBloc(
       context.read(),
+      context.read(),
       userService: context.read(),
     );
     super.initState();

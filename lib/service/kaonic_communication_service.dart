@@ -2,13 +2,22 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:kaonic/data/enums/phy_config_type_enum.dart';
 import 'package:kaonic/data/models/call_event_data.dart';
+import 'package:kaonic/data/models/connectivity_settings.dart';
 import 'package:kaonic/data/models/kaonic_create_chat_event.dart';
 import 'package:kaonic/data/models/kaonic_event.dart';
 import 'package:kaonic/data/models/kaonic_event_type.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
+import 'package:kaonic/data/models/preset_models/radio_preset_model.dart';
+import 'package:kaonic/data/models/radio_settings.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:uuid/uuid.dart';
+
+enum KaonicCommunicationType {
+  tcp,
+  kaonicClient,
+}
 
 class KaonicCommunicationService {
   static const defaultFrequency = "869535";
@@ -30,8 +39,10 @@ class KaonicCommunicationService {
     kaonicEventChannel.receiveBroadcastStream().listen(_listenKaonicEvents);
   }
 
-  void startService() {
-    kaonicMethodChannel.invokeMethod('startService');
+  void startService(ConnectivitySettings connectivitySettings) {
+    kaonicMethodChannel.invokeMethod('startService', {
+      'connectivity': connectivitySettings.toJson(),
+    });
   }
 
   Future<String> createChat(String address) async {
@@ -61,22 +72,21 @@ class KaonicCommunicationService {
   }
 
   void sendConfig(
-      {required int mcs,
-      required int optionNumber,
-      required int module,
-      required int frequency,
-      required int channel,
-      required int channelSpacing,
-      required int txPower}) {
-    kaonicMethodChannel.invokeMethod('sendConfig', {
-      "mcs": mcs,
-      "optionNumber": optionNumber,
-      "module": module,
-      "frequency": frequency,
-      "channel": channel,
-      "channelSpacing": channelSpacing,
-      "txPower": txPower,
-    });
+      {required RadioSettings radioSettings,
+      required PhyConfigTypeEnum configType}) {
+    kaonicMethodChannel.invokeMethod(
+      'sendConfig',
+      radioSettings.toJsonStringConfig(configType),
+    );
+  }
+
+  Future<List<RadioPresetModel>> getPresets() async {
+    final result = await kaonicMethodChannel.invokeMethod('getPresets');
+    final json = jsonDecode(result);
+
+    return (json as List)
+        .map((preset) => RadioPresetModel.fromJson(preset))
+        .toList();
   }
 
   void startCall(String callId, String address) {
