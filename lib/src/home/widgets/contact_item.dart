@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/data/models/contact_model.dart';
 import 'package:kaonic/generated/l10n.dart';
+import 'package:kaonic/src/widgets/user_icon_widget.dart';
 import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/theme/theme.dart';
 
@@ -31,26 +32,11 @@ class ContactItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(42),
       child: Row(
         children: [
-          Flexible(
-            flex: 2,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                  gradient: AppColors.yellowGradient,
-                  borderRadius: BorderRadius.circular(42)),
-              child: SizedBox(
-                height: 32,
-                child: Align(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: Text(
-                      'User',
-                      style: TextStyles.text18Bold,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          UserIconWidget(
+            padding: 8,
+            iconSize: 24,
+            bgColor: AppColors.yellow,
+            iconColor: AppColors.black,
           ),
           SizedBox(width: 10.w),
           Flexible(

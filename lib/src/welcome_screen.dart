@@ -45,7 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     WidgetsFlutterBinding.ensureInitialized();
 
-    Future.delayed(const Duration(milliseconds: 3550), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       if (context.read<UserService>().checkUserSignedIn() != null) {
         context.read<KaonicCommunicationService>().startService(
               context

@@ -5,6 +5,7 @@ import 'package:kaonic/service/call_service.dart';
 import 'package:kaonic/src/call/bloc/call_bloc.dart';
 import 'package:kaonic/src/widgets/icon_circle_button.dart';
 import 'package:kaonic/src/widgets/screen_container.dart';
+import 'package:kaonic/src/widgets/user_icon_widget.dart';
 import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/theme/theme.dart';
 
@@ -55,19 +56,7 @@ class CallScreen extends StatelessWidget {
                             Padding(
                               padding:
                                   EdgeInsets.only(bottom: 150.h, top: 25.h),
-                              child: DecoratedBox(
-                                decoration: const BoxDecoration(
-                                    color: AppColors.grey2,
-                                    shape: BoxShape.circle),
-                                child: Padding(
-                                  padding: EdgeInsets.all(30.w),
-                                  child: const Icon(
-                                    Icons.person,
-                                    color: Colors.white,
-                                    size: 70,
-                                  ),
-                                ),
-                              ),
+                              child: UserIconWidget(),
                             ),
                             AnimatedSwitcher(
                               duration: Durations.medium2,
