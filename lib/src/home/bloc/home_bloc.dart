@@ -26,6 +26,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<_UpdatedNodes>(_updatedNodes);
     on<_HandleCallStatus>(_handleCallStatus);
     on<RemoveContact>(_removeContact);
+    on<OnChatNavigate>(_onChatNavigate);
 
     add(_InitEvent());
 
@@ -88,5 +89,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       _userService.user?.contacts.removeAt(index);
       _userService.updateCurrentUser();
     }
+  }
+
+  void _onChatNavigate(OnChatNavigate event, Emitter<HomeState> emit) {
+    emit(state.copyWith(isInChatPage: event.isInChatPage));
   }
 }

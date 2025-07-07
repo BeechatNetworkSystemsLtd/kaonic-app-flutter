@@ -10,7 +10,7 @@ part 'call_state.dart';
 class CallBloc extends Bloc<CallEvent, CallState> {
   CallBloc({
     required CallService callService,
-    required CallScreenState callState,
+    required CallScreenStateInfo callState,
   })  : _callService = callService,
         super(CallState(
             callState: callState,
@@ -23,7 +23,7 @@ class CallBloc extends Bloc<CallEvent, CallState> {
     add(_InitCall());
   }
 
-  late final StreamSubscription<CallScreenState>? _callStateSubscription;
+  late final StreamSubscription<CallScreenStateInfo>? _callStateSubscription;
   late final CallService _callService;
 
   @override
@@ -40,7 +40,7 @@ class CallBloc extends Bloc<CallEvent, CallState> {
 
   void _onUpdateCallState(_UpdateCallState event, Emitter<CallState> emit) {
     emit(state.copyWith(callState: event.callSate));
-    if (event.callSate == CallScreenState.finished) {
+    if (event.callSate.callScreenState == CallScreenState.finished) {
       emit(EndCallState());
     }
   }

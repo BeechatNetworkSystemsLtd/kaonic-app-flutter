@@ -12,13 +12,20 @@ import 'package:rxdart/subjects.dart';
 typedef OnChatIdChanged = Function(String, String);
 
 class ChatService {
-  ChatService(
+  ChatService._privateConstructor();
+
+  static final ChatService _instance = ChatService._privateConstructor();
+
+  factory ChatService(
     KaonicCommunicationService kaonicService,
     MessagesRepository messageRepository,
   ) {
-    _kaonicService = kaonicService;
-    _messageRepository = messageRepository;
-    _listenMessages();
+    _instance._kaonicService = kaonicService;
+    _instance._messageRepository = messageRepository;
+    _instance._listenMessages();
+    _instance.myAddress();
+
+    return _instance;
   }
 
   late final KaonicCommunicationService _kaonicService;
@@ -33,6 +40,7 @@ class ChatService {
   final _contactChats = <String, String>{};
 
   String? _activeContactAddress;
+  String? _myAddress;
 
   OnChatIdChanged? onChatIDUpdated;
 
@@ -60,7 +68,8 @@ class ChatService {
   }
 
   Future<String> myAddress() async {
-    return await _kaonicService.myAddress();
+    _myAddress = await _kaonicService.myAddress();
+    return _myAddress ?? '';
   }
 
   Future<String> createChat(String address) async {
@@ -89,6 +98,7 @@ class ChatService {
     final currentMap =
         Map<String, List<KaonicEvent>>.from(_messagesSubject.valueOrNull ?? {});
     final messageList = List<KaonicEvent>.from(currentMap[data.chatId] ?? []);
+    final isMessagesEmpty = messageList.isEmpty;
 
     final existingMessages = messageList
         .where((msg) =>
@@ -109,7 +119,10 @@ class ChatService {
 
     _messagesSubject.add(currentMap);
 
-    _saveMessages(messageList);
+    final peerAdrees = data.address != _myAddress ? data.address : null;
+
+    _activeContactAddress = peerAdrees ?? _activeContactAddress;
+    _saveMessages(messageList, isMessagesEmpty);
   }
 
   void _putOrUpdateChatId(String chatId, String address,
@@ -142,11 +155,21 @@ class ChatService {
     }
   }
 
-  void _saveMessages(List<KaonicEvent> messages) {
+  void _saveMessages(List<KaonicEvent> messages,
+      [bool isMessagesEmpty = false]) {
+    List<KaonicEvent>? messagesToSave;
+    if (isMessagesEmpty) {
+      final localMessages = _messageRepository.getMessages();
+      if (_activeContactAddress == localMessages.keys.first) {
+        messagesToSave = List<KaonicEvent>.from(localMessages.values.first)
+          ..addAll(messages);
+      }
+    }
+
     if (_activeContactAddress == null) return;
 
     _messageRepository.saveMessages({
-      _activeContactAddress!: messages,
+      _activeContactAddress!: messagesToSave ?? messages,
     });
   }
 }

@@ -111,7 +111,7 @@ class _MainAppState extends State<MainApp> {
                     ),
                 Routes.call: (context) => CallScreen(
                       callState: ModalRoute.of(context)?.settings.arguments
-                          as CallScreenState,
+                          as CallScreenStateInfo,
                     ),
                 Routes.settings: (context) => const SettingsScreen(),
                 Routes.ota: (context) => const OtaScreen(),
