@@ -95,7 +95,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(3, 4303160672216820288),
     name: 'MessageDataContainer',
-    lastPropertyId: const obx_int.IdUid(2, 9096841548606055478),
+    lastPropertyId: const obx_int.IdUid(3, 4236812012143210727),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -107,6 +107,12 @@ final _entities = <obx_int.ModelEntity>[
       obx_int.ModelProperty(
         id: const obx_int.IdUid(2, 9096841548606055478),
         name: 'jsonString',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 4236812012143210727),
+        name: 'contactChatsJson',
         type: 9,
         flags: 0,
       ),
@@ -577,9 +583,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
       },
       objectToFB: (MessageDataContainer object, fb.Builder fbb) {
         final jsonStringOffset = fbb.writeString(object.jsonString);
-        fbb.startTable(3);
+        final contactChatsJsonOffset = fbb.writeString(object.contactChatsJson);
+        fbb.startTable(4);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, jsonStringOffset);
+        fbb.addOffset(2, contactChatsJsonOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -595,9 +603,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final jsonStringParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 6, '');
+        final contactChatsJsonParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 8, '');
         final object = MessageDataContainer(
           id: idParam,
           jsonString: jsonStringParam,
+          contactChatsJson: contactChatsJsonParam,
         );
 
         return object;
@@ -1080,6 +1092,11 @@ class MessageDataContainer_ {
   /// See [MessageDataContainer.jsonString].
   static final jsonString = obx.QueryStringProperty<MessageDataContainer>(
     _entities[2].properties[1],
+  );
+
+  /// See [MessageDataContainer.contactChatsJson].
+  static final contactChatsJson = obx.QueryStringProperty<MessageDataContainer>(
+    _entities[2].properties[2],
   );
 }
 

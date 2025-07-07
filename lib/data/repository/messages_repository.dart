@@ -46,7 +46,15 @@ class MessagesRepository {
     return messages;
   }
 
-  void saveMessages(Map<String, List<KaonicEvent>> messages) {
+  Map<String, String> get getContactChats {
+    if (_messagesContainer.isEmpty()) return {};
+    final dataContainer = _messagesContainer.getAll().first;
+
+    return dataContainer.contactChats;
+  }
+
+  void saveMessages(Map<String, List<KaonicEvent>> messages,
+      Map<String, String> contactChats) {
     _messagesContainer.removeAll();
     final mapWithoutClases = messages.map((k, v) {
       final jsonValues = v.map((value) {
@@ -58,8 +66,10 @@ class MessagesRepository {
       return MapEntry(k, jsonValues);
     });
 
-    final dataContainer =
-        MessageDataContainer(jsonString: jsonEncode(mapWithoutClases));
+    final dataContainer = MessageDataContainer(
+      jsonString: jsonEncode(mapWithoutClases),
+      contactChatsJson: jsonEncode(contactChats),
+    );
 
     _messagesContainer.put(dataContainer);
   }
