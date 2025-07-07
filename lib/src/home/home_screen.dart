@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HomeBloc(
+        chatService: context.read(),
         callService: context.read<CallService>(),
         userService: context.read<UserService>(),
         kaonicCommunicationService: context.read(),
@@ -143,6 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     final contact =
                                         state.user!.contacts.elementAt(index);
                                     return ContactItem(
+                                      lastMessage:
+                                          state.lastMessages[contact.address],
                                       onTap: () async {
                                         context
                                             .read<HomeBloc>()

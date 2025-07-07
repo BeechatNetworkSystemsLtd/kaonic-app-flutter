@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/data/models/contact_model.dart';
+import 'package:kaonic/data/models/kaonic_event.dart';
+import 'package:kaonic/data/models/kaonic_message_event.dart';
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/src/widgets/user_icon_widget.dart';
 import 'package:kaonic/theme/text_styles.dart';
@@ -15,6 +17,7 @@ class ContactItem extends StatelessWidget {
     this.nearbyFound = false,
     this.unreadCount,
     required this.onLongPress,
+    this.lastMessage,
   });
 
   final ContactModel contact;
@@ -23,9 +26,15 @@ class ContactItem extends StatelessWidget {
   final bool nearbyFound;
   final int? unreadCount;
   final VoidCallback onLongPress;
+  final KaonicEvent? lastMessage;
 
   @override
   Widget build(BuildContext context) {
+    final isMyMessage = lastMessage?.data?.address == '1234567890';
+    final messageData = lastMessage?.data;
+    final messageAuthor =
+        isMyMessage ? 'You: ' : '${messageData?.address.substring(0, 4)}: ';
+
     return InkWell(
       onTap: onTap,
       onLongPress: onLongPress,
@@ -46,57 +55,66 @@ class ContactItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(42),
                 border: Border.all(color: AppColors.grey3),
               ),
-              child: SizedBox(
-                height: 32,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          contact.address,
-                          style: TextStyles.text16
-                              .copyWith(color: AppColors.grey5),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            contact.address,
+                            style: TextStyles.text16
+                                .copyWith(color: AppColors.grey5),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      ),
-                      if (onIdentifyTap != null)
-                        Padding(
-                          padding: EdgeInsets.only(left: 5.w),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(48),
-                            onTap: onIdentifyTap,
-                            child: Ink(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(48),
-                                  color: AppColors.grey2),
-                              padding: EdgeInsets.symmetric(horizontal: 10.w),
-                              child: Text(
-                                S.of(context).labelIdentify,
-                                style: TextStyles.text14
-                                    .copyWith(color: AppColors.grey5),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                        if (onIdentifyTap != null)
+                          Padding(
+                            padding: EdgeInsets.only(left: 5.w),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(48),
+                              onTap: onIdentifyTap,
+                              child: Ink(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(48),
+                                    color: AppColors.grey2),
+                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                child: Text(
+                                  S.of(context).labelIdentify,
+                                  style: TextStyles.text14
+                                      .copyWith(color: AppColors.grey5),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10.w),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: nearbyFound ? AppColors.yellow : null,
-                            border: nearbyFound
-                                ? null
-                                : Border.all(color: AppColors.yellow),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.w),
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: nearbyFound ? AppColors.yellow : null,
+                              border: nearbyFound
+                                  ? null
+                                  : Border.all(color: AppColors.yellow),
+                            ),
+                            child: const SizedBox(width: 8, height: 8),
                           ),
-                          child: const SizedBox(width: 8, height: 8),
-                        ),
+                        )
+                      ],
+                    ),
+                    if (lastMessage != null &&
+                        lastMessage is KaonicEvent<MessageTextEvent>)
+                      Text(
+                        '$messageAuthor ${(messageData as MessageTextEvent).text ?? ''}',
+                        style:
+                            TextStyles.text16.copyWith(color: AppColors.white),
                       )
-                    ],
-                  ),
+                  ],
                 ),
               ),
             ),

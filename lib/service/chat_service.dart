@@ -6,7 +6,7 @@ import 'package:kaonic/data/models/kaonic_event_type.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
 import 'package:kaonic/data/repository/messages_repository.dart';
 import 'package:kaonic/service/kaonic_communication_service.dart';
-import 'package:rxdart/subjects.dart';
+import 'package:rxdart/rxdart.dart';
 
 // Function(address, chatId)
 typedef OnChatIdChanged = Function(String, String);
@@ -35,11 +35,19 @@ class ChatService {
   final _messagesSubject =
       BehaviorSubject<Map<String, List<KaonicEvent>>>.seeded({});
 
+  late Stream<Map<String, KaonicEvent?>> lastMessagesStream =
+      _messagesSubject.switchMap((map) {
+    final lastMessages = _contactChats.map((k, v) {
+      final messages = (map[v] ?? []).lastOrNull;
+      return MapEntry(k, messages);
+    });
+
+    return Stream.value(lastMessages);
+  });
+
   /// key is contact address,
   /// value is chatUUID
   var _contactChats = <String, String>{};
-
-  String? _myAddress;
 
   OnChatIdChanged? onChatIDUpdated;
 
@@ -67,8 +75,7 @@ class ChatService {
   }
 
   Future<String> myAddress() async {
-    _myAddress = await _kaonicService.myAddress();
-    return _myAddress ?? '';
+    return await _kaonicService.myAddress();
   }
 
   Future<String> createChat(String address) async {

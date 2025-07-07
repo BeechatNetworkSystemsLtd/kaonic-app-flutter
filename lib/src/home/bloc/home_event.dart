@@ -38,3 +38,9 @@ final class OnChatNavigate extends HomeEvent {
 
   final bool isInChatPage;
 }
+
+final class OnUpdateLastMessages extends HomeEvent {
+  final Map<String, KaonicEvent?> lastMessages;
+
+  OnUpdateLastMessages(this.lastMessages);
+}

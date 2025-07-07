@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kaonic/data/models/kaonic_event.dart';
 import 'package:kaonic/data/models/user_model.dart';
 import 'package:kaonic/service/call_service.dart';
+import 'package:kaonic/service/chat_service.dart';
 import 'package:kaonic/service/kaonic_communication_service.dart';
 import 'package:kaonic/service/user_service.dart';
-import 'package:meta/meta.dart';
 import 'package:objectbox/objectbox.dart';
 
 part 'home_event.dart';
@@ -16,6 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({
     required CallService callService,
     required UserService userService,
+    required ChatService chatService,
     required KaonicCommunicationService kaonicCommunicationService,
   })  : _userService = userService,
         _callService = callService,
@@ -27,6 +29,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<_HandleCallStatus>(_handleCallStatus);
     on<RemoveContact>(_removeContact);
     on<OnChatNavigate>(_onChatNavigate);
+    on<OnUpdateLastMessages>(_onUpdateLastMessages);
 
     add(_InitEvent());
 
@@ -35,6 +38,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         (event) => add(_UpdatedNodes(nodes: event)),
       );
     }
+
+    _lastMessages = chatService.lastMessagesStream
+        .listen((lastMessages) => add(OnUpdateLastMessages(lastMessages)));
   }
 
   final UserService _userService;
@@ -43,9 +49,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   late final StreamSubscription<Query<UserModel>>? _userSubscription;
   late final StreamSubscription<dynamic>? _nodesSubscription;
   late final StreamSubscription<String>? _callNavigationEventsSubscription;
+  late final StreamSubscription<Map<String, KaonicEvent?>> _lastMessages;
 
   @override
   close() async {
+    _lastMessages.cancel();
     _userSubscription?.cancel();
     _nodesSubscription?.cancel();
     _callNavigationEventsSubscription?.cancel();
@@ -93,5 +101,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   void _onChatNavigate(OnChatNavigate event, Emitter<HomeState> emit) {
     emit(state.copyWith(isInChatPage: event.isInChatPage));
+  }
+
+  void _onUpdateLastMessages(
+      OnUpdateLastMessages event, Emitter<HomeState> emit) {
+    emit(state.copyWith(lastMessages: event.lastMessages));
   }
 }
