@@ -1,5 +1,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:kaonic/data/extensions/bytes_extension.dart';
 import 'package:kaonic/data/extensions/date_time_extension.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
 import 'package:kaonic/theme/text_styles.dart';
@@ -55,55 +56,60 @@ class ChatItem extends StatelessWidget {
           ],
         );
       case MessageFileEvent f:
+        final value = f.fileSizeProcessed / f.fileSize;
+        final isUploaded = f.fileSizeProcessed == f.fileSize;
         return GestureDetector(
-            onTap: f.path == null ? null : () => OpenFile.open(f.path!),
-            child: Stack(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Icon(Icons.file_present_rounded, color: Colors.white),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Row(
-                      children: [
-                        if (f.path == null)
-                          Padding(
-                            padding: const EdgeInsets.only(right: 6),
-                            child: const SizedBox(
-                                width: 7,
-                                height: 7,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 1.5,
-                                  color: AppColors.yellow,
-                                )),
+          onTap: f.path == null ? null : () => OpenFile.open(f.path!),
+          child: Row(
+            spacing: 16,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              isUploaded
+                  ? Flexible(
+                      child: Row(
+                        spacing: 8,
+                        children: [
+                          const Icon(Icons.file_present_rounded,
+                              color: Colors.white),
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  f.fileName,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyles.text14
+                                      .copyWith(color: AppColors.white),
+                                ),
+                                Text(
+                                  f.fileSize.toReadableSize,
+                                  style: TextStyles.text14
+                                      .copyWith(color: AppColors.grey3),
+                                )
+                              ],
+                            ),
                           ),
-                        // if (message.address != peerAddress)
-                        //   Padding(
-                        //     padding: const EdgeInsets.only(right: 4),
-                        //     child: Icon(
-                        //       Icons.upload,
-                        //       color: Colors.grey,
-                        //       size: 16,
-                        //     ),
-                        //   ),
-                        // Text(
-                        //   '${((f.bytes?.length ?? 0) / 1024).toStringAsFixed(1)} kB',
-                        //   style: TextStyle(color: Colors.white),
-                        // ),
-                        if (f.date != null)
-                          Text(
-                            f.date!.messageTime,
-                            style: TextStyles.text14
-                                .copyWith(color: AppColors.grey3),
-                          ),
-                      ],
+                        ],
+                      ),
                     )
-                  ],
+                  : SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        value: value,
+                        color: AppColors.white,
+                      ),
+                    ),
+              if (f.date != null)
+                Text(
+                  f.date!.messageTime,
+                  style: TextStyles.text14.copyWith(color: AppColors.grey3),
                 ),
-              ],
-            ));
+            ],
+          ),
+        );
     }
 
     return const SizedBox.shrink();
