@@ -109,7 +109,12 @@ class ContactItem extends StatelessWidget {
                       (messageData as MessageTextEvent).text ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyles.text16.copyWith(color: AppColors.white),
+                      style: TextStyles.text16.copyWith(
+                        color: AppColors.white,
+                        fontWeight: (messageData as MessageEvent).isRead
+                            ? FontWeight.w400
+                            : FontWeight.w800,
+                      ),
                     ),
                   )
               ],

@@ -12,6 +12,7 @@ MessageTextEvent _$MessageTextEventFromJson(Map<String, dynamic> json) =>
       timestamp: (json['timestamp'] as num).toInt(),
       id: json['id'] as String,
       chatId: json['chat_id'] as String,
+      isRead: json['isRead'] as bool? ?? false,
       text: json['text'] as String?,
     );
 
@@ -21,6 +22,7 @@ Map<String, dynamic> _$MessageTextEventToJson(MessageTextEvent instance) =>
       'timestamp': instance.timestamp,
       'id': instance.id,
       'chat_id': instance.chatId,
+      'isRead': instance.isRead,
       'text': instance.text,
     };
 
@@ -32,6 +34,7 @@ MessageFileEvent _$MessageFileEventFromJson(Map<String, dynamic> json) =>
       fileName: json['fileName'] as String,
       fileSize: (json['fileSize'] as num).toInt(),
       address: json['address'] as String? ?? "",
+      isRead: json['isRead'] as bool? ?? false,
       fileSizeProcessed: (json['fileSizeProcessed'] as num?)?.toInt() ?? 0,
       path: json['path'] as String?,
     );
@@ -42,6 +45,7 @@ Map<String, dynamic> _$MessageFileEventToJson(MessageFileEvent instance) =>
       'timestamp': instance.timestamp,
       'id': instance.id,
       'chat_id': instance.chatId,
+      'isRead': instance.isRead,
       'fileName': instance.fileName,
       'fileSize': instance.fileSize,
       'fileSizeProcessed': instance.fileSizeProcessed,

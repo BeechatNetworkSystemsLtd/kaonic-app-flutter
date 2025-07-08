@@ -8,7 +8,6 @@ import 'package:kaonic/data/repository/messages_repository.dart';
 import 'package:kaonic/service/kaonic_communication_service.dart';
 import 'package:rxdart/rxdart.dart';
 
-// Function(address, chatId)
 typedef OnChatIdChanged = Function(String, String);
 
 class ChatService {
@@ -52,7 +51,7 @@ class ChatService {
       final messages = (map[v] ?? []).lastOrNull;
       return MapEntry(k, messages);
     });
-    // _messageRepository.saveLastMessages(lastMessages);
+
     return Stream.value(lastMessages);
   });
 
@@ -79,6 +78,30 @@ class ChatService {
     });
   }
 
+  void markMessagesAsRead(String address) {
+    final chatId = _contactChats[address];
+    if (chatId == null) return;
+
+    final currentMap =
+        Map<String, List<KaonicEvent>>.from(_messagesSubject.valueOrNull ?? {});
+    final messageList = List<KaonicEvent>.from(currentMap[chatId] ?? []);
+    bool updated = false;
+
+    for (var i = 0; i < messageList.length; i++) {
+      final data = messageList[i].data;
+      if (data is MessageEvent && !data.isRead) {
+        data.isRead = true;
+        updated = true;
+      }
+    }
+
+    if (updated) {
+      currentMap[chatId] = messageList;
+      _messagesSubject.add(currentMap);
+      _saveMessages();
+    }
+  }
+
   Stream<List<KaonicEvent>> getChatMessages(String chatId) {
     return _messagesSubject.stream.map((messagesMap) {
       return messagesMap[chatId] ?? [];
@@ -92,7 +115,6 @@ class ChatService {
   Future<String> createChat(String address) async {
     final chatId = await _kaonicService.createChat(address);
 
-    // _contactChats[address] = chatId;
     _putOrUpdateChatId(chatId, address, needOnChatUpdated: false);
     return chatId;
   }
@@ -114,7 +136,6 @@ class ChatService {
     final currentMap =
         Map<String, List<KaonicEvent>>.from(_messagesSubject.valueOrNull ?? {});
     final messageList = List<KaonicEvent>.from(currentMap[data.chatId] ?? []);
-    final isMessagesEmpty = messageList.isEmpty;
 
     final existingMessages = messageList
         .where((msg) =>
@@ -140,12 +161,6 @@ class ChatService {
 
   void _putOrUpdateChatId(String chatId, String address,
       {bool needOnChatUpdated = true}) {
-    // final containsAddressWithChatID = _contactChats.containsKey(address);
-    // _contactChats[address] = chatId;
-    // if (containsAddressWithChatID) {
-    //   onChatIDUpdated?.call(address, chatId);
-    // }
-
     var currentMap =
         Map<String, List<KaonicEvent>>.from(_messagesSubject.valueOrNull ?? {});
 

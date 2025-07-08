@@ -8,17 +8,20 @@ abstract class MessageEvent extends KaonicEventData {
   final String id;
   @JsonKey(name: 'chat_id')
   final String chatId;
+  bool isRead;
 
   MessageEvent({
     required super.address,
     required super.timestamp,
     required this.id,
     required this.chatId,
+    this.isRead = false,
   });
 
   MessageEvent.empty()
       : id = '',
         chatId = '',
+        isRead = false,
         super(address: '', timestamp: 0);
 }
 
@@ -31,6 +34,7 @@ class MessageTextEvent extends MessageEvent {
     required super.timestamp,
     required super.id,
     required super.chatId,
+    super.isRead,
     this.text,
   });
 
@@ -68,6 +72,7 @@ class MessageFileEvent extends MessageEvent {
     required this.fileName,
     required this.fileSize,
     super.address = "",
+    super.isRead,
     this.fileSizeProcessed = 0,
     this.path,
   });

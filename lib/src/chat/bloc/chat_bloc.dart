@@ -75,7 +75,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   FutureOr<void> _updatedChats(_UpdatedChats event, Emitter<ChatState> emit) {
     // _communicationService.markMessageRead(state.address);
-
+    _chatService.markMessagesAsRead(state.address);
     emit(state.copyWith(
       messages: event.messages,
       flagScrollToDown: true,

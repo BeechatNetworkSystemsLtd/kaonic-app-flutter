@@ -146,33 +146,37 @@ class _ChatScreenState extends State<ChatScreen> {
                               }
 
                               if (state.flagScrollToDown) {
-                                _scrollController.jumpTo(
-                                    _scrollController.position.maxScrollExtent);
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  _scrollController.jumpTo(_scrollController
+                                      .position.maxScrollExtent);
+                                });
                               }
                             },
                             builder: (context, state) {
                               return Column(
                                 children: [
                                   Expanded(
-                                      child: ListView.separated(
-                                          controller: _scrollController,
-                                          padding: EdgeInsets.zero,
-                                          itemBuilder: (context, index) {
-                                            final message =
-                                                state.messages[index].data;
-                                            print(
-                                                'message ${message.runtimeType}');
+                                    child: ListView.separated(
+                                      controller: _scrollController,
+                                      padding: EdgeInsets.zero,
+                                      itemBuilder: (context, index) {
+                                        final message =
+                                            state.messages[index].data;
+                                        print('message ${message.runtimeType}');
 
-                                            return ChatItem(
-                                              myAddress: state.myAddress,
-                                              message: state.messages[index]
-                                                  .data as MessageEvent,
-                                              peerAddress: widget.address,
-                                            );
-                                          },
-                                          separatorBuilder: (context, index) =>
-                                              SizedBox(height: 10.h),
-                                          itemCount: state.messages.length)),
+                                        return ChatItem(
+                                          myAddress: state.myAddress,
+                                          message: state.messages[index].data
+                                              as MessageEvent,
+                                          peerAddress: widget.address,
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) =>
+                                          SizedBox(height: 10.h),
+                                      itemCount: state.messages.length,
+                                    ),
+                                  ),
                                   SizedBox(height: 10.h),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
