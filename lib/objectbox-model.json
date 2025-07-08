@@ -64,7 +64,7 @@
     },
     {
       "id": "3:4303160672216820288",
-      "lastPropertyId": "3:4236812012143210727",
+      "lastPropertyId": "4:8162188118621183703",
       "name": "MessageDataContainer",
       "properties": [
         {
@@ -79,7 +79,7 @@
           "type": 9
         },
         {
-          "id": "3:4236812012143210727",
+          "id": "4:8162188118621183703",
           "name": "contactChatsJson",
           "type": 9
         }
@@ -345,17 +345,22 @@
       "relations": []
     }
   ],
-  "lastEntityId": "6:1276151104916648780",
+  "lastEntityId": "7:4075494356228258830",
   "lastIndexId": "2:3533216531977425030",
   "lastRelationId": "1:4163491123646389794",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    4075494356228258830
+  ],
   "retiredIndexUids": [],
   "retiredPropertyUids": [
     8826984033369877482,
-    5720481686052608034
+    5720481686052608034,
+    4236812012143210727,
+    6213405606651376057,
+    1572018538980372857
   ],
   "retiredRelationUids": [],
   "version": 1

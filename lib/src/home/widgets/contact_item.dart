@@ -30,10 +30,7 @@ class ContactItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMyMessage = lastMessage?.data?.address == '1234567890';
     final messageData = lastMessage?.data;
-    final messageAuthor =
-        isMyMessage ? 'You: ' : '${messageData?.address.substring(0, 4)}: ';
 
     return InkWell(
       onTap: onTap,
@@ -50,73 +47,72 @@ class ContactItem extends StatelessWidget {
           SizedBox(width: 10.w),
           Flexible(
             flex: 5,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(42),
-                border: Border.all(color: AppColors.grey3),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Text(
-                            contact.address,
-                            style: TextStyles.text16
-                                .copyWith(color: AppColors.grey5),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          contact.address,
+                          style: TextStyles.text16
+                              .copyWith(color: AppColors.grey5),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        if (onIdentifyTap != null)
-                          Padding(
-                            padding: EdgeInsets.only(left: 5.w),
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(48),
-                              onTap: onIdentifyTap,
-                              child: Ink(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(48),
-                                    color: AppColors.grey2),
-                                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                child: Text(
-                                  S.of(context).labelIdentify,
-                                  style: TextStyles.text14
-                                      .copyWith(color: AppColors.grey5),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                      ),
+                      if (onIdentifyTap != null)
+                        Padding(
+                          padding: EdgeInsets.only(left: 5.w),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(48),
+                            onTap: onIdentifyTap,
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(48),
+                                  color: AppColors.grey2),
+                              padding: EdgeInsets.symmetric(horizontal: 10.w),
+                              child: Text(
+                                S.of(context).labelIdentify,
+                                style: TextStyles.text14
+                                    .copyWith(color: AppColors.grey5),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 10.w),
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: nearbyFound ? AppColors.yellow : null,
-                              border: nearbyFound
-                                  ? null
-                                  : Border.all(color: AppColors.yellow),
-                            ),
-                            child: const SizedBox(width: 8, height: 8),
+                        ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10.w),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: nearbyFound ? AppColors.yellow : null,
+                            border: nearbyFound
+                                ? null
+                                : Border.all(color: AppColors.yellow),
                           ),
-                        )
-                      ],
-                    ),
-                    if (lastMessage != null &&
-                        lastMessage is KaonicEvent<MessageTextEvent>)
-                      Text(
-                        '$messageAuthor ${(messageData as MessageTextEvent).text ?? ''}',
-                        style:
-                            TextStyles.text16.copyWith(color: AppColors.white),
+                          child: const SizedBox(width: 8, height: 8),
+                        ),
                       )
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+                if (lastMessage != null &&
+                    lastMessage is KaonicEvent<MessageTextEvent>)
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    child: Text(
+                      (messageData as MessageTextEvent).text ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyles.text16.copyWith(color: AppColors.white),
+                    ),
+                  )
+              ],
             ),
           )
         ],

@@ -15,15 +15,26 @@ class ChatService {
   ChatService._privateConstructor();
 
   static final ChatService _instance = ChatService._privateConstructor();
+  bool _isInitialized = false;
 
   factory ChatService(
     KaonicCommunicationService kaonicService,
     MessagesRepository messageRepository,
   ) {
+    if (_instance._isInitialized) return _instance;
+
     _instance._kaonicService = kaonicService;
     _instance._messageRepository = messageRepository;
     _instance._listenMessages();
     _instance.myAddress();
+    if (_instance._contactChats.isEmpty) {
+      _instance._contactChats = messageRepository.getContactChats;
+    }
+    if ((_instance._messagesSubject.valueOrNull ?? {}).isEmpty) {
+      final messages = messageRepository.getMessages();
+      _instance._messagesSubject.add(messages);
+    }
+    _instance._isInitialized = true;
 
     return _instance;
   }
@@ -41,7 +52,7 @@ class ChatService {
       final messages = (map[v] ?? []).lastOrNull;
       return MapEntry(k, messages);
     });
-
+    // _messageRepository.saveLastMessages(lastMessages);
     return Stream.value(lastMessages);
   });
 

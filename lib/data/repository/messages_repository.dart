@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:kaonic/data/models/kaonic_event.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
+import 'package:kaonic/data/models/last_message_data_container.dart';
 import 'package:kaonic/data/models/message_data_container.dart';
 import 'package:kaonic/data/repository/storage.dart';
 
@@ -10,9 +11,39 @@ import '../../objectbox.g.dart';
 class MessagesRepository {
   MessagesRepository({required StorageService storageService}) {
     _messagesContainer = storageService.initRepository<MessageDataContainer>();
+    // _lastMessagesContainer =
+    //     storageService.initRepository<LastMessageDataContainer>();
   }
 
   late final Box<MessageDataContainer> _messagesContainer;
+  // late final Box<LastMessageDataContainer> _lastMessagesContainer;
+
+  // Map<String, KaonicEvent> getLastMessages() {
+  //   if (_lastMessagesContainer.isEmpty()) return {};
+  //   final dataContainer = _lastMessagesContainer.getAll().first;
+
+  //   final json = (jsonDecode(dataContainer.jsonString) as Map<String, dynamic>);
+
+  //   final Map<String, KaonicEvent> messages = json.map((k, v) {
+  //     final isFileMessage = v.containsKey('path');
+  //     final jsonWithType = {
+  //       'data': v,
+  //       'type': isFileMessage ? 'MessageFile' : 'Message'
+  //     };
+  //     final message = isFileMessage
+  //         ? KaonicEvent<MessageFileEvent>.fromJson(jsonWithType,
+  //             (json) => MessageFileEvent.fromJson(json as Map<String, dynamic>))
+  //         : KaonicEvent<MessageTextEvent>.fromJson(
+  //             jsonWithType,
+  //             (json) {
+  //               return MessageTextEvent.fromJson(json as Map<String, dynamic>);
+  //             },
+  //           );
+  //     return MapEntry(k, message);
+  //   });
+
+  //   return messages;
+  // }
 
   Map<String, List<KaonicEvent>> getMessages() {
     if (_messagesContainer.isEmpty()) return {};
@@ -50,8 +81,29 @@ class MessagesRepository {
     if (_messagesContainer.isEmpty()) return {};
     final dataContainer = _messagesContainer.getAll().first;
 
+    if (dataContainer.contactChatsJson.isEmpty) return {};
+
     return dataContainer.contactChats;
   }
+
+  // void saveLastMessages(
+  //   Map<String, KaonicEvent?> messages,
+  // ) {
+  //   _lastMessagesContainer.removeAll();
+  //   final mapWithoutClases = messages.map((k, v) {
+  //     final isFileMessage = v?.data is MessageFileEvent;
+  //     final jsonValue = isFileMessage
+  //         ? (v?.data as MessageFileEvent).toJson()
+  //         : (v?.data as MessageTextEvent).toJson();
+  //     return MapEntry(k, jsonValue);
+  //   });
+
+  //   final dataContainer = LastMessageDataContainer(
+  //     jsonString: jsonEncode(mapWithoutClases),
+  //   );
+
+  //   _lastMessagesContainer.put(dataContainer);
+  // }
 
   void saveMessages(Map<String, List<KaonicEvent>> messages,
       Map<String, String> contactChats) {

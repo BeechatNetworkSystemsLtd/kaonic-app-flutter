@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/theme/assets.dart';
 import 'package:kaonic/theme/text_styles.dart';
+import 'package:kaonic/theme/theme.dart';
 import 'package:kaonic/utils/dialog_util.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -139,59 +140,61 @@ class _HomeScreenState extends State<HomeScreen> {
                                 when state.user != null &&
                                     state.user!.contacts.isNotEmpty =>
                               ListView.separated(
-                                  padding: EdgeInsets.zero,
-                                  itemBuilder: (context, index) {
-                                    final contact =
-                                        state.user!.contacts.elementAt(index);
-                                    return ContactItem(
-                                      lastMessage:
-                                          state.lastMessages[contact.address],
-                                      onTap: () async {
-                                        context
-                                            .read<HomeBloc>()
-                                            .add(OnChatNavigate(true));
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (context, index) {
+                                  final contact =
+                                      state.user!.contacts.elementAt(index);
+                                  return ContactItem(
+                                    lastMessage:
+                                        state.lastMessages[contact.address],
+                                    onTap: () async {
+                                      context
+                                          .read<HomeBloc>()
+                                          .add(OnChatNavigate(true));
 
-                                        await Navigator.of(context)
-                                            .pushNamed(
-                                          Routes.chat,
-                                          arguments: contact.address,
-                                        )
-                                            .whenComplete(() {
-                                          if (context.mounted) {
-                                            context
-                                                .read<HomeBloc>()
-                                                .add(OnChatNavigate(false));
-                                          }
-                                        });
-                                      },
-                                      onIdentifyTap: () {},
-                                      contact: contact,
-                                      nearbyFound:
-                                          state.nodes.contains(contact.address),
-                                      unreadCount:
-                                          state.unreadMessages[contact.address],
-                                      onLongPress: () {
-                                        DialogUtil.showDefaultDialog(
-                                          context,
-                                          onYes: () {
-                                            context.read<HomeBloc>().add(
-                                                  RemoveContact(
-                                                    contact: contact.address,
-                                                  ),
-                                                );
-                                          },
-                                          title: S
-                                              .of(context)
-                                              .labelRemoveThisUserFromContactList,
-                                        );
-                                      },
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) =>
-                                      SizedBox(
-                                        height: 4.h,
-                                      ),
-                                  itemCount: state.user!.contacts.length),
+                                      await Navigator.of(context)
+                                          .pushNamed(
+                                        Routes.chat,
+                                        arguments: contact.address,
+                                      )
+                                          .whenComplete(() {
+                                        if (context.mounted) {
+                                          context
+                                              .read<HomeBloc>()
+                                              .add(OnChatNavigate(false));
+                                        }
+                                      });
+                                    },
+                                    onIdentifyTap: () {},
+                                    contact: contact,
+                                    nearbyFound:
+                                        state.nodes.contains(contact.address),
+                                    unreadCount:
+                                        state.unreadMessages[contact.address],
+                                    onLongPress: () {
+                                      DialogUtil.showDefaultDialog(
+                                        context,
+                                        onYes: () {
+                                          context.read<HomeBloc>().add(
+                                                RemoveContact(
+                                                  contact: contact.address,
+                                                ),
+                                              );
+                                        },
+                                        title: S
+                                            .of(context)
+                                            .labelRemoveThisUserFromContactList,
+                                      );
+                                    },
+                                  );
+                                },
+                                separatorBuilder: (_, __) => Container(
+                                  margin: EdgeInsets.symmetric(vertical: 4),
+                                  height: 1,
+                                  color: AppColors.grey3,
+                                ),
+                                itemCount: state.user!.contacts.length,
+                              ),
                             _ => const SizedBox(),
                           },
                         );

@@ -95,7 +95,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(3, 4303160672216820288),
     name: 'MessageDataContainer',
-    lastPropertyId: const obx_int.IdUid(3, 4236812012143210727),
+    lastPropertyId: const obx_int.IdUid(4, 8162188118621183703),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -111,7 +111,7 @@ final _entities = <obx_int.ModelEntity>[
         flags: 0,
       ),
       obx_int.ModelProperty(
-        id: const obx_int.IdUid(3, 4236812012143210727),
+        id: const obx_int.IdUid(4, 8162188118621183703),
         name: 'contactChatsJson',
         type: 9,
         flags: 0,
@@ -464,13 +464,19 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(6, 1276151104916648780),
+    lastEntityId: const obx_int.IdUid(7, 4075494356228258830),
     lastIndexId: const obx_int.IdUid(2, 3533216531977425030),
     lastRelationId: const obx_int.IdUid(1, 4163491123646389794),
     lastSequenceId: const obx_int.IdUid(0, 0),
-    retiredEntityUids: const [],
+    retiredEntityUids: const [4075494356228258830],
     retiredIndexUids: const [],
-    retiredPropertyUids: const [8826984033369877482, 5720481686052608034],
+    retiredPropertyUids: const [
+      8826984033369877482,
+      5720481686052608034,
+      4236812012143210727,
+      6213405606651376057,
+      1572018538980372857,
+    ],
     retiredRelationUids: const [],
     modelVersion: 5,
     modelVersionParserMinimum: 5,
@@ -584,10 +590,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
       objectToFB: (MessageDataContainer object, fb.Builder fbb) {
         final jsonStringOffset = fbb.writeString(object.jsonString);
         final contactChatsJsonOffset = fbb.writeString(object.contactChatsJson);
-        fbb.startTable(4);
+        fbb.startTable(5);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, jsonStringOffset);
-        fbb.addOffset(2, contactChatsJsonOffset);
+        fbb.addOffset(3, contactChatsJsonOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -605,7 +611,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         ).vTableGet(buffer, rootOffset, 6, '');
         final contactChatsJsonParam = const fb.StringReader(
           asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
+        ).vTableGet(buffer, rootOffset, 10, '');
         final object = MessageDataContainer(
           id: idParam,
           jsonString: jsonStringParam,
