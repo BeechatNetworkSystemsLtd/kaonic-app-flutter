@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kaonic/data/models/kaonic_event.dart';
+import 'package:kaonic/data/models/kaonic_message_event.dart';
 import 'package:kaonic/service/call_service.dart';
 import 'package:kaonic/service/chat_service.dart';
 

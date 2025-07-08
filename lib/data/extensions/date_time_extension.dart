@@ -1,3 +1,6 @@
+import 'package:intl/intl.dart';
+import 'package:kaonic/generated/l10n.dart';
+
 extension DateTimeExtension on DateTime {
   String get getCallDuration {
     final now = DateTime.now();
@@ -13,5 +16,21 @@ extension DateTimeExtension on DateTime {
     } else {
       return '${twoDigits(minutes)}:${twoDigits(seconds)}';
     }
+  }
+
+  String get messageTime {
+    return DateFormat('HH:mm').format(this);
+  }
+
+  String get formatedDay {
+    if (isToday) return S.current.today;
+
+    return DateFormat('MMM d').format(this);
+  }
+
+  bool get isToday {
+    final now = DateTime.now();
+
+    return now.year == year && now.month == month && now.day == day;
   }
 }

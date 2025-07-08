@@ -96,5 +96,6 @@
     "apply": "Apply",
     "cancel": "Cancel",
     "ipCannotBeEmpty": "Ip cannot be empty.",
-    "invalidIpAddress": "Invalid ip address."
+    "invalidIpAddress": "Invalid ip address.",
+    "today": "Today"
 }

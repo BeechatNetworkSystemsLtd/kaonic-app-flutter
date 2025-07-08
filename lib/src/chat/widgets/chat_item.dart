@@ -1,5 +1,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:kaonic/data/extensions/date_time_extension.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
 import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/theme/theme.dart';
@@ -13,7 +14,6 @@ class ChatItem extends StatelessWidget {
     required this.myAddress,
   });
 
-  // final MeshMessage message;
   final MessageEvent message;
   final String peerAddress;
   final String myAddress;
@@ -37,9 +37,22 @@ class ChatItem extends StatelessWidget {
   Widget _child() {
     switch (message) {
       case MessageTextEvent m:
-        return Text(
-          m.text ?? '',
-          style: TextStyles.text14.copyWith(color: Colors.white),
+        return Row(
+          spacing: 8,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(
+              child: Text(
+                m.text ?? '',
+                style: TextStyles.text14.copyWith(color: Colors.white),
+              ),
+            ),
+            if (m.date != null)
+              Text(
+                m.date!.messageTime,
+                style: TextStyles.text14.copyWith(color: AppColors.grey3),
+              ),
+          ],
         );
       case MessageFileEvent f:
         return GestureDetector(
@@ -66,19 +79,25 @@ class ChatItem extends StatelessWidget {
                                   color: AppColors.yellow,
                                 )),
                           ),
-                        if (message.address != peerAddress)
-                          Padding(
-                            padding: const EdgeInsets.only(right: 4),
-                            child: Icon(
-                              Icons.upload,
-                              color: Colors.grey,
-                              size: 16,
-                            ),
-                          ),
+                        // if (message.address != peerAddress)
+                        //   Padding(
+                        //     padding: const EdgeInsets.only(right: 4),
+                        //     child: Icon(
+                        //       Icons.upload,
+                        //       color: Colors.grey,
+                        //       size: 16,
+                        //     ),
+                        //   ),
                         // Text(
                         //   '${((f.bytes?.length ?? 0) / 1024).toStringAsFixed(1)} kB',
                         //   style: TextStyle(color: Colors.white),
                         // ),
+                        if (f.date != null)
+                          Text(
+                            f.date!.messageTime,
+                            style: TextStyles.text14
+                                .copyWith(color: AppColors.grey3),
+                          ),
                       ],
                     )
                   ],

@@ -159,22 +159,46 @@ class _ChatScreenState extends State<ChatScreen> {
                                   Expanded(
                                     child: ListView.separated(
                                       controller: _scrollController,
-                                      padding: EdgeInsets.zero,
                                       itemBuilder: (context, index) {
-                                        final message =
-                                            state.messages[index].data;
-                                        print('message ${message.runtimeType}');
+                                        final item = state.sortedMessages
+                                            .elementAt(index);
 
-                                        return ChatItem(
-                                          myAddress: state.myAddress,
-                                          message: state.messages[index].data
-                                              as MessageEvent,
-                                          peerAddress: widget.address,
+                                        final date = item.first.data?.date ??
+                                            DateTime.now();
+
+                                        return Column(
+                                          spacing: 12,
+                                          children: [
+                                            Text(
+                                              date.formatedDay,
+                                              style: TextStyles.text18Bold
+                                                  .copyWith(
+                                                      color: AppColors.white),
+                                            ),
+                                            ListView.separated(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemBuilder: (context, index) {
+                                                final message =
+                                                    item.elementAt(index);
+
+                                                return ChatItem(
+                                                  myAddress: state.myAddress,
+                                                  message: message.data!,
+                                                  peerAddress: widget.address,
+                                                );
+                                              },
+                                              separatorBuilder: (_, __) =>
+                                                  SizedBox(height: 10.h),
+                                              itemCount: item.length,
+                                            ),
+                                          ],
                                         );
                                       },
-                                      separatorBuilder: (context, index) =>
-                                          SizedBox(height: 10.h),
-                                      itemCount: state.messages.length,
+                                      separatorBuilder: (_, __) =>
+                                          SizedBox(height: 12.h),
+                                      itemCount: state.sortedMessages.length,
                                     ),
                                   ),
                                   SizedBox(height: 10.h),

@@ -33,6 +33,29 @@ final class ChatState {
         myAddress: myAddress ?? this.myAddress,
         isCallEndedOnPop: isCallEndedOnPop ?? this.isCallEndedOnPop,
       );
+
+  List<List<KaonicEvent<MessageEvent>>> get sortedMessages {
+    if (messages.isEmpty) return [];
+
+    var sortedMessages = List<KaonicEvent<MessageEvent>>.from(messages);
+    sortedMessages.sort((a, b) => a.data!.date!.compareTo(b.data!.date!));
+
+    var grouped = groupBy<KaonicEvent<MessageEvent>, DateTime>(
+      sortedMessages,
+      (m) {
+        return DateTime(
+          m.data!.date!.year,
+          m.data!.date!.month,
+          m.data!.date!.day,
+        );
+      },
+    );
+
+    List<List<KaonicEvent<MessageEvent>>> sortedMessagesByDates =
+        grouped.values.toList();
+
+    return sortedMessagesByDates;
+  }
 }
 
 final class NavigateToCall extends ChatState {
