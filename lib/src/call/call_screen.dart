@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kaonic/data/extensions/date_time_extension.dart';
 import 'package:kaonic/service/call_service.dart';
 import 'package:kaonic/src/call/bloc/call_bloc.dart';
 import 'package:kaonic/src/widgets/icon_circle_button.dart';
@@ -80,11 +83,24 @@ class _CallScreenState extends State<CallScreen> {
                               style: TextStyles.text24
                                   .copyWith(color: Colors.white),
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(bottom: 150.h, top: 25.h),
-                              child: UserIconWidget(),
+                            Text(
+                              state.usernameAddressHex ?? '',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyles.text24.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
+                            if (state.callState?.callStart != null &&
+                                state.callState?.callScreenState ==
+                                    CallScreenState.callInProgress)
+                              _CallDurationChip(
+                                callStart: state.callState!.callStart!,
+                              ),
+                            SizedBox(height: 25.h),
+                            _AnimatedUserIconWidget(),
+                            SizedBox(height: 150.h),
                             AnimatedSwitcher(
                               duration: Durations.medium2,
                               child: switch (state.callState?.callScreenState) {
@@ -142,6 +158,113 @@ class _CallScreenState extends State<CallScreen> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class _CallDurationChip extends StatefulWidget {
+  final DateTime callStart;
+  const _CallDurationChip({
+    super.key,
+    required this.callStart,
+  });
+
+  @override
+  State<_CallDurationChip> createState() => _CallDurationChipState();
+}
+
+class _CallDurationChipState extends State<_CallDurationChip> {
+  Timer? _timer;
+
+  void _initTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (_) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: AppColors.positive.withValues(alpha: 0.25),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 4,
+            horizontal: 8,
+          ),
+          child: Text(
+            widget.callStart.getCallDuration,
+            style: TextStyles.text14.copyWith(
+              color: AppColors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AnimatedUserIconWidget extends StatefulWidget {
+  const _AnimatedUserIconWidget({super.key});
+
+  @override
+  State<_AnimatedUserIconWidget> createState() =>
+      _AnimatedUserIconWidgetState();
+}
+
+class _AnimatedUserIconWidgetState extends State<_AnimatedUserIconWidget>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 700),
+    );
+
+    _animation = Tween(begin: 1.0, end: 1.05).animate(_controller);
+
+    _controller.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 150,
+      child: AnimatedBuilder(
+        animation: _animation,
+        builder: (context, child) {
+          return UserIconWidget(
+            padding: 30 * _animation.value,
+            iconSize: 70 * _animation.value,
+          );
+        },
       ),
     );
   }

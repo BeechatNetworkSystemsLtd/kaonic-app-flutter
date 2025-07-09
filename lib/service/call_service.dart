@@ -14,10 +14,10 @@ enum CallScreenState {
   finished;
 
   String getTitle([String? user]) => switch (this) {
-        incoming => '$user CALLING',
-        outgoing => 'CALLING...',
-        callInProgress => 'IN CALL WITH $user',
-        finished => 'CALL ENDED',
+        incoming => 'Incoming call',
+        outgoing => 'Calling...',
+        callInProgress => 'On a call with',
+        finished => 'Call ended',
         _ => ''
       };
 }
