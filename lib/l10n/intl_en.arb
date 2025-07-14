@@ -97,5 +97,6 @@
     "cancel": "Cancel",
     "ipCannotBeEmpty": "Ip cannot be empty.",
     "invalidIpAddress": "Invalid ip address.",
-    "today": "Today"
+    "today": "Today",
+    "typeAMessage": "Type a message"
 }

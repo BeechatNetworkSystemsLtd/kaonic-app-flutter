@@ -6,16 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kaonic/data/extensions/date_time_extension.dart';
-import 'package:kaonic/data/models/kaonic_message_event.dart';
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/routes.dart';
 import 'package:kaonic/service/call_service.dart';
 import 'package:kaonic/service/chat_service.dart';
 import 'package:kaonic/src/chat/bloc/chat_bloc.dart';
 import 'package:kaonic/src/chat/widgets/chat_item.dart';
+import 'package:kaonic/src/widgets/chat_text_field.dart';
 import 'package:kaonic/src/widgets/circle_button.dart';
-import 'package:kaonic/src/widgets/main_button.dart';
-import 'package:kaonic/src/widgets/main_text_field.dart';
 import 'package:kaonic/src/widgets/screen_container.dart';
 import 'package:kaonic/theme/assets.dart';
 import 'package:kaonic/theme/text_styles.dart';
@@ -202,49 +200,24 @@ class _ChatScreenState extends State<ChatScreen> {
                                     ),
                                   ),
                                   SizedBox(height: 10.h),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      MainButton(
-                                        label: S.of(context).pickFile,
-                                        removePadding: true,
-                                        onPressed: () async {
-                                          FilePickerResult? result =
-                                              await FilePicker.platform
-                                                  .pickFiles();
-                                          if (result != null) {
-                                            _chatBloc
-                                                .add(FilePicked(file: result));
-                                          }
-                                        },
-                                        width: 75,
-                                      ),
-                                      SizedBox(height: 10.h),
-                                      Row(
-                                        children: [
-                                          Flexible(
-                                              child: MainTextField(
-                                            hint: 'Message...',
-                                            controller: _textController,
-                                          )),
-                                          SizedBox(width: 10.w),
-                                          MainButton(
-                                            label: S.of(context).labelSend,
-                                            removePadding: true,
-                                            onPressed: () {
-                                              if (_textController.text.isEmpty)
-                                                return;
+                                  ChatTextField(
+                                    controller: _textController,
+                                    onSendMessage: () {
+                                      if (_textController.text.isEmpty) {
+                                        return;
+                                      }
 
-                                              _chatBloc.add(SendMessage(
-                                                  message:
-                                                      _textController.text));
-                                              _textController.clear();
-                                            },
-                                            width: 75,
-                                          )
-                                        ],
-                                      ),
-                                    ],
+                                      _chatBloc.add(SendMessage(
+                                          message: _textController.text));
+                                      _textController.clear();
+                                    },
+                                    onFilePick: () async {
+                                      FilePickerResult? result =
+                                          await FilePicker.platform.pickFiles();
+                                      if (result != null) {
+                                        _chatBloc.add(FilePicked(file: result));
+                                      }
+                                    },
                                   )
                                 ],
                               );

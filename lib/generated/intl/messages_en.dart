@@ -149,6 +149,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "symbolRate": MessageLookupByLibrary.simpleMessage("Symbol Rate"),
         "today": MessageLookupByLibrary.simpleMessage("Today"),
         "txPower": MessageLookupByLibrary.simpleMessage("Tx Power"),
+        "typeAMessage": MessageLookupByLibrary.simpleMessage("Type a message"),
         "upload": MessageLookupByLibrary.simpleMessage("Upload"),
         "uploadOTApackage":
             MessageLookupByLibrary.simpleMessage("Upload OTA package"),
