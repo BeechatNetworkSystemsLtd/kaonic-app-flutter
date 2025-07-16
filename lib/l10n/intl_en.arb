@@ -98,5 +98,6 @@
     "ipCannotBeEmpty": "Ip cannot be empty.",
     "invalidIpAddress": "Invalid ip address.",
     "today": "Today",
-    "typeAMessage": "Type a message"
+    "typeAMessage": "Type a message",
+    "settingsSavedSuccessfully": "Settings saved successfully."
 }

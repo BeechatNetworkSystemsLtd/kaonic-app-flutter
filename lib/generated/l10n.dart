@@ -1049,6 +1049,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Settings saved successfully.`
+  String get settingsSavedSuccessfully {
+    return Intl.message(
+      'Settings saved successfully.',
+      name: 'settingsSavedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

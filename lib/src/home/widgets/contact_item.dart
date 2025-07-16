@@ -102,21 +102,28 @@ class ContactItem extends StatelessWidget {
                   ),
                 ),
                 if (lastMessage != null &&
-                    lastMessage is KaonicEvent<MessageTextEvent>)
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: Text(
-                      (messageData as MessageTextEvent).text ?? '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyles.text16.copyWith(
-                        color: AppColors.white,
-                        fontWeight: (messageData as MessageEvent).isRead
-                            ? FontWeight.w400
-                            : FontWeight.w800,
+                    (lastMessage is KaonicEvent<MessageTextEvent> ||
+                        lastMessage is KaonicEvent<MessageFileEvent>))
+                  Builder(builder: (context) {
+                    final text = lastMessage is KaonicEvent<MessageTextEvent>
+                        ? (messageData as MessageTextEvent).text ?? ''
+                        : (messageData as MessageFileEvent).fileName;
+
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child: Text(
+                        text,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyles.text16.copyWith(
+                          color: AppColors.white,
+                          fontWeight: (messageData as MessageEvent).isRead
+                              ? FontWeight.w400
+                              : FontWeight.w800,
+                        ),
                       ),
-                    ),
-                  )
+                    );
+                  })
               ],
             ),
           )

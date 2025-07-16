@@ -71,9 +71,10 @@ class KaonicCommunicationService {
     });
   }
 
-  void sendConfig(
-      {required RadioSettings radioSettings,
-      required PhyConfigTypeEnum configType}) {
+  void sendConfig({
+    required RadioSettings radioSettings,
+    required PhyConfigTypeEnum configType,
+  }) {
     kaonicMethodChannel.invokeMethod(
       'sendConfig',
       radioSettings.toJsonStringConfig(configType),

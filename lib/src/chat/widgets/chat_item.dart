@@ -65,43 +65,45 @@ class ChatItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              isUploaded
-                  ? Flexible(
-                      child: Row(
-                        spacing: 8,
-                        children: [
-                          const Icon(Icons.file_present_rounded,
-                              color: Colors.white),
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  f.fileName,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyles.text14
-                                      .copyWith(color: AppColors.white),
-                                ),
-                                Text(
-                                  f.fileSize.toReadableSize,
-                                  style: TextStyles.text14
-                                      .copyWith(color: AppColors.grey3),
-                                )
-                              ],
+              Flexible(
+                child: Row(
+                  spacing: 8,
+                  children: [
+                    isUploaded
+                        ? const Icon(
+                            Icons.file_present_rounded,
+                            color: Colors.white,
+                          )
+                        : SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              value: value,
+                              color: AppColors.white,
                             ),
                           ),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            f.fileName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyles.text14
+                                .copyWith(color: AppColors.white),
+                          ),
+                          Text(
+                            f.fileSize.toReadableSize,
+                            style: TextStyles.text14
+                                .copyWith(color: AppColors.grey3),
+                          )
                         ],
                       ),
-                    )
-                  : SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        value: value,
-                        color: AppColors.white,
-                      ),
                     ),
+                  ],
+                ),
+              ),
               if (f.date != null)
                 Text(
                   f.date!.messageTime,

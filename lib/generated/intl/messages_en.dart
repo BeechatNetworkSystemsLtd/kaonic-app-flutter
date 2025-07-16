@@ -138,6 +138,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "sdtd": MessageLookupByLibrary.simpleMessage("SFD Detection Threshold"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "settingsSavedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Settings saved successfully."),
         "sfd": MessageLookupByLibrary.simpleMessage("SFD"),
         "sfd0": MessageLookupByLibrary.simpleMessage("SFD0"),
         "sfd1": MessageLookupByLibrary.simpleMessage("SFD1"),

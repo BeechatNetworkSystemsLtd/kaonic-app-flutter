@@ -7,8 +7,12 @@ class RadioSettingsContainer {
   int id;
   final radioSettingsA = ToOne<RadioSettings>();
   final radioSettingsB = ToOne<RadioSettings>();
+  final int radioSettingsType;
+  final int phyConfig;
 
   RadioSettingsContainer({
     this.id = 0,
+    this.phyConfig = 0,
+    this.radioSettingsType = 0,
   });
 }

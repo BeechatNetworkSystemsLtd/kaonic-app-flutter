@@ -395,7 +395,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(6, 1276151104916648780),
     name: 'RadioSettingsContainer',
-    lastPropertyId: const obx_int.IdUid(3, 7692050720648622374),
+    lastPropertyId: const obx_int.IdUid(5, 3084674819825779504),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -419,6 +419,18 @@ final _entities = <obx_int.ModelEntity>[
         flags: 520,
         indexId: const obx_int.IdUid(2, 3533216531977425030),
         relationTarget: 'RadioSettings',
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(4, 7722495378220061691),
+        name: 'radioSettingsType',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(5, 3084674819825779504),
+        name: 'phyConfig',
+        type: 6,
+        flags: 0,
       ),
     ],
     relations: <obx_int.ModelRelation>[],
@@ -1003,10 +1015,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
         object.id = id;
       },
       objectToFB: (RadioSettingsContainer object, fb.Builder fbb) {
-        fbb.startTable(4);
+        fbb.startTable(6);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.radioSettingsA.targetId);
         fbb.addInt64(2, object.radioSettingsB.targetId);
+        fbb.addInt64(3, object.radioSettingsType);
+        fbb.addInt64(4, object.phyConfig);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -1019,7 +1033,23 @@ obx_int.ModelDefinition getObjectBoxModel() {
           4,
           0,
         );
-        final object = RadioSettingsContainer(id: idParam);
+        final phyConfigParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          12,
+          0,
+        );
+        final radioSettingsTypeParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          10,
+          0,
+        );
+        final object = RadioSettingsContainer(
+          id: idParam,
+          phyConfig: phyConfigParam,
+          radioSettingsType: radioSettingsTypeParam,
+        );
         object.radioSettingsA.targetId = const fb.Int64Reader().vTableGet(
           buffer,
           rootOffset,
@@ -1341,4 +1371,15 @@ class RadioSettingsContainer_ {
       obx.QueryRelationToOne<RadioSettingsContainer, RadioSettings>(
         _entities[5].properties[2],
       );
+
+  /// See [RadioSettingsContainer.radioSettingsType].
+  static final radioSettingsType =
+      obx.QueryIntegerProperty<RadioSettingsContainer>(
+        _entities[5].properties[3],
+      );
+
+  /// See [RadioSettingsContainer.phyConfig].
+  static final phyConfig = obx.QueryIntegerProperty<RadioSettingsContainer>(
+    _entities[5].properties[4],
+  );
 }

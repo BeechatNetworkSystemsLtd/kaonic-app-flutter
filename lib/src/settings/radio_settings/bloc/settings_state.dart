@@ -8,6 +8,7 @@ class SettingsState {
     required this.radioSettingsA,
     required this.radioSettingsB,
     this.presets = const [],
+    this.isSaved = false,
   });
 
   final RadioSettingsType radioSettingsType;
@@ -15,6 +16,7 @@ class SettingsState {
   final RadioSettings radioSettingsA;
   final RadioSettings radioSettingsB;
   final List<RadioPresetModel> presets;
+  final bool isSaved;
 
   bool get _isRfa => radioSettingsType == RadioSettingsType.rfa;
 
@@ -36,6 +38,7 @@ class SettingsState {
     RadioSettings? radioSettingsA,
     RadioSettings? radioSettingsB,
     List<RadioPresetModel>? presets,
+    bool? isSaved,
   }) {
     return SettingsState(
       presets: presets ?? this.presets,
@@ -43,6 +46,7 @@ class SettingsState {
       phyConfig: phyConfig ?? this.phyConfig,
       radioSettingsB: radioSettingsB ?? this.radioSettingsB,
       radioSettingsType: radioSettingsType ?? this.radioSettingsType,
+      isSaved: isSaved ?? this.isSaved,
     );
   }
 }

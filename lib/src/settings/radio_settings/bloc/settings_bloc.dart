@@ -21,16 +21,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     required KaonicCommunicationService communicationService,
   })  : _communicationService = communicationService,
         super(SettingsState(
-          radioSettingsA: _radioSettingsRepository
-                  .getSettingContainer()
-                  ?.radioSettingsA
-                  .target ??
-              RadioSettings(),
-          radioSettingsB: _radioSettingsRepository
-                  .getSettingContainer()
-                  ?.radioSettingsB
-                  .target ??
-              RadioSettings(),
+          radioSettingsA: _radioSettingsRepository.radioSettingsA,
+          radioSettingsB: _radioSettingsRepository.radioSettingsB,
+          phyConfig: _radioSettingsRepository.phyConfig,
+          radioSettingsType: _radioSettingsRepository.radioSettingsType,
         )) {
     on<UpdateFrequency>(_onUpdateFrequency);
     on<UpdateChannelSpacing>(_onUpdateChannelSpacing);
@@ -89,18 +83,26 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   Future<void> _saveSettings(
       SaveSettings event, Emitter<SettingsState> emit) async {
     _communicationService.sendConfig(
-        radioSettings: state.radioSettings, configType: state.phyConfig);
+      radioSettings: state.radioSettings,
+      configType: state.phyConfig,
+    );
 
     _radioSettingsRepository.saveSettings(
       state.radioSettingsA,
       state.radioSettingsB,
+      state.radioSettingsType.index,
+      state.phyConfig.index,
     );
+
+    emit(state.copyWith(isSaved: true));
   }
 
   bool get isRfa => state.radioSettingsType == RadioSettingsType.rfa;
 
   void _onUpdateRadioType(UpdateRadioType event, Emitter<SettingsState> emit) {
     emit(state.copyWith(radioSettingsType: event.radioSettingsType));
+    _updateSetting(
+        emit, (rs) => rs.copyWith(module: event.radioSettingsType.index));
   }
 
   void _onUpdateFrequency(UpdateFrequency event, Emitter<SettingsState> emit) {
@@ -258,6 +260,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   void _onSetPreset(SetPreset event, Emitter<SettingsState> emit) {
     _updateSetting(emit, (rs) => rs.fromRadioPreset(event.preset));
+    emit(state.copyWith(phyConfig: event.preset.phyConfig.type));
   }
 
   FutureOr<void> _onUpdateSfd(

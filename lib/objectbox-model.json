@@ -316,7 +316,7 @@
     },
     {
       "id": "6:1276151104916648780",
-      "lastPropertyId": "3:7692050720648622374",
+      "lastPropertyId": "5:3084674819825779504",
       "name": "RadioSettingsContainer",
       "properties": [
         {
@@ -340,6 +340,16 @@
           "flags": 520,
           "indexId": "2:3533216531977425030",
           "relationTarget": "RadioSettings"
+        },
+        {
+          "id": "4:7722495378220061691",
+          "name": "radioSettingsType",
+          "type": 6
+        },
+        {
+          "id": "5:3084674819825779504",
+          "name": "phyConfig",
+          "type": 6
         }
       ],
       "relations": []

@@ -208,6 +208,7 @@ class RadioSettings {
     int? pdt,
     int? sfd0,
     int? sfd1,
+    int? module,
   }) {
     return RadioSettings(
       id: id ?? this.id,
@@ -247,6 +248,7 @@ class RadioSettings {
       pdt: pdt ?? this.pdt,
       sfd0: sfd0 ?? this.sfd0,
       sfd1: sfd1 ?? this.sfd1,
+      module: module ?? this.module,
     );
   }
 
@@ -291,6 +293,7 @@ class RadioSettings {
       preambleLength: data.preambleLength ?? preambleLength,
       sfd0: data.sfd0 ?? sfd0,
       sfd1: data.sfd1 ?? sfd1,
+      module: module,
     );
   }
 
@@ -333,6 +336,7 @@ class RadioSettings {
       'pdt': pdt,
       'sfd0': sfd0,
       'sfd1': sfd1,
+      'module': module,
     };
   }
 
@@ -377,6 +381,7 @@ class RadioSettings {
       pdt: json['pdt'],
       sfd0: json['sfd0'],
       sfd1: json['sfd1'],
+      module: json['module'],
     );
   }
 
@@ -386,7 +391,7 @@ class RadioSettings {
       'channel': channel,
       'channel_spacing': int.parse(channelSpacing),
       'tx_power': int.parse(txPower),
-      'module': 0,
+      'module': module,
       'phy_config': {
         'type': switch (phyConfigType) {
           PhyConfigTypeEnum.ofdm => 'Ofdm',

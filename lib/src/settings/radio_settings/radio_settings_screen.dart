@@ -16,6 +16,7 @@ import 'package:kaonic/src/widgets/main_button.dart';
 import 'package:kaonic/src/widgets/main_text_field.dart';
 import 'package:kaonic/theme/theme.dart';
 import 'package:kaonic/utils/dialog_util.dart';
+import 'package:kaonic/utils/snackbar_util.dart';
 
 class RadioSettingsScreen extends StatelessWidget {
   const RadioSettingsScreen({super.key});
@@ -147,14 +148,27 @@ class _RadioSettingsWidgetState extends State<_RadioSettingsWidget> {
     super.dispose();
   }
 
+  void _showSavedSettingMessage() {
+    SnackBarUtil.showSuccessMessage(
+      context,
+      message: S.of(context).settingsSavedSuccessfully,
+    );
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SettingsBloc, SettingsState>(
       listenWhen: (prev, curr) =>
           prev.radioSettingsType != curr.radioSettingsType ||
-          prev.radioSettings != curr.radioSettings,
+          prev.radioSettings != curr.radioSettings ||
+          prev.isSaved != curr.isSaved,
       listener: (context, state) {
-        _updateControllers(state);
+        if (state.isSaved) {
+          _showSavedSettingMessage();
+        } else {
+          _updateControllers(state);
+        }
       },
       builder: (context, state) {
         return SingleChildScrollView(
