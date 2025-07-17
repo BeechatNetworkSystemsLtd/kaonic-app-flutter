@@ -97,10 +97,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     ));
   }
 
-  void _filePicked(FilePicked event, Emitter<ChatState> emit) {
+  void _filePicked(FilePicked event, Emitter<ChatState> emit) async {
     if (event.file.files.isEmpty && event.file.files.first.path != null) return;
-    final f = File(event.file.files.first.path!);
-    _chatService.sendFileMessage(f.path, _address);
+    final oldFile = File(event.file.files.first.path!);
+    final timeStamp = DateTime.now().millisecondsSinceEpoch;
+    var splittedName = event.file.files.first.name.split('.')
+      ..insert(1, '$timeStamp');
+    final fileFormat = splittedName.last;
+    splittedName.removeLast();
+    final newFileName = '${splittedName.join('_')}.$fileFormat';
+    final directory = oldFile.parent.path;
+    final newPath = '$directory/$newFileName';
+
+    final renamedFile = await oldFile.rename(newPath);
+    _chatService.sendFileMessage(renamedFile.path, _address);
   }
 
   void _onChatIdChanged(String address, String chatId) {

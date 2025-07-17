@@ -5,7 +5,7 @@ import 'package:kaonic/data/extensions/date_time_extension.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
 import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/theme/theme.dart';
-import 'package:open_file/open_file.dart';
+import 'package:kaonic/utils/open_file_util.dart';
 
 class ChatItem extends StatelessWidget {
   const ChatItem({
@@ -59,7 +59,8 @@ class ChatItem extends StatelessWidget {
         final value = f.fileSizeProcessed / f.fileSize;
         final isUploaded = f.fileSizeProcessed == f.fileSize;
         return GestureDetector(
-          onTap: f.path == null ? null : () => OpenFile.open(f.path!),
+          onTap:
+              f.path == null ? null : () => OpenFileUtil.openFile(f.fileName),
           child: Row(
             spacing: 16,
             crossAxisAlignment: CrossAxisAlignment.end,
