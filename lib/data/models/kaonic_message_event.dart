@@ -8,17 +8,23 @@ abstract class MessageEvent extends KaonicEventData {
   final String id;
   @JsonKey(name: 'chat_id')
   final String chatId;
+  bool isRead;
+  final DateTime? date;
 
   MessageEvent({
     required super.address,
     required super.timestamp,
     required this.id,
     required this.chatId,
+    this.isRead = false,
+    this.date,
   });
 
   MessageEvent.empty()
       : id = '',
         chatId = '',
+        isRead = false,
+        date = null,
         super(address: '', timestamp: 0);
 }
 
@@ -31,20 +37,24 @@ class MessageTextEvent extends MessageEvent {
     required super.timestamp,
     required super.id,
     required super.chatId,
+    super.isRead,
+    DateTime? date,
     this.text,
-  });
+  }) : super(date: date ?? DateTime.now());
 
   MessageTextEvent.withUuid({
     required String address,
     required int timestamp,
     required String chatId,
     String? text,
+    DateTime? date,
   }) : this(
           address: address,
           timestamp: timestamp,
           id: const Uuid().v4(),
           chatId: chatId,
           text: text,
+          date: date ?? DateTime.now(),
         );
 
   factory MessageTextEvent.fromJson(Map<String, dynamic> json) =>
@@ -68,16 +78,24 @@ class MessageFileEvent extends MessageEvent {
     required this.fileName,
     required this.fileSize,
     super.address = "",
+    super.isRead,
     this.fileSizeProcessed = 0,
     this.path,
-  });
+    DateTime? date,
+  }) : super(date: date ?? DateTime.now());
 
-  MessageFileEvent.empty()
+  MessageFileEvent.empty(DateTime? date)
       : fileName = '',
         fileSize = 0,
         fileSizeProcessed = 0,
         path = null,
-        super(address: '', timestamp: 0, id: '', chatId: '');
+        super(
+          address: '',
+          timestamp: 0,
+          id: '',
+          chatId: '',
+          date: date ?? DateTime.now(),
+        );
 
   factory MessageFileEvent.fromJson(Map<String, dynamic> json) =>
       _$MessageFileEventFromJson(json);

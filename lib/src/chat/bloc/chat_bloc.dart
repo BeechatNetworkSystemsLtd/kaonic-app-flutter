@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kaonic/data/models/kaonic_event.dart';
+import 'package:kaonic/data/models/kaonic_message_event.dart';
 import 'package:kaonic/service/call_service.dart';
 import 'package:kaonic/service/chat_service.dart';
 
@@ -19,12 +21,17 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   })  : _chatService = chatService,
         _address = address,
         _callService = callService,
-        super(ChatState(address: address)) {
+        super(ChatState(
+          address: address,
+          callState: CallScreenStateInfo(callScreenState: CallScreenState.idle),
+        )) {
     on<SendMessage>(_sendMessage);
     on<_UpdatedChats>(_updatedChats);
     on<_IntiChat>(_intiChat);
     on<InitiateCall>(_initiateCall);
     on<FilePicked>(_filePicked);
+    on<_UpdateCallState>(_onUpdateCallState);
+    on<EndCallAndPop>(_onEndCallAndPop);
 
     add(_IntiChat());
   }
@@ -32,10 +39,12 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   late final CallService _callService;
   final String _address;
   StreamSubscription<List<KaonicEvent<KaonicEventData>>>? _chatSubscription;
+  StreamSubscription<CallScreenStateInfo>? _callStateSubscription;
 
   @override
   Future<void> close() async {
     _chatSubscription?.cancel();
+    _callStateSubscription?.cancel();
     _chatService.onChatIDUpdated = null;
     super.close();
   }
@@ -43,8 +52,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   FutureOr<void> _intiChat(_IntiChat event, Emitter<ChatState> emit) async {
     final chatId = await _chatService.createChat(_address);
     _chatService.onChatIDUpdated = _onChatIdChanged;
+    final myAddress = await _chatService.myAddress();
+    emit(state.copyWith(myAddress: myAddress));
     _chatSubscription = _chatService.getChatMessages(chatId).listen((messages) {
       add(_UpdatedChats(messages: messages));
+    });
+    _callStateSubscription = _callService.callState.listen((callState) {
+      add(_UpdateCallState(callState: callState));
     });
   }
 
@@ -63,7 +77,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   FutureOr<void> _updatedChats(_UpdatedChats event, Emitter<ChatState> emit) {
     // _communicationService.markMessageRead(state.address);
-
+    _chatService.markMessagesAsRead(state.address);
     emit(state.copyWith(
       messages: event.messages,
       flagScrollToDown: true,
@@ -74,13 +88,29 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       InitiateCall event, Emitter<ChatState> emit) async {
     _callService.createCall(_address);
 
-    emit(NavigateToCall(address: state.address));
+    emit(NavigateToCall(
+      address: state.address,
+      messages: state.messages,
+      myAddress: state.myAddress,
+      flagScrollToDown: state.flagScrollToDown,
+      callState: state.callState,
+    ));
   }
 
-  void _filePicked(FilePicked event, Emitter<ChatState> emit) {
+  void _filePicked(FilePicked event, Emitter<ChatState> emit) async {
     if (event.file.files.isEmpty && event.file.files.first.path != null) return;
-    final f = File(event.file.files.first.path!);
-    _chatService.sendFileMessage(f.path, _address);
+    final oldFile = File(event.file.files.first.path!);
+    final timeStamp = DateTime.now().millisecondsSinceEpoch;
+    var splittedName = event.file.files.first.name.split('.')
+      ..insert(1, '$timeStamp');
+    final fileFormat = splittedName.last;
+    splittedName.removeLast();
+    final newFileName = '${splittedName.join('_')}.$fileFormat';
+    final directory = oldFile.parent.path;
+    final newPath = '$directory/$newFileName';
+
+    final renamedFile = await oldFile.rename(newPath);
+    _chatService.sendFileMessage(renamedFile.path, _address);
   }
 
   void _onChatIdChanged(String address, String chatId) {
@@ -89,5 +119,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     _chatSubscription = _chatService.getChatMessages(chatId).listen((messages) {
       add(_UpdatedChats(messages: messages));
     });
+  }
+
+  void _onUpdateCallState(_UpdateCallState event, Emitter<ChatState> emit) {
+    emit(state.copyWith(callState: event.callState));
+  }
+
+  void _onEndCallAndPop(_, Emitter<ChatState> emit) {
+    _callService.rejectCall();
+    emit(state.copyWith(isCallEndedOnPop: true));
   }
 }

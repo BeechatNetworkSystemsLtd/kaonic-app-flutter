@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kaonic/data/models/contact_model.dart';
+import 'package:kaonic/data/models/kaonic_event.dart';
+import 'package:kaonic/data/models/kaonic_message_event.dart';
 import 'package:kaonic/generated/l10n.dart';
+import 'package:kaonic/src/widgets/user_icon_widget.dart';
 import 'package:kaonic/theme/text_styles.dart';
 import 'package:kaonic/theme/theme.dart';
 
@@ -13,6 +16,8 @@ class ContactItem extends StatelessWidget {
     this.onIdentifyTap,
     this.nearbyFound = false,
     this.unreadCount,
+    required this.onLongPress,
+    this.lastMessage,
   });
 
   final ContactModel contact;
@@ -20,54 +25,41 @@ class ContactItem extends StatelessWidget {
   final Function()? onIdentifyTap;
   final bool nearbyFound;
   final int? unreadCount;
+  final VoidCallback onLongPress;
+  final KaonicEvent? lastMessage;
 
   @override
   Widget build(BuildContext context) {
+    final messageData = lastMessage?.data;
+
     return InkWell(
       onTap: onTap,
+      onLongPress: onLongPress,
       borderRadius: BorderRadius.circular(42),
       child: Row(
         children: [
-          Flexible(
-            flex: 2,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                  gradient: AppColors.yellowGradient,
-                  borderRadius: BorderRadius.circular(42)),
-              child: SizedBox(
-                height: 32,
-                child: Align(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: Text(
-                      'User',
-                      style: TextStyles.text18Bold,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+          UserIconWidget(
+            padding: 8,
+            iconSize: 24,
+            bgColor: AppColors.yellow,
+            iconColor: AppColors.black,
           ),
           SizedBox(width: 10.w),
           Flexible(
             flex: 5,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(42),
-                border: Border.all(color: AppColors.grey3),
-              ),
-              child: SizedBox(
-                height: 32,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                   child: Row(
                     children: [
                       Flexible(
                         child: Text(
-                          contact.address,
+                          contact.address.toUpperCase(),
                           style: TextStyles.text16
-                              .copyWith(color: AppColors.grey5),
+                              .copyWith(color: AppColors.white),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -109,7 +101,30 @@ class ContactItem extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
+                if (lastMessage != null &&
+                    (lastMessage is KaonicEvent<MessageTextEvent> ||
+                        lastMessage is KaonicEvent<MessageFileEvent>))
+                  Builder(builder: (context) {
+                    final text = lastMessage is KaonicEvent<MessageTextEvent>
+                        ? (messageData as MessageTextEvent).text ?? ''
+                        : (messageData as MessageFileEvent).fileName;
+
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child: Text(
+                        text,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyles.text16.copyWith(
+                          color: AppColors.grey5,
+                          fontWeight: (messageData as MessageEvent).isRead
+                              ? FontWeight.w400
+                              : FontWeight.w800,
+                        ),
+                      ),
+                    );
+                  })
+              ],
             ),
           )
         ],

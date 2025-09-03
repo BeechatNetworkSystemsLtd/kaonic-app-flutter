@@ -9,4 +9,7 @@ abstract class Routes {
   static const chat = '/chat';
   static const call = '/call';
   static const settings = '/settings';
+  static const ota = '/ota';
+  static const radioSettings = '/radioSettings';
+  static const connectivitySettings = '/connectivitySettings';
 }

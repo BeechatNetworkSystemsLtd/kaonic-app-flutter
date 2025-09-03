@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kaonic/data/repository/connectivity_settings_repository.dart';
 import 'package:kaonic/generated/l10n.dart';
 import 'package:kaonic/routes.dart';
+import 'package:kaonic/service/kaonic_communication_service.dart';
 import 'package:kaonic/service/user_service.dart';
 import 'package:kaonic/src/widgets/main_button.dart';
 import 'package:kaonic/theme/assets.dart';
@@ -43,8 +45,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void initState() {
     WidgetsFlutterBinding.ensureInitialized();
 
-    Future.delayed(const Duration(milliseconds: 3550), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       if (context.read<UserService>().checkUserSignedIn() != null) {
+        context.read<KaonicCommunicationService>().startService(
+              context
+                  .read<ConnectivitySettingsRepository>()
+                  .getConnectivitySetting(),
+            );
         Navigator.of(context)
             .pushNamedAndRemoveUntil(Routes.home, (_) => false);
       }

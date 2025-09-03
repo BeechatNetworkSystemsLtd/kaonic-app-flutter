@@ -25,7 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    _bloc = LoginBloc(userService: context.read());
+    _bloc = LoginBloc(
+      context.read(),
+      context.read(),
+      userService: context.read(),
+    );
     super.initState();
   }
 

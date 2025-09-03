@@ -8,11 +8,11 @@ final class CallState {
   });
 
   final String? usernameAddressHex;
-  final CallScreenState? callState;
+  final CallScreenStateInfo? callState;
 
   CallState copyWith({
     String? usernameAddressHex,
-    CallScreenState? callState,
+    CallScreenStateInfo? callState,
   }) =>
       CallState(
         callState: callState ?? this.callState,

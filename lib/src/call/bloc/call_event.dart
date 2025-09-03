@@ -10,7 +10,7 @@ final class EndCall extends CallEvent {}
 final class AcceptCall extends CallEvent {}
 
 final class _UpdateCallState extends CallEvent {
-  final CallScreenState callSate;
+  final CallScreenStateInfo callSate;
 
   _UpdateCallState(this.callSate);
 }

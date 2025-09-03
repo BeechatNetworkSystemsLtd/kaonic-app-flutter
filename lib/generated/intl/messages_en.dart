@@ -20,23 +20,51 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(count) => "Preemphasis ${count}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "Channel": MessageLookupByLibrary.simpleMessage("Channel"),
         "ChannelSpacing":
             MessageLookupByLibrary.simpleMessage("Channel spacing"),
         "Frequency": MessageLookupByLibrary.simpleMessage("Frequency"),
-        "OFDMOption": MessageLookupByLibrary.simpleMessage("OFDM Option"),
-        "OFDMRate": MessageLookupByLibrary.simpleMessage("OFDM MCS"),
+        "apply": MessageLookupByLibrary.simpleMessage("Apply"),
         "back": MessageLookupByLibrary.simpleMessage("Back"),
+        "bandwidthTime": MessageLookupByLibrary.simpleMessage("Bandwidth Time"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "connectivitySettings":
+            MessageLookupByLibrary.simpleMessage("Connectivity Settings"),
+        "connectivityType":
+            MessageLookupByLibrary.simpleMessage("Connectivity Type"),
+        "connectivityTypeKaonic":
+            MessageLookupByLibrary.simpleMessage("Kaonic Client"),
+        "connectivityTypeTCP":
+            MessageLookupByLibrary.simpleMessage("TCP Client"),
         "createPasscode":
             MessageLookupByLibrary.simpleMessage("Create passcode"),
         "createUsername":
             MessageLookupByLibrary.simpleMessage("Create username:"),
+        "csfd0": MessageLookupByLibrary.simpleMessage("CSFD0"),
+        "csfd1": MessageLookupByLibrary.simpleMessage("CSFD1"),
+        "deviceVersion": MessageLookupByLibrary.simpleMessage("Device version"),
+        "doYouWantToEndTheCall": MessageLookupByLibrary.simpleMessage(
+            "Do you want to end the call and exit the screen?"),
+        "dw": MessageLookupByLibrary.simpleMessage("DW"),
+        "en": MessageLookupByLibrary.simpleMessage("EN"),
         "enterPasscode": MessageLookupByLibrary.simpleMessage("Enter passcode"),
+        "fecie": MessageLookupByLibrary.simpleMessage("FECIE"),
+        "fecs": MessageLookupByLibrary.simpleMessage("FECS"),
+        "frequencyInversion":
+            MessageLookupByLibrary.simpleMessage("Frequency Inversion"),
+        "fsk": MessageLookupByLibrary.simpleMessage("FSK"),
         "hint": MessageLookupByLibrary.simpleMessage("type..."),
+        "invalidIpAddress":
+            MessageLookupByLibrary.simpleMessage("Invalid ip address."),
         "invalidPasscode":
             MessageLookupByLibrary.simpleMessage("Invalid passcode"),
+        "ip": MessageLookupByLibrary.simpleMessage("IP"),
+        "ipCannotBeEmpty":
+            MessageLookupByLibrary.simpleMessage("Ip cannot be empty."),
         "labelAddThisUserToContactList": MessageLookupByLibrary.simpleMessage(
             "Add this user to Contact List?"),
         "labelAddress": MessageLookupByLibrary.simpleMessage("Address:"),
@@ -51,31 +79,86 @@ class MessageLookup extends MessageLookupByLibrary {
         "labelNo": MessageLookupByLibrary.simpleMessage("No"),
         "labelPleaseSaveThisFile": MessageLookupByLibrary.simpleMessage(
             "Please save this file to be able to back up your account later."),
+        "labelRemoveThisUserFromContactList":
+            MessageLookupByLibrary.simpleMessage(
+                "Remove this user from Contact List?"),
         "labelSend": MessageLookupByLibrary.simpleMessage("Send"),
         "labelUnknown": MessageLookupByLibrary.simpleMessage("unknown"),
         "labelUsername": MessageLookupByLibrary.simpleMessage("Username:"),
         "labelUsersNearby":
             MessageLookupByLibrary.simpleMessage("Users nearby"),
         "labelYes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "local": MessageLookupByLibrary.simpleMessage("local"),
+        "localOTApackage":
+            MessageLookupByLibrary.simpleMessage("Local OTA package"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginFailure": MessageLookupByLibrary.simpleMessage(
             "User does not exist or passcode is incorrect"),
+        "mcs": MessageLookupByLibrary.simpleMessage("MCS"),
+        "modulationIndex":
+            MessageLookupByLibrary.simpleMessage("Modulation Index"),
+        "modulationIndexScale":
+            MessageLookupByLibrary.simpleMessage("Modulation Index Scale"),
+        "modulationOrder":
+            MessageLookupByLibrary.simpleMessage("Modulation Order"),
+        "mse": MessageLookupByLibrary.simpleMessage("MSE"),
+        "noRssi": MessageLookupByLibrary.simpleMessage(
+            "Preamble detection does not take RSSI values into account"),
+        "ofdm": MessageLookupByLibrary.simpleMessage("OFDM"),
+        "ongoingCall": MessageLookupByLibrary.simpleMessage("Ongoing call"),
         "opt1": MessageLookupByLibrary.simpleMessage("Option 1"),
         "opt2": MessageLookupByLibrary.simpleMessage("Option 2"),
         "opt3": MessageLookupByLibrary.simpleMessage("Option 3"),
         "opt4": MessageLookupByLibrary.simpleMessage("Option 4"),
+        "option": MessageLookupByLibrary.simpleMessage("Option"),
+        "otaUpdate": MessageLookupByLibrary.simpleMessage("OTA Update"),
+        "otaVersion": MessageLookupByLibrary.simpleMessage("OTA version"),
         "passcodeNotMatch":
             MessageLookupByLibrary.simpleMessage("Passcode did not match"),
+        "pdt": MessageLookupByLibrary.simpleMessage(
+            "Preamble Detection Threshold"),
+        "pdtm": MessageLookupByLibrary.simpleMessage("PDTM"),
+        "pe": MessageLookupByLibrary.simpleMessage("PE"),
         "pickFile": MessageLookupByLibrary.simpleMessage("Pick File"),
+        "port": MessageLookupByLibrary.simpleMessage("Port"),
+        "preambleInversion":
+            MessageLookupByLibrary.simpleMessage("Preamble Inversion"),
+        "preambleLength":
+            MessageLookupByLibrary.simpleMessage("Preamble Length"),
+        "preemphasis": m0,
+        "presets": MessageLookupByLibrary.simpleMessage("Presets"),
         "radio": MessageLookupByLibrary.simpleMessage("Radio"),
+        "radioSettings": MessageLookupByLibrary.simpleMessage("Radio Settings"),
+        "rawbit": MessageLookupByLibrary.simpleMessage("RAWBIT"),
+        "remote": MessageLookupByLibrary.simpleMessage("remote"),
         "repeatPasscode":
             MessageLookupByLibrary.simpleMessage("Repeat passcode"),
+        "rxo": MessageLookupByLibrary.simpleMessage("RXO"),
+        "rxpto": MessageLookupByLibrary.simpleMessage("RXPTO"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "sdtd": MessageLookupByLibrary.simpleMessage("SFD Detection Threshold"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "settingsSavedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Settings saved successfully."),
+        "sfd": MessageLookupByLibrary.simpleMessage("SFD"),
+        "sfd0": MessageLookupByLibrary.simpleMessage("SFD0"),
+        "sfd1": MessageLookupByLibrary.simpleMessage("SFD1"),
+        "sfd32": MessageLookupByLibrary.simpleMessage("SFD32"),
+        "sftq": MessageLookupByLibrary.simpleMessage("SFTQ"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
+        "softwareUpdate":
+            MessageLookupByLibrary.simpleMessage("Software Update"),
+        "symbolRate": MessageLookupByLibrary.simpleMessage("Symbol Rate"),
+        "today": MessageLookupByLibrary.simpleMessage("Today"),
         "txPower": MessageLookupByLibrary.simpleMessage("Tx Power"),
+        "typeAMessage": MessageLookupByLibrary.simpleMessage("Type a message"),
+        "upload": MessageLookupByLibrary.simpleMessage("Upload"),
+        "uploadOTApackage":
+            MessageLookupByLibrary.simpleMessage("Upload OTA package"),
         "userExistError": MessageLookupByLibrary.simpleMessage(
             "User with this username is already exist"),
-        "username": MessageLookupByLibrary.simpleMessage("Username")
+        "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "withRssi": MessageLookupByLibrary.simpleMessage(
+            "Preamble detection takes RSSI values into account.")
       };
 }

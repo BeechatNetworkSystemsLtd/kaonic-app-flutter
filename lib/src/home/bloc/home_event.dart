@@ -26,3 +26,21 @@ final class _UpdatedUser extends HomeEvent {
 
   final UserModel user;
 }
+
+final class RemoveContact extends HomeEvent {
+  RemoveContact({required this.contact});
+
+  final String contact;
+}
+
+final class OnChatNavigate extends HomeEvent {
+  OnChatNavigate(this.isInChatPage);
+
+  final bool isInChatPage;
+}
+
+final class OnUpdateLastMessages extends HomeEvent {
+  final Map<String, KaonicEvent?> lastMessages;
+
+  OnUpdateLastMessages(this.lastMessages);
+}

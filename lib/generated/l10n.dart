@@ -280,6 +280,16 @@ class S {
     );
   }
 
+  /// `Remove this user from Contact List?`
+  String get labelRemoveThisUserFromContactList {
+    return Intl.message(
+      'Remove this user from Contact List?',
+      name: 'labelRemoveThisUserFromContactList',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No`
   String get labelNo {
     return Intl.message(
@@ -380,21 +390,21 @@ class S {
     );
   }
 
-  /// `OFDM Option`
-  String get OFDMOption {
+  /// `Option`
+  String get option {
     return Intl.message(
-      'OFDM Option',
-      name: 'OFDMOption',
+      'Option',
+      name: 'option',
       desc: '',
       args: [],
     );
   }
 
-  /// `OFDM MCS`
-  String get OFDMRate {
+  /// `MCS`
+  String get mcs {
     return Intl.message(
-      'OFDM MCS',
-      name: 'OFDMRate',
+      'MCS',
+      name: 'mcs',
       desc: '',
       args: [],
     );
@@ -465,6 +475,586 @@ class S {
     return Intl.message(
       'Login',
       name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OTA Update`
+  String get otaUpdate {
+    return Intl.message(
+      'OTA Update',
+      name: 'otaUpdate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Local OTA package`
+  String get localOTApackage {
+    return Intl.message(
+      'Local OTA package',
+      name: 'localOTApackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OTA version`
+  String get otaVersion {
+    return Intl.message(
+      'OTA version',
+      name: 'otaVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `local`
+  String get local {
+    return Intl.message(
+      'local',
+      name: 'local',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `remote`
+  String get remote {
+    return Intl.message(
+      'remote',
+      name: 'remote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload OTA package`
+  String get uploadOTApackage {
+    return Intl.message(
+      'Upload OTA package',
+      name: 'uploadOTApackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Device version`
+  String get deviceVersion {
+    return Intl.message(
+      'Device version',
+      name: 'deviceVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload`
+  String get upload {
+    return Intl.message(
+      'Upload',
+      name: 'upload',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Software Update`
+  String get softwareUpdate {
+    return Intl.message(
+      'Software Update',
+      name: 'softwareUpdate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ongoing call`
+  String get ongoingCall {
+    return Intl.message(
+      'Ongoing call',
+      name: 'ongoingCall',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want to end the call and exit the screen?`
+  String get doYouWantToEndTheCall {
+    return Intl.message(
+      'Do you want to end the call and exit the screen?',
+      name: 'doYouWantToEndTheCall',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Radio Settings`
+  String get radioSettings {
+    return Intl.message(
+      'Radio Settings',
+      name: 'radioSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connectivity Settings`
+  String get connectivitySettings {
+    return Intl.message(
+      'Connectivity Settings',
+      name: 'connectivitySettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `IP`
+  String get ip {
+    return Intl.message(
+      'IP',
+      name: 'ip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Port`
+  String get port {
+    return Intl.message(
+      'Port',
+      name: 'port',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connectivity Type`
+  String get connectivityType {
+    return Intl.message(
+      'Connectivity Type',
+      name: 'connectivityType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `TCP Client`
+  String get connectivityTypeTCP {
+    return Intl.message(
+      'TCP Client',
+      name: 'connectivityTypeTCP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kaonic Client`
+  String get connectivityTypeKaonic {
+    return Intl.message(
+      'Kaonic Client',
+      name: 'connectivityTypeKaonic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bandwidth Time`
+  String get bandwidthTime {
+    return Intl.message(
+      'Bandwidth Time',
+      name: 'bandwidthTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modulation Index Scale`
+  String get modulationIndexScale {
+    return Intl.message(
+      'Modulation Index Scale',
+      name: 'modulationIndexScale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OFDM`
+  String get ofdm {
+    return Intl.message(
+      'OFDM',
+      name: 'ofdm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FSK`
+  String get fsk {
+    return Intl.message(
+      'FSK',
+      name: 'fsk',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modulation Index`
+  String get modulationIndex {
+    return Intl.message(
+      'Modulation Index',
+      name: 'modulationIndex',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modulation Order`
+  String get modulationOrder {
+    return Intl.message(
+      'Modulation Order',
+      name: 'modulationOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Symbol Rate`
+  String get symbolRate {
+    return Intl.message(
+      'Symbol Rate',
+      name: 'symbolRate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preamble detection does not take RSSI values into account`
+  String get noRssi {
+    return Intl.message(
+      'Preamble detection does not take RSSI values into account',
+      name: 'noRssi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preamble detection takes RSSI values into account.`
+  String get withRssi {
+    return Intl.message(
+      'Preamble detection takes RSSI values into account.',
+      name: 'withRssi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PDTM`
+  String get pdtm {
+    return Intl.message(
+      'PDTM',
+      name: 'pdtm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `RXO`
+  String get rxo {
+    return Intl.message(
+      'RXO',
+      name: 'rxo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `RXPTO`
+  String get rxpto {
+    return Intl.message(
+      'RXPTO',
+      name: 'rxpto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MSE`
+  String get mse {
+    return Intl.message(
+      'MSE',
+      name: 'mse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FECS`
+  String get fecs {
+    return Intl.message(
+      'FECS',
+      name: 'fecs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FECIE`
+  String get fecie {
+    return Intl.message(
+      'FECIE',
+      name: 'fecie',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SFD32`
+  String get sfd32 {
+    return Intl.message(
+      'SFD32',
+      name: 'sfd32',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CSFD1`
+  String get csfd1 {
+    return Intl.message(
+      'CSFD1',
+      name: 'csfd1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CSFD0`
+  String get csfd0 {
+    return Intl.message(
+      'CSFD0',
+      name: 'csfd0',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SFD1`
+  String get sfd1 {
+    return Intl.message(
+      'SFD1',
+      name: 'sfd1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SFD0`
+  String get sfd0 {
+    return Intl.message(
+      'SFD0',
+      name: 'sfd0',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SFD`
+  String get sfd {
+    return Intl.message(
+      'SFD',
+      name: 'sfd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `DW`
+  String get dw {
+    return Intl.message(
+      'DW',
+      name: 'dw',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Frequency Inversion`
+  String get frequencyInversion {
+    return Intl.message(
+      'Frequency Inversion',
+      name: 'frequencyInversion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preamble Inversion`
+  String get preambleInversion {
+    return Intl.message(
+      'Preamble Inversion',
+      name: 'preambleInversion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SFTQ`
+  String get sftq {
+    return Intl.message(
+      'SFTQ',
+      name: 'sftq',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `RAWBIT`
+  String get rawbit {
+    return Intl.message(
+      'RAWBIT',
+      name: 'rawbit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PE`
+  String get pe {
+    return Intl.message(
+      'PE',
+      name: 'pe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `EN`
+  String get en {
+    return Intl.message(
+      'EN',
+      name: 'en',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preemphasis {count}`
+  String preemphasis(Object count) {
+    return Intl.message(
+      'Preemphasis $count',
+      name: 'preemphasis',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Preamble Length`
+  String get preambleLength {
+    return Intl.message(
+      'Preamble Length',
+      name: 'preambleLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SFD Detection Threshold`
+  String get sdtd {
+    return Intl.message(
+      'SFD Detection Threshold',
+      name: 'sdtd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preamble Detection Threshold`
+  String get pdt {
+    return Intl.message(
+      'Preamble Detection Threshold',
+      name: 'pdt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Presets`
+  String get presets {
+    return Intl.message(
+      'Presets',
+      name: 'presets',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply`
+  String get apply {
+    return Intl.message(
+      'Apply',
+      name: 'apply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ip cannot be empty.`
+  String get ipCannotBeEmpty {
+    return Intl.message(
+      'Ip cannot be empty.',
+      name: 'ipCannotBeEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid ip address.`
+  String get invalidIpAddress {
+    return Intl.message(
+      'Invalid ip address.',
+      name: 'invalidIpAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today`
+  String get today {
+    return Intl.message(
+      'Today',
+      name: 'today',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type a message`
+  String get typeAMessage {
+    return Intl.message(
+      'Type a message',
+      name: 'typeAMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings saved successfully.`
+  String get settingsSavedSuccessfully {
+    return Intl.message(
+      'Settings saved successfully.',
+      name: 'settingsSavedSuccessfully',
       desc: '',
       args: [],
     );

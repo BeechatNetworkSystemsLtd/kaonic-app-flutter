@@ -28,3 +28,5 @@ plugins {
 }
 
 include(":app")
+// include(":kaonic-plugin")
+// project(":kaonic-plugin").projectDir = File(rootDir, "../../kaonic-android/kaonic-plugin/")

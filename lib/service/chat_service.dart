@@ -4,27 +4,60 @@ import 'package:kaonic/data/models/kaonic_create_chat_event.dart';
 import 'package:kaonic/data/models/kaonic_event.dart';
 import 'package:kaonic/data/models/kaonic_event_type.dart';
 import 'package:kaonic/data/models/kaonic_message_event.dart';
+import 'package:kaonic/data/repository/messages_repository.dart';
 import 'package:kaonic/service/kaonic_communication_service.dart';
-import 'package:rxdart/subjects.dart';
+import 'package:rxdart/rxdart.dart';
 
-// Function(address, chatId)
 typedef OnChatIdChanged = Function(String, String);
 
 class ChatService {
-  ChatService(KaonicCommunicationService kaonicService) {
-    _kaonicService = kaonicService;
-    _listenMessages();
+  ChatService._privateConstructor();
+
+  static final ChatService _instance = ChatService._privateConstructor();
+  bool _isInitialized = false;
+
+  factory ChatService(
+    KaonicCommunicationService kaonicService,
+    MessagesRepository messageRepository,
+  ) {
+    if (_instance._isInitialized) return _instance;
+
+    _instance._kaonicService = kaonicService;
+    _instance._messageRepository = messageRepository;
+    _instance._listenMessages();
+    _instance.myAddress();
+    if (_instance._contactChats.isEmpty) {
+      _instance._contactChats = messageRepository.getContactChats;
+    }
+    if ((_instance._messagesSubject.valueOrNull ?? {}).isEmpty) {
+      final messages = messageRepository.getMessages();
+      _instance._messagesSubject.add(messages);
+    }
+    _instance._isInitialized = true;
+
+    return _instance;
   }
 
   late final KaonicCommunicationService _kaonicService;
+  late final MessagesRepository _messageRepository;
 
   /// key is address of chat id
   final _messagesSubject =
       BehaviorSubject<Map<String, List<KaonicEvent>>>.seeded({});
 
+  late Stream<Map<String, KaonicEvent?>> lastMessagesStream =
+      _messagesSubject.switchMap((map) {
+    final lastMessages = _contactChats.map((k, v) {
+      final messages = (map[v] ?? []).lastOrNull;
+      return MapEntry(k, messages);
+    });
+
+    return Stream.value(lastMessages);
+  });
+
   /// key is contact address,
   /// value is chatUUID
-  final _contactChats = <String, String>{};
+  var _contactChats = <String, String>{};
 
   OnChatIdChanged? onChatIDUpdated;
 
@@ -45,16 +78,44 @@ class ChatService {
     });
   }
 
+  void markMessagesAsRead(String address) {
+    final chatId = _contactChats[address];
+    if (chatId == null) return;
+
+    final currentMap =
+        Map<String, List<KaonicEvent>>.from(_messagesSubject.valueOrNull ?? {});
+    final messageList = List<KaonicEvent>.from(currentMap[chatId] ?? []);
+    bool updated = false;
+
+    for (var i = 0; i < messageList.length; i++) {
+      final data = messageList[i].data;
+      if (data is MessageEvent && !data.isRead) {
+        data.isRead = true;
+        updated = true;
+      }
+    }
+
+    if (updated) {
+      currentMap[chatId] = messageList;
+      _messagesSubject.add(currentMap);
+      _saveMessages();
+    }
+  }
+
   Stream<List<KaonicEvent>> getChatMessages(String chatId) {
     return _messagesSubject.stream.map((messagesMap) {
       return messagesMap[chatId] ?? [];
     });
   }
 
+  Future<String> myAddress() async {
+    return await _kaonicService.myAddress();
+  }
+
   Future<String> createChat(String address) async {
     final chatId = await _kaonicService.createChat(address);
 
-    _contactChats[address] = chatId;
+    _putOrUpdateChatId(chatId, address, needOnChatUpdated: false);
     return chatId;
   }
 
@@ -94,13 +155,44 @@ class ChatService {
     currentMap[data.chatId] = messageList;
 
     _messagesSubject.add(currentMap);
+
+    _saveMessages();
   }
 
-  void _putOrUpdateChatId(String chatId, String address) {
-    final containsAddressWithChatID = _contactChats.containsKey(address);
-    _contactChats[address] = chatId;
-    if (containsAddressWithChatID) {
-      onChatIDUpdated?.call(address, chatId);
+  void _putOrUpdateChatId(String chatId, String address,
+      {bool needOnChatUpdated = true}) {
+    var currentMap =
+        Map<String, List<KaonicEvent>>.from(_messagesSubject.valueOrNull ?? {});
+
+    if (_contactChats.isEmpty) {
+      _contactChats = _messageRepository.getContactChats;
     }
+
+    if (currentMap.isEmpty) {
+      _messagesSubject.add(_messageRepository.getMessages());
+    }
+
+    currentMap =
+        Map<String, List<KaonicEvent>>.from(_messagesSubject.valueOrNull ?? {});
+
+    final prevChatId = _contactChats[address];
+    _contactChats[address] = chatId;
+
+    if (prevChatId != null) {
+      final messages = currentMap[prevChatId] ?? [];
+      currentMap.remove(prevChatId);
+      currentMap[chatId] = messages;
+      _messagesSubject.add(currentMap);
+      _saveMessages();
+      if (needOnChatUpdated) {
+        onChatIDUpdated?.call(address, chatId);
+      }
+    }
+  }
+
+  void _saveMessages() {
+    final currentMap =
+        Map<String, List<KaonicEvent>>.from(_messagesSubject.valueOrNull ?? {});
+    _messageRepository.saveMessages(currentMap, _contactChats);
   }
 }

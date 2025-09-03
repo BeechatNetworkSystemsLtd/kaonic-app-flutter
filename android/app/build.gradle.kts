@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "network.beechat.app.kaonic"
-    compileSdk = 34
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -42,10 +42,12 @@ android {
 
 
 dependencies {
+    // implementation(project(":kaonic-plugin"))
     implementation(files("libs/kaonic-plugin.aar"))
     implementation("com.github.mik3y:usb-serial-for-android:3.8.0")
     implementation("androidx.compose.runtime:runtime:1.8.2")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.19.0")
+    implementation("com.google.code.gson:gson:2.10.1")
 }
 
 flutter {

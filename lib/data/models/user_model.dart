@@ -32,4 +32,7 @@ class UserModel {
         key: key,
         id: id);
   }
+
+  List<String> get contactAddressList =>
+      contacts.map((contact) => contact.address).toList();
 }
