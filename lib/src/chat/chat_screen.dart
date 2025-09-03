@@ -46,12 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
       chatService: context.read<ChatService>(),
     );
     [Permission.manageExternalStorage, Permission.accessMediaLocation]
-        .request()
-        .then(
-      (value) {
-        print("object");
-      },
-    );
+        .request();
     super.initState();
   }
 
@@ -110,9 +105,10 @@ class _ChatScreenState extends State<ChatScreen> {
                                   color: Colors.white,
                                 )),
                             Text(
-                              widget.address.length > 15
-                                  ? widget.address.substring(0, 15)
-                                  : widget.address,
+                              (widget.address.length > 15
+                                      ? widget.address.substring(0, 15)
+                                      : widget.address)
+                                  .toUpperCase(),
                               textAlign: TextAlign.center,
                               style: TextStyles.text24
                                   .copyWith(color: Colors.white),

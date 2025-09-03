@@ -32,13 +32,14 @@ import 'package:kaonic/theme/theme.dart';
 
 const mocked = true;
 
-void main() {
+final _storageService = StorageService();
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
     DeviceOrientation.portraitUp,
   ]);
-
+  await _storageService.init();
   runApp(const MainApp());
 }
 
@@ -51,7 +52,6 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   final designSize = const Size(375, 812);
-  final _storageService = StorageService();
   late final _messagesRepository =
       MessagesRepository(storageService: _storageService);
   late final _connectivitySettingRepository =

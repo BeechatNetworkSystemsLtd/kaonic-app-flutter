@@ -57,9 +57,9 @@ class ContactItem extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          contact.address,
+                          contact.address.toUpperCase(),
                           style: TextStyles.text16
-                              .copyWith(color: AppColors.grey5),
+                              .copyWith(color: AppColors.white),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -116,7 +116,7 @@ class ContactItem extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyles.text16.copyWith(
-                          color: AppColors.white,
+                          color: AppColors.grey5,
                           fontWeight: (messageData as MessageEvent).isRead
                               ? FontWeight.w400
                               : FontWeight.w800,

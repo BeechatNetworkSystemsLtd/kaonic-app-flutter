@@ -14,7 +14,7 @@ class CallBloc extends Bloc<CallEvent, CallState> {
   })  : _callService = callService,
         super(CallState(
             callState: callState,
-            usernameAddressHex: callService.activeCallAddress)) {
+            usernameAddressHex: callService.activeCallAddress?.toUpperCase())) {
     on<_InitCall>(_initCall);
     on<EndCall>(_endCall);
     on<AcceptCall>(_acceptCall);

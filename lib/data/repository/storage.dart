@@ -7,10 +7,9 @@ class StorageService {
   late final Store _store;
 
   StorageService() {
-    _init();
   }
 
-  Future<void> _init() async {
+  Future<void> init() async {
     _store = await openStore(
       directory:
           p.join((await getApplicationDocumentsDirectory()).path, "kaonic_db"),
